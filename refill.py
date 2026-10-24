@@ -15,8 +15,13 @@ EMOJI_FONT = os.path.join(S, "fonts", "NotoColorEmoji.ttf")
 MIN_LEFT = 6          # пополняем, когда осталось меньше двух дней роликов
 BATCH = 4             # сценариев за один запрос к ИИ (ограничение бесплатного лимита на длину ответа)
 ROUNDS = 3            # запросов за одно пополнение: 3 × 4 = 12 новых сценариев (4 дня)
-MODELS = ["openai/gpt-4.1", "openai/gpt-4o", "openai/gpt-4.1-mini"]
-API = "https://models.github.ai/inference/chat/completions"
+# (адрес, модель): сначала новый адрес GitHub Models, потом старый (Azure), он тоже принимает токен GitHub
+MODELS = [
+    ("https://models.github.ai/inference/chat/completions", "openai/gpt-4.1"),
+    ("https://models.inference.ai.azure.com/chat/completions", "gpt-4o"),
+    ("https://models.github.ai/inference/chat/completions", "openai/gpt-4o"),
+    ("https://models.inference.ai.azure.com/chat/completions", "gpt-4o-mini"),
+]
 
 ACCENTS = [(124, 92, 255), (0, 200, 255), (255, 120, 60), (40, 210, 140), (255, 70, 120), (255, 190, 40)]
 HANDLE = "@PortfolioHazzer_bot"
@@ -170,16 +175,18 @@ def ask_ai(prompt):
     if not token:
         raise RuntimeError("нет GITHUB_TOKEN")
     last = None
-    for model in MODELS:
+    for api, model in MODELS:
         try:
             import requests
-            r = requests.post(API, timeout=180, json={
+            r = requests.post(api, timeout=180, json={
                 "model": model, "temperature": 0.9, "max_tokens": 4000,
                 "messages": [{"role": "user", "content": prompt}]}, headers={
                 "Authorization": "Bearer " + token, "Accept": "application/vnd.github+json",
                 "X-GitHub-Api-Version": "2022-11-28", "User-Agent": "shorts-autopilot"})
             if r.status_code != 200:
                 raise RuntimeError("%s %s" % (r.status_code, r.text[:300]))
+            if "json" not in r.headers.get("Content-Type", ""):
+                raise RuntimeError("ответ не JSON (%s, %s, %r)" % (r.url, r.headers.get("Content-Type"), r.text[:100]))
             try:
                 text = r.json()["choices"][0]["message"]["content"]
             except Exception:
@@ -187,7 +194,7 @@ def ask_ai(prompt):
             m = re.search(r"\{.*\}", text, re.S)
             return json.loads(m.group(0))["videos"], model
         except Exception as e:
-            print("Модель %s не ответила: %s" % (model, e))
+            print("Модель %s (%s) не ответила: %s" % (model, api, e))
             last = e
             time.sleep(5)
     raise RuntimeError("ни одна модель не ответила: %s" % last)
