@@ -3,6 +3,7 @@
 Пишет сценарии бесплатный ИИ GitHub Models (доступ даёт сам GitHub Actions через GITHUB_TOKEN).
 Запуск: python refill.py            — пополнить, если осталось мало
         python refill.py --force    — пополнить в любом случае
+        python refill.py --force --dry — только показать, что напишет ИИ, ничего не сохраняя
 """
 import os, sys, json, re, time, urllib.request, urllib.error
 
@@ -189,7 +190,7 @@ def ask_ai(prompt):
     raise RuntimeError("ни одна модель не ответила: %s" % last)
 
 
-def refill(force=False):
+def refill(force=False, dry=False):
     scen = load(SCEN, [])
     used = set(load(STATE, {"used": []})["used"])
     left = sum(1 for s in scen if s["id"] not in used)
@@ -216,7 +217,9 @@ def refill(force=False):
             taken.add(v["id"])
             added += 1
             print("+ %s (%s, %s)" % (v["id"], v["yt_title"], model))
-    if added:
+    if added and dry:
+        print(json.dumps(scen[-added:], ensure_ascii=False, indent=1))
+    elif added:
         tmp = SCEN + ".tmp"
         with open(tmp, "w", encoding="utf-8") as f:
             json.dump(scen, f, ensure_ascii=False, indent=1)
@@ -226,4 +229,4 @@ def refill(force=False):
 
 
 if __name__ == "__main__":
-    refill("--force" in sys.argv)
+    refill("--force" in sys.argv, "--dry" in sys.argv)
