@@ -1,0 +1,86 @@
+name: Shorts Autopilot
+
+on:
+  schedule:
+    # 10:00, 16:00 и 22:00 по Москве (UTC+3). GitHub иногда запускает с опозданием на 5-30 минут.
+    - cron: "3 7 * * *"
+    - cron: "3 13 * * *"
+    - cron: "3 19 * * *"
+  workflow_dispatch:
+    inputs:
+      refill:
+        description: "Сначала дописать новые сценарии, даже если старые не кончились"
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+  models: read
+
+concurrency:
+  group: autopilot
+  cancel-in-progress: false
+
+jobs:
+  video:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Библиотеки
+        run: pip install -r requirements.txt
+
+      - name: Голос из кэша
+        id: voice
+        uses: actions/cache@v4
+        with:
+          path: voice
+          key: voice-dmitri-medium-v1
+
+      - name: Скачать голос
+        if: steps.voice.outputs.cache-hit != 'true'
+        run: |
+          mkdir -p voice
+          curl -sSL -o v.tar.bz2 https://github.com/k2-fsa/sherpa-onnx/releases/download/tts-models/vits-piper-ru_RU-dmitri-medium.tar.bz2
+          tar -xjf v.tar.bz2
+          cp vits-piper-ru_RU-dmitri-medium/ru_RU-dmitri-medium.onnx vits-piper-ru_RU-dmitri-medium/ru_RU-dmitri-medium.onnx.json voice/
+          rm -rf v.tar.bz2 vits-piper-ru_RU-dmitri-medium
+
+      - name: Пополнить сценарии
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: python refill.py ${{ inputs.refill && '--force' || '' }}
+
+      - name: Собрать и выложить ролик
+        env:
+          YOUTUBE_TOKEN: ${{ secrets.YOUTUBE_TOKEN }}
+        run: |
+          if [ -z "$YOUTUBE_TOKEN" ]; then echo "Нет секрета YOUTUBE_TOKEN (см. README)"; exit 1; fi
+          printf '%s' "$YOUTUBE_TOKEN" > token.json
+          python run.py
+
+      - name: Сохранить прогресс
+        if: always()
+        run: |
+          rm -f token.json
+          git config user.name "shorts-autopilot"
+          git config user.email "actions@users.noreply.github.com"
+          git add state.json scenarios.json log.txt
+          git diff --cached --quiet && exit 0
+          git commit -m "Ролик $(date -u +%F\ %H:%M) UTC"
+          for i in 1 2 3; do git pull --rebase && git push && break; sleep 5; done
+
+      - name: Ролик и описание (скачать можно 7 дней)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: video
+          path: out/
+          retention-days: 7
+          if-no-files-found: ignore

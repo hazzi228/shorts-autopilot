@@ -1,0 +1,8 @@
+piper-tts==1.8.0
+onnxruntime
+numpy
+pillow
+imageio-ffmpeg
+google-auth
+requests
+fonttools

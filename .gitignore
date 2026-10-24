@@ -1,0 +1,8 @@
+token.json
+client_secret.json
+voice/
+work/
+out/
+run.lock
+__pycache__/
+.venv/
