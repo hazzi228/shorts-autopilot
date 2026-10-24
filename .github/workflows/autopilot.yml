@@ -58,7 +58,7 @@ jobs:
         run: |
           if [ -z "$YOUTUBE_TOKEN" ]; then echo "Нет секрета YOUTUBE_TOKEN (см. README)"; exit 1; fi
           printf '%s' "$YOUTUBE_TOKEN" > token.json
-          python run.py
+          python -u run.py
 
       - name: Пополнить сценарии (после ролика, чтобы не задерживать его)
         if: always()
@@ -67,7 +67,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
-        run: python refill.py ${{ inputs.refill && '--force' || '' }}
+        run: python -u refill.py ${{ inputs.refill && '--force' || '' }}
 
       - name: Сохранить прогресс
         if: always()
