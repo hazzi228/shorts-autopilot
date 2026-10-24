@@ -11,4 +11,4 @@ jobs:
         with:
           python-version: "3.12"
       - run: pip install -q requests beautifulsoup4
-      - run: python -u leads/probe_tmp.py
+      - run: python -u leads/finder.py --dry-run --days 1

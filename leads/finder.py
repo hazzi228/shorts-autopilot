@@ -104,6 +104,51 @@ def from_telegram(channel):
         }
 
 
+# Разделы Kwork: 37 создание сайтов, 38 доработка сайтов, 79 вёрстка, 41 скрипты и боты.
+KWORK_SITE = {"37", "38", "79"}
+KWORK_BOTS = "41"
+MSK = timezone(timedelta(hours=3))
+
+
+def from_kwork(categories, pages=2):
+    """Открытые заказы Kwork из тех же запросов, что делает сама страница «Биржа проектов»."""
+    for cat in categories:
+        for page in range(1, pages + 1):
+            r = requests.post("https://kwork.ru/projects", headers={**UA, "X-Requested-With": "XMLHttpRequest"},
+                              data={"c": cat, "page": page}, timeout=25)
+            r.raise_for_status()
+            pag = (r.json().get("data") or {}).get("pagination") or {}
+            for w in pag.get("data") or []:
+                title, desc = clean(w.get("name")), clean(w.get("description"))
+                price = w.get("priceLimit")
+                price = f" (Бюджет: {float(price):,.0f} ₽)".replace(",", " ") if price else ""
+                yield {
+                    "id": f"kwork:{w['id']}",
+                    "source": "Kwork",
+                    "title": title[:120],
+                    "text": f"{title}{price}. {desc}",
+                    "url": f"https://kwork.ru/projects/{w['id']}",
+                    "contacts": [],
+                    "date": datetime.strptime(w["date_create"], "%Y-%m-%d %H:%M:%S").replace(tzinfo=MSK),
+                    "category": str(w.get("category_id")),
+                }
+            if page >= (pag.get("last_page") or 1):
+                break
+            time.sleep(1)
+
+
+def classify_kwork(lead):
+    """Kwork уже разложил заказы по разделам, поэтому слова «нужен/сделать» не обязательны."""
+    t = lead["text"].lower()
+    if SKIP_WORDS.search(t):
+        return None
+    if lead["category"] in KWORK_SITE:
+        return "site"
+    if lead["category"] == KWORK_BOTS and re.search(r"бот|telegram|телеграм|\bтг\b|mini ?app|мини[- ]?прилож", t):
+        return "bot"
+    return None
+
+
 def from_rss(name, url):
     root = ElementTree.fromstring(get(url).encode("utf-8"))
     for item in root.iter("item"):
@@ -155,13 +200,21 @@ def collect():
     leads, errors = [], []
     jobs = [("tg", ch) for ch in SOURCES.get("telegram", [])]
     jobs += [("rss", r) for r in SOURCES.get("rss", [])]
+    if SOURCES.get("kwork"):
+        jobs.append(("kwork", {"name": "Kwork", "categories": SOURCES["kwork"]}))
     for kind, src in jobs:
+        name = src if kind == "tg" else src["name"]
         try:
-            items = list(from_telegram(src) if kind == "tg" else from_rss(src["name"], src["url"]))
+            if kind == "tg":
+                items = list(from_telegram(src))
+            elif kind == "rss":
+                items = list(from_rss(src["name"], src["url"]))
+            else:
+                items = list(from_kwork(src["categories"]))
             leads += items
-            print(f"  {src if kind == 'tg' else src['name']}: {len(items)} постов")
+            print(f"  {name}: {len(items)} постов")
         except Exception as e:  # одна упавшая лента не должна ломать остальные
-            errors.append(f"{src if kind == 'tg' else src['name']}: {type(e).__name__} {str(e)[:80]}")
+            errors.append(f"{name}: {type(e).__name__} {str(e)[:80]}")
         time.sleep(1)
     return leads, errors
 
@@ -211,7 +264,7 @@ def card(lead):
              "", html.escape(text), ""]
     if lead["url"]:
         lines.append(f"🔗 <a href=\"{html.escape(lead['url'])}\">Открыть заявку</a>")
-    if lead["id"].startswith("rss:"):
+    if lead["id"].startswith(("rss:", "kwork:")):
         lines.append("✍️ Отклик оставляется прямо на сайте биржи, Telegram для этого не нужен")
     if lead["contacts"]:
         lines.append("✉️ Контакт: " + ", ".join(html.escape(c) for c in lead["contacts"]))
@@ -242,7 +295,7 @@ def main():
         seen[lead["id"]] = None
         if now - lead["date"] > window:
             continue
-        lead["kind"] = classify(lead["text"])
+        lead["kind"] = classify_kwork(lead) if lead["id"].startswith("kwork:") else classify(lead["text"])
         fp = fingerprint(lead["text"])
         if not lead["kind"] or fp in prints:
             continue
