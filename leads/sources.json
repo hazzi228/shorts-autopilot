@@ -1,7 +1,7 @@
 {
   "max_age_days": 3,
   "max_per_run": 15,
-  "owners": [],
+  "owners": ["Hazzi71", "hazzer_h"],
   "telegram": [
     "freegolup",
     "workk_on",
