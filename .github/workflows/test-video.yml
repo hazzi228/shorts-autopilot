@@ -10,15 +10,15 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
         with:
           python-version: "3.12"
           cache: pip
       - run: pip install -r requirements.txt
       - name: Голос из кэша
         id: voice
-        uses: actions/cache@v4
+        uses: actions/cache@v5
         with:
           path: voice
           key: voice-dmitri-medium-v1
@@ -37,7 +37,7 @@ jobs:
           git config user.name "shorts-autopilot"
           git config user.email "actions@users.noreply.github.com"
           git checkout --orphan samples
-          git rm -rq --cached .
+          git rm -rqf --cached .
           mkdir -p samples && cp /tmp/s/test.mp4 samples/
           git add samples/test.mp4
           git commit -qm "Тестовый ролик"
