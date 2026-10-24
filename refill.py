@@ -178,7 +178,11 @@ def ask_ai(prompt):
             "Accept": "application/vnd.github+json", "X-GitHub-Api-Version": "2022-11-28"})
         try:
             with urllib.request.urlopen(req, timeout=180) as r:
-                text = json.load(r)["choices"][0]["message"]["content"]
+                raw = r.read().decode("utf-8", "replace")
+            try:
+                text = json.loads(raw)["choices"][0]["message"]["content"]
+            except Exception:
+                raise RuntimeError("непонятный ответ: %r" % raw[:300])
             m = re.search(r"\{.*\}", text, re.S)
             return json.loads(m.group(0))["videos"], model
         except Exception as e:
