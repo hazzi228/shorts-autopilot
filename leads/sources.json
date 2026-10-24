@@ -14,7 +14,12 @@
     "frilancekomfort",
     "webfrl",
     "freelancetaverna",
-    "frilans_zakazy"
+    "frilans_zakazy",
+    "FreelanceBay",
+    "zakazy_it",
+    "it_zakazy",
+    "theyseeku",
+    "workathome"
   ],
   "rss": [
     {
@@ -25,5 +30,11 @@
       "name": "FL.ru программирование",
       "url": "https://www.fl.ru/rss/all.xml?category=5"
     }
+  ],
+  "kwork": [
+    "37",
+    "38",
+    "79",
+    "41"
   ]
 }
