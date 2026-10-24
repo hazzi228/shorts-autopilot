@@ -6,7 +6,7 @@ RSS бирж), оставляет только свежие заявки, где
 нужно самому: инструмент ничего не отправляет посторонним людям.
 
 Запуск: python leads/finder.py [--dry-run]
-Секреты: LEADS_BOT_TOKEN (токен бота от @BotFather), LEADS_CHAT_ID (необязательно).
+Секреты: LEADS_BOT_TOKEN (токен бота от @BotFather), LEADS_CHAT_ID (необязательно, можно несколько через запятую).
 """
 import argparse
 import hashlib
@@ -236,24 +236,33 @@ def send(token, chat_id, text):
     r.raise_for_status()
 
 
-def find_chat_id(token, state):
+def find_chat_ids(token, state):
+    """Кому слать заявки. Новых получателей ищем среди тех, кто написал боту /start."""
     if os.environ.get("LEADS_CHAT_ID"):
-        return os.environ["LEADS_CHAT_ID"].strip()
-    if state.get("chat_id"):
-        return state["chat_id"]
-    # Берём того, кто написал боту /start. Бот новый и личный, так что это хозяин.
+        return [c.strip() for c in os.environ["LEADS_CHAT_ID"].split(",") if c.strip()], []
+    ids = state.setdefault("chat_ids", [state.pop("chat_id")] if state.get("chat_id") else [])
+    owners = {n.lstrip("@").lower() for n in SOURCES.get("owners", [])}
+    if ids and not owners:
+        return ids, []
     r = requests.get(f"https://api.telegram.org/bot{token}/getUpdates", timeout=20).json()
     if not r.get("ok"):
         desc = r.get("description", "")
         if "webhook" in desc.lower():
             sys.exit("В LEADS_BOT_TOKEN токен бота-портфолио. Нужен отдельный новый бот от @BotFather (см. leads/README.md)")
         sys.exit(f"Telegram не принял LEADS_BOT_TOKEN: {desc}. Проверь, что токен скопирован целиком")
+    new = []
     for upd in reversed(r.get("result", [])):
         chat = (upd.get("message") or {}).get("chat", {})
-        if chat.get("type") == "private":
-            state["chat_id"] = str(chat["id"])
-            return state["chat_id"]
-    return None
+        if chat.get("type") != "private" or str(chat["id"]) in ids:
+            continue
+        # Без списка owners бот личный, и первый написавший ему и есть хозяин.
+        if owners and (chat.get("username") or "").lower() not in owners:
+            continue
+        ids.append(str(chat["id"]))
+        new.append(str(chat["id"]))
+        if not owners:
+            break
+    return ids, new
 
 
 def card(lead):
@@ -317,18 +326,21 @@ def main():
     token = re.sub(r'[\s"]', "", os.environ.get("LEADS_BOT_TOKEN", ""))
     if not token:
         sys.exit("Нет секрета LEADS_BOT_TOKEN (см. leads/README.md)")
-    first_connect = not state.get("chat_id") and not os.environ.get("LEADS_CHAT_ID")
-    chat_id = find_chat_id(token, state)
-    if not chat_id:
+    chat_ids, new_ids = find_chat_ids(token, state)
+    if not chat_ids:
         sys.exit("Бот не знает, куда писать: открой в Telegram бота для заявок (того, чей токен в LEADS_BOT_TOKEN), "
                  "нажми Start или напиши ему любое сообщение, потом запусти ещё раз")
-    if first_connect:
+    for chat_id in new_ids:
         send(token, chat_id, "✅ Бот подключён. Сюда будут приходить заявки на ботов и сайты, "
                              "проверка каждый час с 8:00 до 23:00 по Москве."
-                             + ("" if fresh else " За последние сутки подходящих заявок не было."))
+                             + ("" if fresh else " Сейчас новых подходящих заявок нет."))
 
     for lead in fresh:
-        send(token, chat_id, card(lead))
+        for chat_id in chat_ids:
+            try:
+                send(token, chat_id, card(lead))
+            except requests.RequestException as e:
+                log(f"не отправилось в чат {chat_id}: {e}")
         time.sleep(1.2)
 
     state["ids"] = list(seen)[-5000:]
