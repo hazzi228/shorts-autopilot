@@ -73,16 +73,23 @@ class Bot {
     return msg;
   }
 
-  async ownerId(user) {
-    const fixed = this.env.OWNER_ID;
-    if (fixed) return Number(fixed);
-    const nick = (data.owner?.telegram || "").replace(/^@/, "").toLowerCase();
-    if (user?.username && nick && user.username.toLowerCase() === nick) {
-      if ((await this.kv.get("owner_id")) !== String(user.id)) await this.kv.put("owner_id", String(user.id));
-      return user.id;
+  // Владельцев может быть несколько: основной ник owner.telegram и дополнительные owner.extra_owners.
+  // id узнаём, когда владелец впервые пишет боту, и храним в KV.
+  async ownerIds(user) {
+    const fixed = String(this.env.OWNER_ID || "").split(",").map((s) => Number(s.trim())).filter(Boolean);
+    if (fixed.length) return fixed;
+    let ids = JSON.parse((await this.kv.get("owner_ids")) || "[]");
+    if (!ids.length) {
+      const old = await this.kv.get("owner_id");
+      if (old) ids = [Number(old)];
     }
-    const saved = await this.kv.get("owner_id");
-    return saved ? Number(saved) : null;
+    const nicks = [data.owner?.telegram, ...(data.owner?.extra_owners || [])]
+      .map((n) => String(n || "").replace(/^@/, "").toLowerCase()).filter(Boolean);
+    if (user?.username && nicks.includes(user.username.toLowerCase()) && !ids.includes(user.id)) {
+      ids.push(user.id);
+      await this.kv.put("owner_ids", JSON.stringify(ids));
+    }
+    return ids;
   }
 }
 
@@ -197,16 +204,18 @@ function clientLabel(user) {
 
 // Пересылает сообщение клиента владельцу и запоминает, кому отвечать.
 async function toOwner(bot, msg, header) {
-  const owner = await bot.ownerId();
-  if (!owner) {
+  const owners = await bot.ownerIds();
+  if (!owners.length) {
     console.warn("Пришла заявка, но владелец ещё не нажимал /start в боте, переслать некуда");
     return false;
   }
-  const remember = (m) => bot.kv.put(`relay:${m.message_id}`, String(msg.chat.id), { expirationTtl: 90 * DAY });
-  await remember(await bot.send(owner, header));
-  // Текст уже стоит в заголовке, а фото, файлы и голосовые пересылаем отдельно.
-  if (!msg.text) {
-    await remember(await bot.call("copyMessage", { chat_id: owner, from_chat_id: msg.chat.id, message_id: msg.message_id }));
+  const remember = (m) => bot.kv.put(`relay:${m.chat.id}:${m.message_id}`, String(msg.chat.id), { expirationTtl: 90 * DAY });
+  for (const owner of owners) {
+    await remember(await bot.send(owner, header));
+    // Текст уже стоит в заголовке, а фото, файлы и голосовые пересылаем отдельно.
+    if (!msg.text) {
+      await remember(await bot.call("copyMessage", { chat_id: owner, from_chat_id: msg.chat.id, message_id: msg.message_id }));
+    }
   }
   return true;
 }
@@ -217,16 +226,18 @@ async function onMessage(bot, msg) {
   const user = msg.from;
   const isCommand = msg.text?.startsWith("/");
 
-  if (user.id === (await bot.ownerId(user))) {
+  if ((await bot.ownerIds(user)).includes(user.id)) {
     if (isCommand) {
       await bot.send(msg.chat.id, "👋 Ты владелец бота. Сюда будут приходить заявки и сообщения клиентов. " +
         "Чтобы ответить, нажми на сообщение → «Ответить».");
       return show(bot, msg.chat.id, null, ...mainMenu(), data.owner?.photo);
     }
-    const client = msg.reply_to_message && (await bot.kv.get(`relay:${msg.reply_to_message.message_id}`));
+    const replied = msg.reply_to_message?.message_id;
+    // Старые заявки (до нескольких владельцев) записаны без номера чата.
+    const client = replied && ((await bot.kv.get(`relay:${msg.chat.id}:${replied}`)) || (await bot.kv.get(`relay:${replied}`)));
     if (!client) return bot.send(msg.chat.id, "Чтобы ответить клиенту, нажми на его сообщение → «Ответить» и напиши текст.");
     await bot.call("copyMessage", { chat_id: Number(client), from_chat_id: msg.chat.id, message_id: msg.message_id });
-    await bot.kv.put(`relay:${msg.message_id}`, client, { expirationTtl: 90 * DAY });
+    await bot.kv.put(`relay:${msg.chat.id}:${msg.message_id}`, client, { expirationTtl: 90 * DAY });
     return bot.send(msg.chat.id, "✅ Отправлено клиенту");
   }
 

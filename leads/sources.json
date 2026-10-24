@@ -1,6 +1,7 @@
 {
   "max_age_days": 3,
   "max_per_run": 15,
+  "owners": [],
   "telegram": [
     "freegolup",
     "workk_on",
