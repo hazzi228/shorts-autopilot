@@ -188,6 +188,11 @@ def find_chat_id(token, state):
         return state["chat_id"]
     # Берём того, кто написал боту /start. Бот новый и личный, так что это хозяин.
     r = requests.get(f"https://api.telegram.org/bot{token}/getUpdates", timeout=20).json()
+    if not r.get("ok"):
+        desc = r.get("description", "")
+        if "webhook" in desc.lower():
+            sys.exit("В LEADS_BOT_TOKEN токен бота-портфолио. Нужен отдельный новый бот от @BotFather (см. leads/README.md)")
+        sys.exit(f"Telegram не принял LEADS_BOT_TOKEN: {desc}. Проверь, что токен скопирован целиком")
     for upd in reversed(r.get("result", [])):
         chat = (upd.get("message") or {}).get("chat", {})
         if chat.get("type") == "private":
@@ -253,12 +258,19 @@ def main():
             print("\n" + "=" * 60 + "\n" + html.unescape(re.sub(r"<[^>]+>", "", card(lead))))
         return
 
-    token = os.environ.get("LEADS_BOT_TOKEN", "").strip()
+    # При копировании легко захватить пробел, перенос строки или кавычки.
+    token = re.sub(r'[\s"]', "", os.environ.get("LEADS_BOT_TOKEN", ""))
     if not token:
         sys.exit("Нет секрета LEADS_BOT_TOKEN (см. leads/README.md)")
+    first_connect = not state.get("chat_id") and not os.environ.get("LEADS_CHAT_ID")
     chat_id = find_chat_id(token, state)
     if not chat_id:
-        sys.exit("Бот не знает, куда писать: открой своего бота в Telegram и нажми Start, потом запусти ещё раз")
+        sys.exit("Бот не знает, куда писать: открой в Telegram бота для заявок (того, чей токен в LEADS_BOT_TOKEN), "
+                 "нажми Start или напиши ему любое сообщение, потом запусти ещё раз")
+    if first_connect:
+        send(token, chat_id, "✅ Бот подключён. Сюда будут приходить заявки на ботов и сайты, "
+                             "проверка каждый час с 8:00 до 23:00 по Москве."
+                             + ("" if fresh else " За последние сутки подходящих заявок не было."))
 
     for lead in fresh:
         send(token, chat_id, card(lead))
