@@ -107,6 +107,8 @@ def from_telegram(channel):
 # Разделы Kwork: 37 создание сайтов, 38 доработка сайтов, 79 вёрстка, 41 скрипты и боты.
 KWORK_SITE = {"37", "38", "79"}
 KWORK_BOTS = "41"
+# Настройка серверов и прочее администрирование: это не разработка сайта
+KWORK_ADMIN = re.compile(r"varnish|nginx|apache|\bvps\b|\bdns\b|днс|ssl|сертификат|почт[ауы] на домен|перенос на (?:хостинг|сервер)")
 MSK = timezone(timedelta(hours=3))
 
 
@@ -142,9 +144,9 @@ def classify_kwork(lead):
     t = lead["text"].lower()
     if SKIP_WORDS.search(t):
         return None
-    if lead["category"] in KWORK_SITE:
+    if lead["category"] in KWORK_SITE and not KWORK_ADMIN.search(t):
         return "site"
-    if lead["category"] == KWORK_BOTS and re.search(r"бот|telegram|телеграм|\bтг\b|mini ?app|мини[- ]?прилож", t):
+    if lead["category"] == KWORK_BOTS and re.search(r"\bбот|telegram|телеграм|\bтг\b|mini ?app|мини[- ]?прилож", t):
         return "bot"
     return None
 
