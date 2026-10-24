@@ -1,4 +1,4 @@
-import sys, os, re, math, wave, subprocess, random
+import sys, os, re, math, wave, subprocess, random, time
 import numpy as np
 from PIL import Image, ImageDraw, ImageFont, ImageFilter
 
@@ -326,7 +326,55 @@ def hero_timer(t, accent):
     return glow(im, accent, 30, 0.6)
 
 # ---------- audio ----------
+# Нейронный голос Microsoft (edge-tts). Если сервис не ответил, весь остаток ролика озвучивает Piper (Дмитрий).
+EDGE_VOICE = os.environ.get("EDGE_VOICE", "de-DE-FlorianMultilingualNeural")
+EDGE_RATE = os.environ.get("EDGE_RATE", "+5%")
+_edge_off = not EDGE_VOICE
+
+
+def tts_edge(text, path):
+    import asyncio, edge_tts
+    mp3 = path.replace(".wav", "_edge.mp3")
+    last = None
+    for attempt in range(3):
+        try:
+            asyncio.run(edge_tts.Communicate(text, EDGE_VOICE, rate=EDGE_RATE).save(mp3))
+            if os.path.getsize(mp3) > 2000:
+                break
+            last = RuntimeError("пустой ответ")
+        except Exception as e:
+            last = e
+        time.sleep(3 * (attempt + 1))
+    else:
+        raise RuntimeError("edge-tts: %s" % last)
+    subprocess.run([FFMPEG, "-loglevel", "error", "-y", "-i", mp3, "-af", "highpass=f=70",
+                    "-ar", str(SR), "-ac", "1", path], check=True)
+
+
 def tts(text, path):
+    global _edge_off
+    if not _edge_off:
+        try:
+            tts_edge(text, path)
+            return read_voice(path)
+        except Exception as e:
+            print("Нейроголос недоступен (%s), озвучиваю Дмитрием" % e)
+            _edge_off = True
+    return tts_piper(text, path)
+
+
+def read_voice(path):
+    with wave.open(path, "rb") as wf:
+        a = np.frombuffer(wf.readframes(wf.getnframes()), dtype=np.int16).astype(np.float32) / 32768
+        sr = wf.getframerate()
+    # обрезаем тишину по краям
+    nz = np.where(np.abs(a) > 0.01)[0]
+    if len(nz):
+        a = a[max(0, nz[0] - 200): nz[-1] + 1500]
+    return a, sr
+
+
+def tts_piper(text, path):
     from piper import PiperVoice, SynthesisConfig
     global _voice
     try:
@@ -342,15 +390,7 @@ def tts(text, path):
                     "highpass=f=80,equalizer=f=300:t=q:w=1:g=-2,equalizer=f=3000:t=q:w=1.5:g=1.5",
                     
                     "-ar", "22050", "-ac", "1", proc], check=True)
-    path = proc
-    with wave.open(path, "rb") as wf:
-        a = np.frombuffer(wf.readframes(wf.getnframes()), dtype=np.int16).astype(np.float32) / 32768
-        sr = wf.getframerate()
-    # обрезаем тишину по краям
-    nz = np.where(np.abs(a) > 0.01)[0]
-    if len(nz):
-        a = a[max(0, nz[0] - 200): nz[-1] + 1500]
-    return a, sr
+    return read_voice(proc)
 
 def music(dur, sr, seed):
     rng = np.random.default_rng(seed)

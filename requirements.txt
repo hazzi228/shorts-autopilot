@@ -6,3 +6,4 @@ imageio-ffmpeg
 google-auth
 requests
 fonttools
+edge-tts

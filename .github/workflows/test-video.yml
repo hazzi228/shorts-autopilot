@@ -1,0 +1,44 @@
+name: Test video (no upload)
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - run: pip install -r requirements.txt
+      - name: Голос из кэша
+        id: voice
+        uses: actions/cache@v4
+        with:
+          path: voice
+          key: voice-dmitri-medium-v1
+      - name: Скачать голос
+        if: steps.voice.outputs.cache-hit != 'true'
+        run: |
+          mkdir -p voice
+          curl -sSL -o v.tar.bz2 https://github.com/k2-fsa/sherpa-onnx/releases/download/tts-models/vits-piper-ru_RU-dmitri-medium.tar.bz2
+          tar -xjf v.tar.bz2
+          cp vits-piper-ru_RU-dmitri-medium/ru_RU-dmitri-medium.onnx vits-piper-ru_RU-dmitri-medium/ru_RU-dmitri-medium.onnx.json voice/
+          rm -rf v.tar.bz2 vits-piper-ru_RU-dmitri-medium
+      - run: python run.py --no-upload && cat log.txt
+      - name: Сохранить ролик в ветку samples
+        run: |
+          mkdir -p /tmp/s && cp out/*.mp4 /tmp/s/test.mp4
+          git config user.name "shorts-autopilot"
+          git config user.email "actions@users.noreply.github.com"
+          git checkout --orphan samples
+          git rm -rq --cached .
+          mkdir -p samples && cp /tmp/s/test.mp4 samples/
+          git add samples/test.mp4
+          git commit -qm "Тестовый ролик"
+          git push -f origin samples
