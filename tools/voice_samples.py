@@ -22,6 +22,19 @@ async def main(out):
             print("ok", name)
         except Exception as e:
             print("fail", name, e)
+    try:
+        from gtts import gTTS
+        gTTS(TEXT, lang="ru").save(os.path.join(out, "09-Google.mp3"))
+        print("ok google")
+    except Exception as e:
+        print("fail google", e)
+    ok = [f for f in os.listdir(out) if os.path.getsize(os.path.join(out, f)) > 5000]
+    for f in os.listdir(out):
+        if f not in ok:
+            os.remove(os.path.join(out, f))
+    print("готово:", ok)
+    if not ok:
+        sys.exit(1)
 
 
 asyncio.run(main(sys.argv[1] if len(sys.argv) > 1 else "samples"))
