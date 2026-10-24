@@ -183,7 +183,9 @@ def ask_ai(prompt):
         try:
             import requests
             body = {"model": model, "messages": [{"role": "user", "content": prompt}]}
-            if "pollinations" not in api:  # у Pollinations модель «думает» и съедает лимит, поэтому без ограничения
+            if "pollinations" in api:  # бесплатная модель «думает» и съедает лимит ответа, просим думать меньше
+                body.update(reasoning_effort="low")
+            else:
                 body.update(temperature=0.9, max_tokens=4000)
             r = requests.post(api, timeout=300, json=body, headers={
                 "Authorization": "Bearer " + token, "Accept": "application/vnd.github+json",
