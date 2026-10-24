@@ -1,0 +1,19 @@
+name: Voice samples
+
+on:
+  workflow_dispatch:
+
+jobs:
+  samples:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install edge-tts==7.0.2
+      - run: python tools/voice_samples.py samples
+      - uses: actions/upload-artifact@v4
+        with:
+          name: samples
+          path: samples/
