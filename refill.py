@@ -24,7 +24,8 @@ MODELS = [
 ]
 # (Pollinations без ключа проверен 24.10.2026: выдумывает факты, поэтому не используется)
 # если добавить секрет GEMINI_API_KEY (бесплатный ключ Google AI Studio), Gemini пробуется первым
-GEMINI = ("https://generativelanguage.googleapis.com/v1beta/openai/chat/completions", "gemini-2.5-flash")
+GEMINI_API = "https://generativelanguage.googleapis.com/v1beta/openai/chat/completions"
+GEMINI = [(GEMINI_API, "gemini-3.8-flash"), (GEMINI_API, "gemini-flash-latest")]
 
 ACCENTS = [(124, 92, 255), (0, 200, 255), (255, 120, 60), (40, 210, 140), (255, 70, 120), (255, 190, 40)]
 HANDLE = "@PortfolioHazzer_bot"
@@ -178,7 +179,7 @@ _dead = set()  # модели, которые уже не ответили в э
 
 def ask_ai(prompt):
     last = None
-    plan = ([GEMINI] if os.environ.get("GEMINI_API_KEY") else []) + MODELS
+    plan = (GEMINI if os.environ.get("GEMINI_API_KEY") else []) + MODELS
     for api, model in plan:
         if (api, model) in _dead:
             continue
