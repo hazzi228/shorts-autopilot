@@ -135,8 +135,32 @@ def pid_alive(pid):
         return False
 
 
+def recent_upload_minutes():
+    """Сколько минут назад был последний успешный ролик (по log.txt), или None."""
+    if not os.path.exists(LOG):
+        return None
+    last = None
+    with open(LOG, encoding="utf-8") as f:
+        for line in f:
+            if "Загружен на YouTube" in line:
+                last = line
+    if not last:
+        return None
+    try:
+        t = datetime.datetime.strptime(last[1:20], "%Y-%m-%d %H:%M:%S")
+    except ValueError:
+        return None
+    return (datetime.datetime.now() - t).total_seconds() / 60
+
+
 def main():
     no_upload = "--no-upload" in sys.argv
+    if os.environ.get("GITHUB_EVENT_NAME") == "schedule":
+        # GitHub иногда запускает расписание с опозданием: если ролик недавно уже вышел, второй не выкладываем
+        m = recent_upload_minutes()
+        if m is not None and m < 150:
+            log("Ролик уже выходил %d мин назад, этот запуск пропускаю" % m)
+            return
     if os.path.exists(LOCK) and (datetime.datetime.now().timestamp() - os.path.getmtime(LOCK)) < 3 * 3600:
         try:
             other = int(open(LOCK).read().strip() or 0)
