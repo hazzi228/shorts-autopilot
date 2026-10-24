@@ -21,7 +21,12 @@ MODELS = [
     ("https://models.inference.ai.azure.com/chat/completions", "gpt-4o"),
     ("https://models.github.ai/inference/chat/completions", "openai/gpt-4o"),
     ("https://models.inference.ai.azure.com/chat/completions", "gpt-4o-mini"),
+    # бесплатный сервис без ключа, запасной вариант
+    ("https://text.pollinations.ai/openai", "openai"),
+    ("https://text.pollinations.ai/openai", "openai-large"),
 ]
+# если добавить секрет GEMINI_API_KEY (бесплатный ключ Google AI Studio), Gemini пробуется первым
+GEMINI = ("https://generativelanguage.googleapis.com/v1beta/openai/chat/completions", "gemini-2.5-flash")
 
 ACCENTS = [(124, 92, 255), (0, 200, 255), (255, 120, 60), (40, 210, 140), (255, 70, 120), (255, 190, 40)]
 HANDLE = "@PortfolioHazzer_bot"
@@ -171,11 +176,10 @@ def build_video(raw, index, taken):
 
 
 def ask_ai(prompt):
-    token = os.environ.get("GITHUB_TOKEN")
-    if not token:
-        raise RuntimeError("нет GITHUB_TOKEN")
     last = None
-    for api, model in MODELS:
+    plan = ([GEMINI] if os.environ.get("GEMINI_API_KEY") else []) + MODELS
+    for api, model in plan:
+        token = os.environ.get("GEMINI_API_KEY") if "googleapis" in api else os.environ.get("GITHUB_TOKEN", "")
         try:
             import requests
             r = requests.post(api, timeout=180, json={
