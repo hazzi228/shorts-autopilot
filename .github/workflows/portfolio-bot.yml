@@ -52,15 +52,29 @@ jobs:
 
       - name: Выложить
         run: |
-          npx --yes wrangler@4.148.0 deploy 2>&1 | tee deploy.log
+          # При самой первой выкладке wrangler иногда падает уже после загрузки, второй раз проходит.
+          npx --yes wrangler@4.148.0 deploy || { sleep 5; npx --yes wrangler@4.148.0 deploy; }
           printf '%s' "$BOT_TOKEN" | npx --yes wrangler@4.148.0 secret put BOT_TOKEN
 
       - name: Подключить к Telegram
         run: |
-          url=$(grep -oE 'https://portfolio-bot\.[a-z0-9-]+\.workers\.dev' deploy.log | head -1)
-          [ -n "$url" ] || { echo "Не нашёл адрес бота в выводе wrangler"; exit 1; }
+          api="https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/workers"
+          auth="Authorization: Bearer $CLOUDFLARE_API_TOKEN"
+          # Адрес вида имя.workers.dev; если его ещё нет, создаём.
+          sub=$(curl -sS -H "$auth" "$api/subdomain" | python3 -c \
+            "import json,sys; print((json.load(sys.stdin).get('result') or {}).get('subdomain') or '')")
+          if [ -z "$sub" ]; then
+            sub="hazzer-$(printf '%s' "$CLOUDFLARE_ACCOUNT_ID" | cut -c1-6)"
+            curl -sS -X PUT -H "$auth" -H "Content-Type: application/json" -d "{\"subdomain\":\"$sub\"}" "$api/subdomain"
+            echo
+          fi
+          curl -sS -X POST -H "$auth" -H "Content-Type: application/json" -d '{"enabled":true}' \
+            "$api/scripts/portfolio-bot/subdomain"
+          echo
+          url="https://portfolio-bot.$sub.workers.dev"
           secret=$(printf '%s' "$BOT_TOKEN" | sha256sum | cut -c1-32)
           curl -sS "https://api.telegram.org/bot$BOT_TOKEN/setWebhook" \
             -d "url=$url" -d "secret_token=$secret" -d 'allowed_updates=["message","callback_query"]' | tee hook.json
+          echo
           grep -q '"ok":true' hook.json
           echo "Бот работает: $url"
