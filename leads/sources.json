@@ -1,0 +1,29 @@
+{
+  "max_age_days": 3,
+  "max_per_run": 15,
+  "telegram": [
+    "freegolup",
+    "workk_on",
+    "ipomogator",
+    "FreeWorkFeed",
+    "FrWork3",
+    "kadrof_work",
+    "digitaltender",
+    "rabotka_zdes",
+    "onlinevakansii",
+    "frilancekomfort",
+    "webfrl",
+    "freelancetaverna",
+    "frilans_zakazy"
+  ],
+  "rss": [
+    {
+      "name": "FL.ru",
+      "url": "https://www.fl.ru/rss/all.xml"
+    },
+    {
+      "name": "FL.ru программирование",
+      "url": "https://www.fl.ru/rss/all.xml?category=5"
+    }
+  ]
+}
