@@ -23,7 +23,7 @@ MODELS = [
     ("https://models.inference.ai.azure.com/chat/completions", "gpt-4o-mini"),
     # бесплатный сервис без ключа, запасной вариант
     ("https://text.pollinations.ai/openai", "openai"),
-    ("https://text.pollinations.ai/openai", "openai-large"),
+    ("https://text.pollinations.ai/openai", "openai"),
 ]
 # если добавить секрет GEMINI_API_KEY (бесплатный ключ Google AI Studio), Gemini пробуется первым
 GEMINI = ("https://generativelanguage.googleapis.com/v1beta/openai/chat/completions", "gemini-2.5-flash")
@@ -182,9 +182,10 @@ def ask_ai(prompt):
         token = os.environ.get("GEMINI_API_KEY") if "googleapis" in api else os.environ.get("GITHUB_TOKEN", "")
         try:
             import requests
-            r = requests.post(api, timeout=180, json={
-                "model": model, "temperature": 0.9, "max_tokens": 4000,
-                "messages": [{"role": "user", "content": prompt}]}, headers={
+            body = {"model": model, "messages": [{"role": "user", "content": prompt}]}
+            if "pollinations" not in api:  # у Pollinations модель «думает» и съедает лимит, поэтому без ограничения
+                body.update(temperature=0.9, max_tokens=4000)
+            r = requests.post(api, timeout=300, json=body, headers={
                 "Authorization": "Bearer " + token, "Accept": "application/vnd.github+json",
                 "X-GitHub-Api-Version": "2022-11-28", "User-Agent": "shorts-autopilot"})
             if r.status_code != 200:
@@ -192,9 +193,11 @@ def ask_ai(prompt):
             if "json" not in r.headers.get("Content-Type", ""):
                 raise RuntimeError("ответ не JSON (%s, %s, %r)" % (r.url, r.headers.get("Content-Type"), r.text[:100]))
             try:
-                text = r.json()["choices"][0]["message"]["content"]
+                text = r.json()["choices"][0]["message"].get("content") or ""
             except Exception:
                 raise RuntimeError("непонятный ответ: %r" % r.text[:300])
+            if "{" not in text:
+                raise RuntimeError("в ответе нет сценариев: %r" % r.text[-300:])
             m = re.search(r"\{.*\}", text, re.S)
             return json.loads(m.group(0))["videos"], model
         except Exception as e:
