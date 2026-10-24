@@ -5,7 +5,6 @@ on:
 
 permissions:
   contents: read
-  models: read
 
 jobs:
   test:
@@ -17,6 +16,5 @@ jobs:
           python-version: "3.12"
       - run: pip install fonttools requests json-repair
       - env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
         run: python -u refill.py --force --dry

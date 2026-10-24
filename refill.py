@@ -1,6 +1,6 @@
 """Пополняет scenarios.json новыми сценариями, когда старые заканчиваются.
 
-Пишет сценарии бесплатный ИИ GitHub Models (доступ даёт сам GitHub Actions через GITHUB_TOKEN).
+Пишет сценарии бесплатный Gemini (секрет GEMINI_API_KEY с бесплатным ключом Google AI Studio).
 Запуск: python refill.py            — пополнить, если осталось мало
         python refill.py --force    — пополнить в любом случае
         python refill.py --force --dry — только показать, что напишет ИИ, ничего не сохраняя
@@ -15,15 +15,11 @@ EMOJI_FONT = os.path.join(S, "fonts", "NotoColorEmoji.ttf")
 MIN_LEFT = 6          # пополняем, когда осталось меньше двух дней роликов
 BATCH = 2             # сценариев за один запрос к ИИ (у бесплатных моделей короткий лимит ответа)
 ROUNDS = 6            # запросов за одно пополнение: 6 × 2 = 12 новых сценариев (4 дня)
-# (адрес, модель): сначала новый адрес GitHub Models, потом старый (Azure), он тоже принимает токен GitHub
-MODELS = [
-    ("https://models.github.ai/inference/chat/completions", "openai/gpt-4.1"),
-    ("https://models.inference.ai.azure.com/chat/completions", "gpt-4o"),
-    ("https://models.github.ai/inference/chat/completions", "openai/gpt-4o"),
-    ("https://models.inference.ai.azure.com/chat/completions", "gpt-4o-mini"),
-]
+# GitHub Models проверен 24.10.2026: на этом аккаунте отвечает пустым "OK", а старый адрес Azure больше не существует.
+# Поэтому токен GitHub никуда не отправляем, сценарии пишет только Gemini.
+MODELS = []
 # (Pollinations без ключа проверен 24.10.2026: выдумывает факты, поэтому не используется)
-# если добавить секрет GEMINI_API_KEY (бесплатный ключ Google AI Studio), Gemini пробуется первым
+# нужен секрет GEMINI_API_KEY (бесплатный ключ Google AI Studio)
 GEMINI_API = "https://generativelanguage.googleapis.com/v1beta/openai/chat/completions"
 GEMINI = [(GEMINI_API, "gemini-3.8-flash"), (GEMINI_API, "gemini-flash-latest")]
 
@@ -127,11 +123,21 @@ def clean_say(t):
     return t
 
 
+LINK = re.compile(r"https?://|www\.|t\.me|@\w|\b[\w-]+\.(ru|com|net|org|io|me|su|рф|xyz|top|link)\b", re.I)
+
+
+def no_links(t):
+    """ИИ не должен вставлять в ролик свои ссылки и чужие @ники: в ролике рекламируется только наш бот."""
+    if LINK.search(t):
+        raise Bad("ссылка в тексте: " + t[:80])
+    return t
+
+
 def scene(raw):
     h = raw.get("hero") or {}
     say = clean_say(raw.get("say", ""))
-    show = " ".join(str(raw.get("show") or say).split())[:220]
-    cap = " ".join(str(h.get("caption", "")).split())[:34]
+    show = no_links(" ".join(str(raw.get("show") or say).split())[:220])
+    cap = no_links(" ".join(str(h.get("caption", "")).split())[:34])
     if h.get("type") == "big":
         txt = str(h.get("text", "")).strip()
         if not txt or len(txt) > 7:
@@ -157,18 +163,20 @@ def build_video(raw, index, taken):
         raise Bad("число сцен")
     br = raw.get("bridge") or {}
     b_say = clean_say(br.get("say", ""))
-    b_show = " ".join(str(br.get("show") or b_say).split())
+    b_show = no_links(" ".join(str(br.get("show") or b_say).split()))
     ad1 = dict(ad=True, hero=["reviews"],
                say=b_say + " Я Хаззер, делаю телеграм боты и сайты под ключ. Вот что пишут мои заказчики.",
                show=b_show + " Я Hazzer, делаю Telegram-ботов и сайты под ключ. Отзывы заказчиков ⭐ 5 из 5")
     a2 = AD2[index % 3]
     ad2 = dict(ad=True, hero=["cta"], say=a2[0], show=a2[1])
-    tags = [str(t).replace("#", "").strip() for t in raw.get("tags", []) if str(t).strip()][:5] + ["телеграмбот"]
+    tags = [no_links(str(t).replace("#", "").strip()) for t in raw.get("tags", []) if str(t).strip()][:5] + ["телеграмбот"]
     hashtags = " ".join("#" + t.replace(" ", "") for t in tags + ["shorts"])
     title = " ".join(str(raw.get("yt_title", "")).split())[:95]
     desc = str(raw.get("desc", "")).strip()
     if not title or not desc:
         raise Bad("нет заголовка или описания")
+    no_links(title)
+    no_links(desc)
     return dict(id=vid, title=str(raw.get("topic") or title)[:80], accent=list(ACCENTS[index % len(ACCENTS)]),
                 yt_title=title, description=desc + "\n\n" + CTA_DESC + "\n\n" + hashtags,
                 tags=tags + ["shorts", "интересные факты"], scenes=story + [ad1, ad2] + ending)
@@ -182,8 +190,7 @@ def ask_one(api, model, token, prompt):
     body = {"model": model, "temperature": 0.9, "max_tokens": 8000,
             "messages": [{"role": "user", "content": prompt}]}
     r = requests.post(api, timeout=150, json=body, headers={
-        "Authorization": "Bearer " + token, "Accept": "application/vnd.github+json",
-        "X-GitHub-Api-Version": "2022-11-28", "User-Agent": "shorts-autopilot"})
+        "Authorization": "Bearer " + token, "User-Agent": "shorts-autopilot"})
     if r.status_code != 200:
         raise RuntimeError("%s %s" % (r.status_code, r.text[:300]))
     if "json" not in r.headers.get("Content-Type", ""):
@@ -209,7 +216,7 @@ def ask_ai(prompt):
     for api, model in plan:
         if (api, model) in _dead:
             continue
-        token = os.environ.get("GEMINI_API_KEY") if "googleapis" in api else os.environ.get("GITHUB_TOKEN", "")
+        token = os.environ.get("GEMINI_API_KEY")
         for wait in (0, 20, 60):
             time.sleep(wait)
             try:

@@ -15,7 +15,6 @@ on:
 
 permissions:
   contents: write
-  models: read
 
 concurrency:
   group: autopilot
@@ -48,6 +47,7 @@ jobs:
         run: |
           mkdir -p voice
           curl -sSL -o v.tar.bz2 https://github.com/k2-fsa/sherpa-onnx/releases/download/tts-models/vits-piper-ru_RU-dmitri-medium.tar.bz2
+          echo "c86d0803737de13d441923ff3b3f309482fab8d7af3ec85949942809eb9a3660  v.tar.bz2" | sha256sum -c -
           tar -xjf v.tar.bz2
           cp vits-piper-ru_RU-dmitri-medium/ru_RU-dmitri-medium.onnx vits-piper-ru_RU-dmitri-medium/ru_RU-dmitri-medium.onnx.json voice/
           rm -rf v.tar.bz2 vits-piper-ru_RU-dmitri-medium
@@ -65,7 +65,6 @@ jobs:
         continue-on-error: true
         timeout-minutes: 15
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
         run: python -u refill.py ${{ inputs.refill && '--force' || '' }}
 
