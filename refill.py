@@ -5,7 +5,7 @@
         python refill.py --force    — пополнить в любом случае
         python refill.py --force --dry — только показать, что напишет ИИ, ничего не сохраняя
 """
-import os, sys, json, re, time, urllib.request, urllib.error
+import os, sys, json, re, time
 
 S = os.path.dirname(os.path.abspath(__file__))
 SCEN = os.path.join(S, "scenarios.json")
@@ -171,23 +171,22 @@ def ask_ai(prompt):
         raise RuntimeError("нет GITHUB_TOKEN")
     last = None
     for model in MODELS:
-        body = json.dumps({"model": model, "temperature": 0.9, "max_tokens": 4000,
-                           "messages": [{"role": "user", "content": prompt}]}).encode()
-        req = urllib.request.Request(API, data=body, headers={
-            "Authorization": "Bearer " + token, "Content-Type": "application/json",
-            "Accept": "application/vnd.github+json", "X-GitHub-Api-Version": "2022-11-28"})
         try:
-            with urllib.request.urlopen(req, timeout=180) as r:
-                raw = r.read().decode("utf-8", "replace")
+            import requests
+            r = requests.post(API, timeout=180, json={
+                "model": model, "temperature": 0.9, "max_tokens": 4000,
+                "messages": [{"role": "user", "content": prompt}]}, headers={
+                "Authorization": "Bearer " + token, "Accept": "application/vnd.github+json",
+                "X-GitHub-Api-Version": "2022-11-28", "User-Agent": "shorts-autopilot"})
+            if r.status_code != 200:
+                raise RuntimeError("%s %s" % (r.status_code, r.text[:300]))
             try:
-                text = json.loads(raw)["choices"][0]["message"]["content"]
+                text = r.json()["choices"][0]["message"]["content"]
             except Exception:
-                raise RuntimeError("непонятный ответ: %r" % raw[:300])
+                raise RuntimeError("непонятный ответ: %r" % r.text[:300])
             m = re.search(r"\{.*\}", text, re.S)
             return json.loads(m.group(0))["videos"], model
         except Exception as e:
-            if isinstance(e, urllib.error.HTTPError):
-                e = "%s %s" % (e.code, e.read()[:200])
             print("Модель %s не ответила: %s" % (model, e))
             last = e
             time.sleep(5)
