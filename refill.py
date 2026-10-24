@@ -21,10 +21,8 @@ MODELS = [
     ("https://models.inference.ai.azure.com/chat/completions", "gpt-4o"),
     ("https://models.github.ai/inference/chat/completions", "openai/gpt-4o"),
     ("https://models.inference.ai.azure.com/chat/completions", "gpt-4o-mini"),
-    # бесплатный сервис без ключа, запасной вариант
-    ("https://text.pollinations.ai/openai", "openai"),
-    ("https://text.pollinations.ai/openai", "openai"),
 ]
+# (Pollinations без ключа проверен 24.10.2026: выдумывает факты, поэтому не используется)
 # если добавить секрет GEMINI_API_KEY (бесплатный ключ Google AI Studio), Gemini пробуется первым
 GEMINI = ("https://generativelanguage.googleapis.com/v1beta/openai/chat/completions", "gemini-2.5-flash")
 
@@ -175,10 +173,15 @@ def build_video(raw, index, taken):
                 tags=tags + ["shorts", "интересные факты"], scenes=story + [ad1, ad2] + ending)
 
 
+_dead = set()  # модели, которые уже не ответили в этом запуске
+
+
 def ask_ai(prompt):
     last = None
     plan = ([GEMINI] if os.environ.get("GEMINI_API_KEY") else []) + MODELS
     for api, model in plan:
+        if (api, model) in _dead:
+            continue
         token = os.environ.get("GEMINI_API_KEY") if "googleapis" in api else os.environ.get("GITHUB_TOKEN", "")
         try:
             import requests
@@ -209,6 +212,7 @@ def ask_ai(prompt):
             return data["videos"], model
         except Exception as e:
             print("Модель %s (%s) не ответила: %s" % (model, api, e))
+            _dead.add((api, model))
             last = e
             time.sleep(5)
     raise RuntimeError("ни одна модель не ответила: %s" % last)
