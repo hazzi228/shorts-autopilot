@@ -1,0 +1,15 @@
+# Настройки выкладки на Cloudflare Workers. Выкладывает GitHub (.github/workflows/portfolio-bot.yml).
+name = "portfolio-bot"
+main = "worker.js"
+compatibility_date = "2026-10-01"
+
+# Картинки из папки images (имя файла указывается в data.json, поле image).
+[assets]
+directory = "./images"
+binding = "ASSETS"
+
+# Память бота: кто владелец, кому отвечать, загруженные картинки.
+# id подставляет workflow при выкладке.
+[[kv_namespaces]]
+binding = "STATE"
+id = "KV_ID"

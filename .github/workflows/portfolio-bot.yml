@@ -1,0 +1,66 @@
+name: Бот-портфолио
+
+# Выкладывает бота на Cloudflare Workers при каждом изменении папки portfolio-bot
+# (например, правке data.json) и при ручном запуске.
+on:
+  push:
+    branches: [main]
+    paths: ["portfolio-bot/**", ".github/workflows/portfolio-bot.yml"]
+  workflow_dispatch:
+
+concurrency:
+  group: portfolio-bot
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    defaults:
+      run:
+        working-directory: portfolio-bot
+    env:
+      CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+      CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+      BOT_TOKEN: ${{ secrets.PORTFOLIO_BOT_TOKEN }}
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 22
+
+      - name: Проверить секреты
+        run: |
+          for s in CLOUDFLARE_API_TOKEN CLOUDFLARE_ACCOUNT_ID BOT_TOKEN; do
+            if [ -z "${!s}" ]; then echo "Нет секрета $s (см. portfolio-bot/README.md)"; exit 1; fi
+          done
+          python3 -c "import json; json.load(open('data.json', encoding='utf-8'))" \
+            || { echo "В data.json ошибка: пропущена запятая или кавычка"; exit 1; }
+
+      - name: Память бота (Cloudflare KV)
+        run: |
+          api="https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/storage/kv/namespaces"
+          auth="Authorization: Bearer $CLOUDFLARE_API_TOKEN"
+          id=$(curl -sS -H "$auth" "$api?per_page=100" | python3 -c \
+            "import json,sys; print(next((n['id'] for n in json.load(sys.stdin)['result'] if n['title']=='portfolio-bot-state'), ''))")
+          if [ -z "$id" ]; then
+            id=$(curl -sS -H "$auth" -H "Content-Type: application/json" -d '{"title":"portfolio-bot-state"}' "$api" \
+              | python3 -c "import json,sys; print(json.load(sys.stdin)['result']['id'])")
+          fi
+          sed -i "s/KV_ID/$id/" wrangler.toml
+
+      - name: Выложить
+        run: |
+          npx --yes wrangler@4.148.0 deploy 2>&1 | tee deploy.log
+          printf '%s' "$BOT_TOKEN" | npx --yes wrangler@4.148.0 secret put BOT_TOKEN
+
+      - name: Подключить к Telegram
+        run: |
+          url=$(grep -oE 'https://portfolio-bot\.[a-z0-9-]+\.workers\.dev' deploy.log | head -1)
+          [ -n "$url" ] || { echo "Не нашёл адрес бота в выводе wrangler"; exit 1; }
+          secret=$(printf '%s' "$BOT_TOKEN" | sha256sum | cut -c1-32)
+          curl -sS "https://api.telegram.org/bot$BOT_TOKEN/setWebhook" \
+            -d "url=$url" -d "secret_token=$secret" -d 'allowed_updates=["message","callback_query"]' | tee hook.json
+          grep -q '"ok":true' hook.json
+          echo "Бот работает: $url"
