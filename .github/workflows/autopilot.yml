@@ -9,7 +9,7 @@ on:
   workflow_dispatch:
     inputs:
       refill:
-        description: "Сначала дописать новые сценарии, даже если старые не кончились"
+        description: "Дописать новые сценарии, даже если старые не кончились"
         type: boolean
         default: false
 
@@ -52,12 +52,6 @@ jobs:
           cp vits-piper-ru_RU-dmitri-medium/ru_RU-dmitri-medium.onnx vits-piper-ru_RU-dmitri-medium/ru_RU-dmitri-medium.onnx.json voice/
           rm -rf v.tar.bz2 vits-piper-ru_RU-dmitri-medium
 
-      - name: Пополнить сценарии
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
-        run: python refill.py ${{ inputs.refill && '--force' || '' }}
-
       - name: Собрать и выложить ролик
         env:
           YOUTUBE_TOKEN: ${{ secrets.YOUTUBE_TOKEN }}
@@ -65,6 +59,15 @@ jobs:
           if [ -z "$YOUTUBE_TOKEN" ]; then echo "Нет секрета YOUTUBE_TOKEN (см. README)"; exit 1; fi
           printf '%s' "$YOUTUBE_TOKEN" > token.json
           python run.py
+
+      - name: Пополнить сценарии (после ролика, чтобы не задерживать его)
+        if: always()
+        continue-on-error: true
+        timeout-minutes: 15
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+        run: python refill.py ${{ inputs.refill && '--force' || '' }}
 
       - name: Сохранить прогресс
         if: always()

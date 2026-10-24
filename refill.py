@@ -181,7 +181,7 @@ def ask_one(api, model, token, prompt):
     import requests
     body = {"model": model, "temperature": 0.9, "max_tokens": 8000,
             "messages": [{"role": "user", "content": prompt}]}
-    r = requests.post(api, timeout=300, json=body, headers={
+    r = requests.post(api, timeout=150, json=body, headers={
         "Authorization": "Bearer " + token, "Accept": "application/vnd.github+json",
         "X-GitHub-Api-Version": "2022-11-28", "User-Agent": "shorts-autopilot"})
     if r.status_code != 200:
@@ -224,6 +224,9 @@ def ask_ai(prompt):
     raise RuntimeError("ни одна модель не ответила: %s" % last)
 
 
+TIME_BUDGET = 12 * 60  # не дольше 12 минут за запуск, чтобы не тратить лишние минуты GitHub
+
+
 def refill(force=False, dry=False):
     scen = load(SCEN, [])
     used = set(load(STATE, {"used": []})["used"])
@@ -233,7 +236,11 @@ def refill(force=False, dry=False):
         return 0
     taken = {s["id"] for s in scen}
     added = 0
+    started = time.time()
     for _ in range(ROUNDS):
+        if time.time() - started > TIME_BUDGET:
+            print("Время на пополнение вышло, остальное допишу в следующий раз")
+            break
         titles = "\n".join("- " + s["title"] for s in scen)
         prompt = PROMPT.format(n=BATCH, used=titles, example=json.dumps(EXAMPLE, ensure_ascii=False, indent=1))
         try:
