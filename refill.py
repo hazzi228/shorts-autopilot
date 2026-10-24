@@ -13,8 +13,8 @@ STATE = os.path.join(S, "state.json")
 EMOJI_FONT = os.path.join(S, "fonts", "NotoColorEmoji.ttf")
 
 MIN_LEFT = 6          # пополняем, когда осталось меньше двух дней роликов
-BATCH = 4             # сценариев за один запрос к ИИ (ограничение бесплатного лимита на длину ответа)
-ROUNDS = 3            # запросов за одно пополнение: 3 × 4 = 12 новых сценариев (4 дня)
+BATCH = 2             # сценариев за один запрос к ИИ (у бесплатных моделей короткий лимит ответа)
+ROUNDS = 6            # запросов за одно пополнение: 6 × 2 = 12 новых сценариев (4 дня)
 # (адрес, модель): сначала новый адрес GitHub Models, потом старый (Azure), он тоже принимает токен GitHub
 MODELS = [
     ("https://models.github.ai/inference/chat/completions", "openai/gpt-4.1"),
@@ -201,7 +201,12 @@ def ask_ai(prompt):
             if "{" not in text:
                 raise RuntimeError("в ответе нет сценариев: %r" % r.text[-300:])
             m = re.search(r"\{.*\}", text, re.S)
-            return json.loads(m.group(0))["videos"], model
+            try:
+                data = json.loads(m.group(0))
+            except ValueError:
+                from json_repair import repair_json  # бесплатные модели иногда ошибаются в запятых
+                data = json.loads(repair_json(m.group(0)))
+            return data["videos"], model
         except Exception as e:
             print("Модель %s (%s) не ответила: %s" % (model, api, e))
             last = e
