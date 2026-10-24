@@ -151,9 +151,9 @@ def build_video(raw, index, taken):
     while vid in taken:
         vid = "%s-%d" % (base, n)
         n += 1
-    story = [scene(x) for x in raw.get("story", [])]
-    ending = [scene(x) for x in raw.get("ending", [])]
-    if len(story) != 3 or not 1 <= len(ending) <= 2:
+    story = [scene(x) for x in raw.get("story", [])][:3]
+    ending = [scene(x) for x in raw.get("ending", [])][-2:]
+    if len(story) != 3 or not ending:
         raise Bad("число сцен")
     br = raw.get("bridge") or {}
     b_say = clean_say(br.get("say", ""))
@@ -177,6 +177,32 @@ def build_video(raw, index, taken):
 _dead = set()  # модели, которые уже не ответили в этом запуске
 
 
+def ask_one(api, model, token, prompt):
+    import requests
+    body = {"model": model, "temperature": 0.9, "max_tokens": 8000,
+            "messages": [{"role": "user", "content": prompt}]}
+    r = requests.post(api, timeout=300, json=body, headers={
+        "Authorization": "Bearer " + token, "Accept": "application/vnd.github+json",
+        "X-GitHub-Api-Version": "2022-11-28", "User-Agent": "shorts-autopilot"})
+    if r.status_code != 200:
+        raise RuntimeError("%s %s" % (r.status_code, r.text[:300]))
+    if "json" not in r.headers.get("Content-Type", ""):
+        raise RuntimeError("ответ не JSON (%s, %r)" % (r.headers.get("Content-Type"), r.text[:100]))
+    try:
+        text = r.json()["choices"][0]["message"].get("content") or ""
+    except Exception:
+        raise RuntimeError("непонятный ответ: %r" % r.text[:300])
+    m = re.search(r"\{.*\}", text, re.S)
+    if not m:
+        raise RuntimeError("в ответе нет сценариев: %r" % text[-300:])
+    try:
+        data = json.loads(m.group(0))
+    except ValueError:
+        from json_repair import repair_json  # модели иногда ошибаются в запятых
+        data = json.loads(repair_json(m.group(0)))
+    return data["videos"]
+
+
 def ask_ai(prompt):
     last = None
     plan = (GEMINI if os.environ.get("GEMINI_API_KEY") else []) + MODELS
@@ -184,38 +210,17 @@ def ask_ai(prompt):
         if (api, model) in _dead:
             continue
         token = os.environ.get("GEMINI_API_KEY") if "googleapis" in api else os.environ.get("GITHUB_TOKEN", "")
-        try:
-            import requests
-            body = {"model": model, "messages": [{"role": "user", "content": prompt}]}
-            if "pollinations" in api:  # бесплатная модель «думает» и съедает лимит ответа, просим думать меньше
-                body.update(reasoning_effort="low")
-            else:
-                body.update(temperature=0.9, max_tokens=4000)
-            r = requests.post(api, timeout=300, json=body, headers={
-                "Authorization": "Bearer " + token, "Accept": "application/vnd.github+json",
-                "X-GitHub-Api-Version": "2022-11-28", "User-Agent": "shorts-autopilot"})
-            if r.status_code != 200:
-                raise RuntimeError("%s %s" % (r.status_code, r.text[:300]))
-            if "json" not in r.headers.get("Content-Type", ""):
-                raise RuntimeError("ответ не JSON (%s, %s, %r)" % (r.url, r.headers.get("Content-Type"), r.text[:100]))
+        for wait in (0, 20, 60):
+            time.sleep(wait)
             try:
-                text = r.json()["choices"][0]["message"].get("content") or ""
-            except Exception:
-                raise RuntimeError("непонятный ответ: %r" % r.text[:300])
-            if "{" not in text:
-                raise RuntimeError("в ответе нет сценариев: %r" % r.text[-300:])
-            m = re.search(r"\{.*\}", text, re.S)
-            try:
-                data = json.loads(m.group(0))
-            except ValueError:
-                from json_repair import repair_json  # бесплатные модели иногда ошибаются в запятых
-                data = json.loads(repair_json(m.group(0)))
-            return data["videos"], model
-        except Exception as e:
-            print("Модель %s (%s) не ответила: %s" % (model, api, e))
-            _dead.add((api, model))
-            last = e
-            time.sleep(5)
+                return ask_one(api, model, token, prompt), model
+            except Exception as e:
+                print("Модель %s не ответила: %s" % (model, str(e)[:200]))
+                last = e
+                # перегрузка бывает временной: ждём и пробуем ещё раз, остальные ошибки сразу пропускаем
+                if not re.match(r"(429|500|502|503|504) ", str(e)):
+                    break
+        _dead.add((api, model))
     raise RuntimeError("ни одна модель не ответила: %s" % last)
 
 
