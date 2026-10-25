@@ -328,7 +328,7 @@ def hero_timer(t, accent):
 # ---------- audio ----------
 # Нейронный голос Microsoft (edge-tts). Если сервис не ответил, весь остаток ролика озвучивает Piper (Дмитрий).
 EDGE_VOICE = os.environ.get("EDGE_VOICE", "de-DE-FlorianMultilingualNeural")
-EDGE_RATE = os.environ.get("EDGE_RATE", "+5%")
+EDGE_RATE = os.environ.get("EDGE_RATE", "+12%")  # чуть быстрее: в шортсах медленная речь теряет зрителя
 _edge_off = not EDGE_VOICE
 
 
@@ -392,11 +392,10 @@ def tts_piper(text, path):
                     "-ar", "22050", "-ac", "1", proc], check=True)
     return read_voice(proc)
 
-def music(dur, sr, seed):
+def music(dur, sr, seed, bpm=112):
     rng = np.random.default_rng(seed)
     t = np.arange(int(dur * sr)) / sr
     out = np.zeros_like(t)
-    bpm = 88
     beat = 60 / bpm
     bar = beat * 4
     # Am  F  C  G
@@ -450,6 +449,22 @@ def whoosh(sr):
     y = np.convolve(x, np.ones(8) / 8, mode="same")
     return y * env * 0.12
 
+def pop_sfx(sr):
+    """Короткий щелчок-«поп» на появление картинки."""
+    ta = np.arange(int(0.09 * sr)) / sr
+    f = 900 * np.exp(-ta * 30) + 300
+    return np.sin(2 * np.pi * np.cumsum(f) / sr) * np.exp(-ta * 45) * 0.22
+
+
+def hit_sfx(sr):
+    """Удар на хук в первую секунду: низкий бум и шум."""
+    ta = np.arange(int(0.6 * sr)) / sr
+    f = 120 * np.exp(-ta * 9) + 38
+    boom = np.sin(2 * np.pi * np.cumsum(f) / sr) * np.exp(-ta * 6)
+    noise = np.random.default_rng(3).standard_normal(len(ta)) * np.exp(-ta * 25) * 0.25
+    return (boom + noise) * 0.45
+
+
 # ---------- captions ----------
 def chunk_caption(text):
     words = text.split()
@@ -457,7 +472,7 @@ def chunk_caption(text):
     for w_ in words:
         cur.append(w_)
         ln = len(" ".join(cur))
-        if ln >= 16 or len(cur) >= 4 or re.search(r"[.,:!?»…]$", w_):
+        if ln >= 14 or len(cur) >= 3 or re.search(r"[.,:!?»…]$", w_):
             chunks.append(" ".join(cur)); cur = []
     if cur:
         if chunks and len(" ".join(cur)) < 6:
@@ -470,17 +485,17 @@ def chunk_caption(text):
 def build(v, out_path, work):
     os.makedirs(work, exist_ok=True)
     accent = tuple(v["accent"])
-    GAP = 0.32
-    audio_parts, timeline, t = [], [], 0.5
+    GAP = 0.14  # паузы короче: монтаж без провисаний
+    audio_parts, timeline, t = [], [], 0.12
     sr = SR
     for i, sc in enumerate(v["scenes"]):
         a, sr = tts(sc["say"], os.path.join(work, "s%02d.wav" % i))
         d = len(a) / sr
-        gap = GAP + (0.25 if (sc.get("ad") != v["scenes"][min(i + 1, len(v["scenes"]) - 1)].get("ad")) else 0)
+        gap = GAP + (0.15 if (sc.get("ad") != v["scenes"][min(i + 1, len(v["scenes"]) - 1)].get("ad")) else 0)
         timeline.append(dict(sc, start=t, voice_end=t + d, end=t + d + gap))
         audio_parts.append((t, a))
         t += d + gap
-    total = t + 0.8
+    total = t + 0.5
     timeline[-1]["end"] = total
     n = int(total * sr)
     voice = np.zeros(n)
@@ -492,12 +507,18 @@ def build(v, out_path, work):
     env = np.convolve(np.abs(voice), np.ones(int(0.3 * sr)) / int(0.3 * sr), mode="same")
     duck = 1 - 0.55 * np.clip(env / 0.05, 0, 1)
     mix = voice + mus * 0.12 * duck
-    # whoosh на входе и выходе из рекламы
-    wh = whoosh(sr)
+    # звуки монтажа: удар на хуке, свист на каждой склейке, «поп» на появлении картинки
+    def put(x, at, gain=1.0):
+        s0 = max(0, int(at * sr))
+        if s0 < n:
+            mix[s0:s0 + len(x)] += x[: n - s0] * gain
+    wh, pp = whoosh(sr), pop_sfx(sr)
+    put(hit_sfx(sr), 0)
     for i, sc in enumerate(timeline):
-        prev_ad = timeline[i - 1].get("ad") if i else None
-        if i and bool(sc.get("ad")) != bool(prev_ad):
-            s0 = max(0, int((sc["start"] - 0.3) * sr)); mix[s0:s0 + len(wh)] += wh[: n - s0]
+        if i:
+            change = bool(sc.get("ad")) != bool(timeline[i - 1].get("ad"))
+            put(wh, sc["start"] - 0.25, 1.3 if change else 0.8)
+        put(pp, sc["start"] + 0.05, 0.9)
     mix = mix / (np.abs(mix).max() + 1e-9) * 0.95
     wav_path = os.path.join(work, "mix.wav")
     with wave.open(wav_path, "wb") as wf:
@@ -528,13 +549,17 @@ def build(v, out_path, work):
         else:
             heroes.append(None)
         # субтитры
+        # субтитры по 2-3 слова, текущее слово подсвечивается (время слова по длине)
         ch = chunk_caption(sc["show"])
-        L = sum(len(c) + 3 for c in ch)
+        L = sum(len(w_) + 2 for c in ch for w_ in c.split())
         dur = sc["voice_end"] - sc["start"]
         tt, caps = sc["start"], []
         for c in ch:
-            dd = dur * (len(c) + 3) / L
-            caps.append((tt, tt + dd, c)); tt += dd
+            ws = []
+            for w_ in c.split():
+                dd = dur * (len(w_) + 2) / L
+                ws.append((tt, tt + dd, w_)); tt += dd
+            caps.append((ws[0][0], ws[-1][1], ws))
         sc["caps"] = caps
     chat_bubbles = None
     for sc in timeline:
@@ -582,7 +607,7 @@ def build(v, out_path, work):
     nframes = int(total * FPS)
     for fi in range(nframes):
         t = fi / FPS
-        si = next((i for i, sc in enumerate(timeline) if sc["start"] - (0.5 if i == 0 else 0) <= t < sc["end"]), len(timeline) - 1)
+        si = next((i for i, sc in enumerate(timeline) if sc["start"] - (0.2 if i == 0 else 0) <= t < sc["end"]), len(timeline) - 1)
         sc = timeline[si]
         lt = t - sc["start"]
         is_ad = bool(sc.get("ad"))
@@ -591,24 +616,14 @@ def build(v, out_path, work):
         fr.alpha_composite(blob, (int(-200 + 160 * math.sin(t * 0.4)), int(300 + 200 * math.cos(t * 0.3))))
         fr.alpha_composite(blob2, (int(400 + 150 * math.cos(t * 0.35)), int(900 + 220 * math.sin(t * 0.27))))
 
-        # прогресс-бар
-        d = ImageDraw.Draw(fr)
-        d.rectangle((0, 0, W, 10), fill=(255, 255, 255, 40))
-        d.rectangle((0, 0, int(W * t / total), 10), fill=accent + (255,))
-
-        # верхняя плашка
-        if is_ad:
-            c = chip("Портфолио: " + HANDLE, accent + (230,))
-        else:
-            c = chip(v["title"], (255, 255, 255, 30))
-        fr.alpha_composite(c, ((W - c.width) // 2, 130))
-
         # герой
         hero_cy = 820
         k = sc["hero"][0]
         hero = heroes[si]
-        pop = ease_out_back(lt / 0.45)
+        pop = ease_out_back(lt / 0.3)
         fade = min(1, max(0, lt / 0.25))
+        if si == 0:
+            pop = fade = 1  # первый кадр сразу с картинкой: по нему зритель решает, листать ли дальше
         float_y = int(12 * math.sin(t * 2.2))
         if k == "timer":
             hero = hero_timer(max(0, lt - 0.2) * 3.0 / max(1.0, (sc["voice_end"] - sc["start"]) * 0.45), accent)
@@ -672,21 +687,69 @@ def build(v, out_path, work):
                 btn = cta_button(accent, 1 + 0.05 * math.sin((lt - 0.5) * 6))
                 fr.alpha_composite(btn, ((W - btn.width) // 2, top + img.height + 40))
 
-        # субтитры
+        # «камера»: на склейке резкий наезд и вспышка, дальше медленный зум, в первую секунду лёгкая тряска
+        z = 1.0 + 0.05 * min(1.0, lt / max(0.5, sc["end"] - sc["start"]))
+        if lt < 0.22:
+            z += 0.10 * (1 - ease_out(lt / 0.22))
+        sx = sy = 0
+        if t < 0.9:
+            amp = 14 * (1 - t / 0.9)
+            sx, sy = int(amp * math.sin(t * 70)), int(amp * math.cos(t * 53))
+        if abs(z - 1) > 0.002 or sx or sy:
+            zw, zh = int(W * z), int(H * z)
+            big = fr.resize((zw, zh), Image.BILINEAR)
+            ox, oy = (zw - W) // 2 + sx, (zh - H) // 2 + sy
+            fr = big.crop((ox, oy, ox + W, oy + H))
+        if si and lt < 0.07:
+            fr.alpha_composite(Image.new("RGBA", (W, H), (255, 255, 255, int(150 * (1 - lt / 0.07)))))
+
+        # прогресс-бар
+        d = ImageDraw.Draw(fr)
+        d.rectangle((0, 0, W, 10), fill=(255, 255, 255, 40))
+        d.rectangle((0, 0, int(W * t / total), 10), fill=accent + (255,))
+
+        # верхняя плашка
+        if is_ad:
+            c = chip("Портфолио: " + HANDLE, accent + (230,))
+        else:
+            c = chip(v["title"], (255, 255, 255, 30))
+        fr.alpha_composite(c, ((W - c.width) // 2, 130))
+
+        # субтитры: 2-3 слова, слово, которое звучит, крупнее и цветное
         cap = next((c for c in sc["caps"] if c[0] <= t < c[1]), None)
         if cap is None and sc["caps"] and t >= sc["caps"][-1][0]:
-            cap = sc["caps"][-1] if t < sc["voice_end"] + 0.25 else None
+            cap = sc["caps"][-1] if t < sc["voice_end"] + 0.2 else None
+        if cap is None and si == 0 and sc["caps"]:
+            cap = sc["caps"][0]  # хук на экране с первого кадра
         if cap:
             ct = t - cap[0]
-            s = 0.85 + 0.15 * ease_out_back(ct / 0.18)
-            f = font(BLACK, max(20, int(76 * s)))
-            lines = wrap(" ".join(x if (x.startswith("@") or "." in x[:-1]) else x.upper() for x in cap[2].split()), f, 960)
-            y = 1500 - (len(lines) - 1) * 48
-            for li, ln in enumerate(lines):
-                lw = text_width(ln, f)
-                col = (255, 230, 80) if (li == 0 and is_ad) else (255, 255, 255)
-                draw_mixed(fr, (int((W - lw) / 2), y), ln, f, col, stroke=8, stroke_fill=(0, 0, 0))
-                y += 96
+            s = 0.8 + 0.2 * ease_out_back(ct / 0.16)
+            base_size = 92 if si == 0 else 80
+            f = font(BLACK, max(20, int(base_size * s)))
+            fa = font(BLACK, max(20, int(base_size * s * 1.12)))
+            words = [(a_, b_, x if (x.startswith("@") or "." in x[:-1]) else x.upper()) for a_, b_, x in cap[2]]
+            sp = f.getlength(" ") * 0.7
+            lines, cur, cw = [], [], 0
+            for wd in words:
+                ww = text_width(wd[2], fa)
+                if cur and cw + sp + ww > 960:
+                    lines.append((cur, cw)); cur, cw = [], 0
+                cw += (sp if cur else 0) + ww
+                cur.append((wd, ww))
+            if cur:
+                lines.append((cur, cw))
+            hi = (255, 230, 80) if not is_ad else (120, 255, 170)
+            y = 1480 - (len(lines) - 1) * 54
+            for ln, lw in lines:
+                x = (W - lw) / 2
+                for (a_, b_, txt), ww in ln:
+                    on = a_ <= t < b_ or (t >= b_ and (a_, b_, txt) == words[-1][:3])
+                    ff_ = fa if on else f
+                    tw = text_width(txt, ff_)
+                    draw_mixed(fr, (int(x + (ww - tw) / 2), y + (0 if on else int(base_size * 0.06))), txt, ff_,
+                               hi if on else (255, 255, 255), stroke=9, stroke_fill=(0, 0, 0))
+                    x += ww + sp
+                y += int(base_size * 1.25)
         ff.stdin.write(fr.convert("RGB").tobytes())
     ff.stdin.close()
     ff.wait()
