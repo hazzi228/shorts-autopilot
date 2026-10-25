@@ -11,6 +11,10 @@ on:
         description: "Дописать новые сценарии, даже если старые не кончились"
         type: boolean
         default: false
+      check:
+        description: "Выпускать ролик, только если в текущем слоте его ещё не было (для внешнего таймера)"
+        type: boolean
+        default: false
 
 permissions:
   contents: write
@@ -29,7 +33,7 @@ jobs:
       - name: Пора ли выпускать ролик
         id: slot
         run: |
-          if [ "${{ github.event_name }}" = "schedule" ]; then python3 run.py --check; else echo "due=true" >> "$GITHUB_OUTPUT"; fi
+          if [ "${{ github.event_name }}" = "schedule" ] || [ "${{ inputs.check }}" = "true" ]; then python3 run.py --check; else echo "due=true" >> "$GITHUB_OUTPUT"; fi
 
       - uses: actions/setup-python@v6
         if: steps.slot.outputs.due == 'true'
