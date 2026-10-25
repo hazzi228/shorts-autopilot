@@ -2,6 +2,7 @@
 
 Запуск: python run.py            — обычный запуск (по расписанию)
         python run.py --no-upload — собрать ролик без загрузки (проверка)
+        python run.py --check     — только сказать, пора ли выпускать ролик (для облака)
 """
 import os, sys, json, glob, shutil, datetime, traceback, time
 
@@ -135,8 +136,12 @@ def pid_alive(pid):
         return False
 
 
-def recent_upload_minutes():
-    """Сколько минут назад был последний успешный ролик (по log.txt), или None."""
+SLOTS_MSK = [10, 16, 22]  # во сколько по Москве выходят ролики
+SLOT_WINDOW_H = 5          # если GitHub совсем опоздал, ролик всё равно выходит в течение 5 часов после слота
+
+
+def last_upload_utc():
+    """Время последнего успешного ролика по log.txt (в облаке время в логе по UTC), или None."""
     if not os.path.exists(LOG):
         return None
     last = None
@@ -147,20 +152,35 @@ def recent_upload_minutes():
     if not last:
         return None
     try:
-        t = datetime.datetime.strptime(last[1:20], "%Y-%m-%d %H:%M:%S")
+        return datetime.datetime.strptime(last[1:20], "%Y-%m-%d %H:%M:%S")
     except ValueError:
         return None
-    return (datetime.datetime.now() - t).total_seconds() / 60
+
+
+def slot_due():
+    """Пора ли выпускать ролик: идёт окно слота, а в этом слоте ролика ещё не было.
+    Расписание GitHub часто опаздывает на час-два, поэтому оно запускается каждый час, а решает этот код."""
+    now = datetime.datetime.now(datetime.timezone.utc).replace(tzinfo=None)
+    msk = now + datetime.timedelta(hours=3)
+    starts = [msk.replace(hour=h, minute=0, second=0, microsecond=0) - datetime.timedelta(days=d)
+              for d in (0, 1) for h in SLOTS_MSK]
+    start = max(t for t in starts if t <= msk) - datetime.timedelta(hours=3)  # обратно в UTC
+    if now - start > datetime.timedelta(hours=SLOT_WINDOW_H):
+        return False
+    last = last_upload_utc()
+    return not (last and last >= start - datetime.timedelta(minutes=30))
 
 
 def main():
     no_upload = "--no-upload" in sys.argv
-    if os.environ.get("GITHUB_EVENT_NAME") == "schedule":
-        # GitHub иногда запускает расписание с опозданием: если ролик недавно уже вышел, второй не выкладываем
-        m = recent_upload_minutes()
-        if m is not None and m < 150:
-            log("Ролик уже выходил %d мин назад, этот запуск пропускаю" % m)
-            return
+    if "--check" in sys.argv:
+        # быстрая проверка до установки библиотек: печатает due=true/false для GitHub Actions
+        due = slot_due()
+        print("due=" + ("true" if due else "false"))
+        if os.environ.get("GITHUB_OUTPUT"):
+            with open(os.environ["GITHUB_OUTPUT"], "a") as f:
+                f.write("due=%s\n" % ("true" if due else "false"))
+        return
     if os.path.exists(LOCK) and (datetime.datetime.now().timestamp() - os.path.getmtime(LOCK)) < 3 * 3600:
         try:
             other = int(open(LOCK).read().strip() or 0)
