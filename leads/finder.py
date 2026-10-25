@@ -46,7 +46,7 @@ REQUEST = re.compile(NEED + r"\w*[\s,:-]+(?:[\w-]+[\s,:]+){0,3}?(?:" + THING + "
 # Объявления исполнителей, резюме, вакансии в штат и чужие профессии нам не нужны.
 SKIP_WORDS = re.compile(
     r"ищу (работу|заказ|клиент|подработ)|возьму (заказ|в работу)|предлагаю (услуг|свои)|(^|\s)сделаю\b|"
-    r"резюме|#ищу_работу|мои услуги|в (мою |нашу )?команду|обучени[ея]|курс(ы)? по|заработок без|"
+    r"курсов(ая|ую|ой|ик)|дипломн|лабораторн|резюме|#ищу_работу|мои услуги|в (мою |нашу )?команду|обучени[ея]|курс(ы)? по|заработок без|"
     r"пассивный доход|полный рабочий день|в офис|оклад|по тк\b|казино|ставки|накрутк|арбитраж|18\+|"
     r"эскорт|взлом|forex|igaming|gambling|отзыв(ы|ов)? (на|о|для)|оставить отзыв")
 # Если в начале заявки другая профессия (дизайн, видео, SEO...), это не наш заказ.
@@ -64,6 +64,21 @@ def log(msg):
 
 def clean(text):
     return re.sub(r"\s+", " ", html.unescape(text or "")).strip()
+
+
+# Ниши, где Hazzer уже силён и где чаще заказывают повторно: такие заявки помечаются и идут первыми.
+NICHE_VPN = re.compile(r"\bvpn|\bвпн|подписк|цифров\w* товар|ключ(и|ей) доступа|продаж\w* (аккаунт|ключ)")
+NICHE_SCHOOL = re.compile(r"онлайн[- ]?школ|\bкурс(?!ов(ая|ую|ой|ые|ик))|марафон|вебинар|инфобиз|эксперт|коуч|наставни|"
+                          r"закрыт\w* (канал|чат|клуб)|приватн\w* (канал|чат)|платн\w* (канал|доступ|чат)")
+
+
+def niche(text):
+    t = text.lower()
+    if NICHE_VPN.search(t):
+        return "vpn"
+    if NICHE_SCHOOL.search(t):
+        return "school"
+    return None
 
 
 def classify(text):
@@ -185,7 +200,14 @@ def contacts(text, links):
 
 def draft(kind, lead):
     """Короткий вежливый отклик, который можно скопировать и поправить."""
-    if kind == "bot":
+    if kind == "bot" and lead.get("niche") == "vpn":
+        offer = ("Как раз специализируюсь на этом: сделал два бота для продажи VPN-подписок с автовыдачей доступа, "
+                 "оплатой через СБП, карту и крипту, промокодами, рефералами и админкой прямо в Telegram. "
+                 "Заказчики оставили 5 звёзд.")
+    elif kind == "bot" and lead.get("niche") == "school":
+        offer = ("Делаю ботов для экспертов и онлайн-школ: оплата (СБП, карта, крипта), автоматическая выдача "
+                 "доступа в закрытый канал и его продление, рассылки по ученикам, статистика продаж в админке.")
+    elif kind == "bot":
         offer = ("Делаю Telegram-ботов под ключ: оплата (СБП, карта, крипта), личный кабинет клиента, "
                  "админ-панель прямо в боте, рассылки и статистика. Недавно сдал два бота для продажи VPN, "
                  "заказчики оставили 5 звёзд.")
@@ -277,6 +299,8 @@ def card(lead):
     text = lead["text"]
     if len(text) > 700:
         text = text[:700].rsplit(" ", 1)[0] + "…"
+    if lead.get("niche"):
+        kind_name = "🔥 Твоя ниша · " + ("VPN и подписки" if lead["niche"] == "vpn" else "онлайн-школы") + "\n" + kind_name
     lines = [f"<b>{kind_name}</b> · {html.escape(lead['source'])} · "
              f"{lead['date'].astimezone(timezone(timedelta(hours=3))):%d.%m %H:%M} МСК",
              "", html.escape(text), ""]
@@ -314,6 +338,7 @@ def main():
         if now - lead["date"] > window:
             continue
         lead["kind"] = classify_kwork(lead) if lead["id"].startswith("kwork:") else classify(lead["text"])
+        lead["niche"] = niche(lead["text"]) if lead["kind"] == "bot" else None
         fp = fingerprint(lead["text"])
         if not lead["kind"] or fp in prints:
             continue
@@ -322,7 +347,8 @@ def main():
 
     log(f"просмотрено {len(raw)}, подходящих новых {len(fresh)}"
         + (f"; не открылись: {'; '.join(errors)}" if errors else ""))
-    fresh = fresh[-MAX_PER_RUN:]
+    # Заявки из своих ниш точно попадут в выдачу и придут последними, то есть окажутся внизу чата.
+    fresh = sorted(fresh, key=lambda l: bool(l["niche"]))[-MAX_PER_RUN:]
 
     if args.dry_run:
         for lead in fresh:
