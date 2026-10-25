@@ -35,3 +35,17 @@
 Владельца бот узнаёт по нику из `data.json` (`owner.telegram`). Если сменишь ник в Telegram, поменяй его и там.
 Ещё владельцы: впиши их ники в `owner.extra_owners`, например `"extra_owners": ["второй_ник"]`,
 потом с того аккаунта открой бота и нажми /start. Заявки будут приходить всем владельцам, ответить может любой.
+
+## Таймер для роликов и поиска заказов
+
+Расписание GitHub Actions на бесплатном тарифе почти не срабатывает, поэтому ролики (10:00, 16:00, 22:00 МСК)
+и поиск заказов (каждый час с 8:17 до 23:17) запускает таймер Cloudflare в этом же боте. Ему нужен токен GitHub:
+
+1. github.com → Settings → Developer settings → Personal access tokens → Fine-grained tokens → Generate new token.
+2. Repository access: Only select repositories → `shorts-autopilot`.
+3. Permissions → Repository permissions → Actions: Read and write. Больше ничего не нужно.
+4. Скопировать токен и добавить его в репозиторий: Settings → Secrets and variables → Actions → New repository secret,
+   имя `GH_DISPATCH_TOKEN`.
+5. Actions → «Бот-портфолио» → Run workflow, чтобы бот получил токен.
+
+Когда срок токена закончится, бот напишет в Telegram. Тогда надо создать новый токен и заменить секрет.

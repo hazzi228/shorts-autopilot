@@ -30,6 +30,42 @@ export default {
     // Всегда 200, иначе Telegram будет повторять одно и то же сообщение.
     return new Response("ok");
   },
+
+  // Расписание GitHub Actions на бесплатном тарифе почти не срабатывает, а таймер Cloudflare
+  // точный. Поэтому по таймеру (wrangler.toml) бот сам запускает в GitHub ролики и поиск заказов.
+  async scheduled(event, env) {
+    const job = CRON_JOBS[event.cron];
+    if (!job || !env.GH_DISPATCH_TOKEN) return;
+    const res = await fetch(`https://api.github.com/repos/${REPO}/actions/workflows/${job.workflow}/dispatches`, {
+      method: "POST",
+      headers: {
+        authorization: `Bearer ${env.GH_DISPATCH_TOKEN}`,
+        accept: "application/vnd.github+json",
+        "user-agent": "portfolio-bot",
+      },
+      body: JSON.stringify({ ref: "main", inputs: job.inputs }),
+    });
+    if (res.ok) return;
+    const why = `${res.status} ${(await res.text()).slice(0, 200)}`;
+    console.error(`Не удалось запустить ${job.workflow}: ${why}`);
+    // Предупреждаем владельца не чаще раза в сутки: скорее всего, истёк или неверный токен GitHub.
+    const bot = new Bot(env);
+    if (await bot.kv.get("dispatch_warned")) return;
+    await bot.kv.put("dispatch_warned", "1", { expirationTtl: DAY });
+    for (const owner of await bot.ownerIds()) {
+      await bot.send(owner, `⚠️ Не получилось запустить ${esc(job.workflow)} в GitHub (${esc(why)}). ` +
+        "Скорее всего, истёк токен GH_DISPATCH_TOKEN: создай новый и замени секрет в GitHub.").catch(() => {});
+    }
+  },
+};
+
+const REPO = "hazzi228/shorts-autopilot";
+// Время по UTC (Москва = UTC+3), строки должны совпадать с [triggers] в wrangler.toml.
+const CRON_JOBS = {
+  // Ролики в 10:00, 16:00 и 22:00 по Москве; check: true пропускает запуск, если ролик в этом слоте уже вышел.
+  "5 7-9,13-15,19-21 * * *": { workflow: "autopilot.yml", inputs: { check: "true" } },
+  // Поиск заказов каждый час с 8:17 до 23:17 по Москве.
+  "17 5-20 * * *": { workflow: "leads.yml" },
 };
 
 export async function webhookSecret(token) {
