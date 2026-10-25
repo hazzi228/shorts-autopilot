@@ -348,7 +348,12 @@ def main():
     log(f"просмотрено {len(raw)}, подходящих новых {len(fresh)}"
         + (f"; не открылись: {'; '.join(errors)}" if errors else ""))
     # Заявки из своих ниш точно попадут в выдачу и придут последними, то есть окажутся внизу чата.
-    fresh = sorted(fresh, key=lambda l: bool(l["niche"]))[-MAX_PER_RUN:]
+    fresh = sorted(fresh, key=lambda l: bool(l["niche"]))
+    # Не влезшие в этот раз не помечаем просмотренными: они придут при следующей проверке.
+    for lead in fresh[:-MAX_PER_RUN]:
+        seen.pop(lead["id"], None)
+        prints.pop(fingerprint(lead["text"]), None)
+    fresh = fresh[-MAX_PER_RUN:]
 
     if args.dry_run:
         for lead in fresh:
