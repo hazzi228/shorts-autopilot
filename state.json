@@ -11,6 +11,7 @@
     "smiley",
     "recaptcha",
     "amazon",
-    "wifi"
+    "wifi",
+    "google-name"
   ]
 }
