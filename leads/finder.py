@@ -295,6 +295,15 @@ def find_chat_ids(token, state):
     return ids, new
 
 
+def tags(lead):
+    # Хэштеги кликабельны в Telegram: нажал #кворк, и видны только заявки с Kwork.
+    site = {"kwork": "#кворк", "rss": "#флру"}.get(lead["id"].split(":")[0], "#тг")
+    out = [site, "#бот" if lead["kind"] == "bot" else "#сайт"]
+    if lead.get("niche"):
+        out += ["#ниша", "#vpn" if lead["niche"] == "vpn" else "#школа"]
+    return " ".join(out)
+
+
 def card(lead):
     kind_name = "🤖 Бот" if lead["kind"] == "bot" else "🌐 Сайт"
     text = lead["text"]
@@ -304,7 +313,7 @@ def card(lead):
         kind_name = "🔥 Твоя ниша · " + ("VPN и подписки" if lead["niche"] == "vpn" else "онлайн-школы") + "\n" + kind_name
     lines = [f"<b>{kind_name}</b> · {html.escape(lead['source'])} · "
              f"{lead['date'].astimezone(timezone(timedelta(hours=3))):%d.%m %H:%M} МСК",
-             "", html.escape(text), ""]
+             tags(lead), "", html.escape(text), ""]
     if lead["url"]:
         lines.append(f"🔗 <a href=\"{html.escape(lead['url'])}\">Открыть заявку</a>")
     if lead["id"].startswith(("rss:", "kwork:")):
