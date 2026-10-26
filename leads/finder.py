@@ -228,6 +228,58 @@ def draft(kind, lead):
     return f"{hello} {offer} {end}"
 
 
+GEMINI_API = "https://generativelanguage.googleapis.com/v1beta/openai/chat/completions"
+# lite отвечает почти всегда, большие модели днём часто перегружены
+GEMINI_MODELS = ["gemini-flash-lite-latest", "gemini-flash-latest", "gemini-3.8-flash"]
+AI_BUDGET = 4 * 60  # не дольше 4 минут на отклики за запуск
+_ai = {"dead": set(), "spent": 0.0}
+
+
+def ai_draft(lead):
+    """Отклик под конкретный заказ от бесплатного Gemini. None, если не вышло: тогда берём шаблон."""
+    key = os.environ.get("GEMINI_API_KEY")
+    if not key or _ai["spent"] > AI_BUDGET:
+        return None
+    facts = draft(lead["kind"], lead)
+    prompt = (
+        "Ты фрилансер Hazzer, делаешь Telegram-ботов и сайты. Напиши отклик на заказ ниже: 3-5 предложений, "
+        "до 550 знаков, по-русски, на «вы», начни со «Здравствуйте!», живо и по делу, без канцелярита. Покажи, что понял задачу "
+        "(назови её суть своими словами), задай 1-2 уточняющих вопроса именно по этой задаче. "
+        "О себе пиши только то, что есть в образце, ничего не выдумывай: никаких цен, сроков, лет опыта и "
+        "других проектов. Обязательно упомяни @PortfolioHazzer_bot, других ссылок и @ не добавляй. "
+        "Верни только текст отклика.\n\n"
+        f"Образец (факты обо мне): {facts}\n\nЗаказ:\n{lead['text'][:2000]}")
+    for model in GEMINI_MODELS:
+        text = None
+        # Бесплатный Gemini часто отвечает 503 «перегружен»: пробуем ещё раз после паузы.
+        for wait in (0, 6):
+            if model in _ai["dead"] or _ai["spent"] > AI_BUDGET:
+                break
+            start = time.time()
+            time.sleep(wait)
+            try:
+                r = requests.post(GEMINI_API, timeout=40, headers={"Authorization": "Bearer " + key}, json={
+                    "model": model, "temperature": 0.8, "max_tokens": 800,
+                    "messages": [{"role": "user", "content": prompt}]})
+                r.raise_for_status()
+                text = (r.json()["choices"][0]["message"].get("content") or "").strip().strip('"«»')
+                break
+            except Exception as e:
+                print(f"  отклик от {model} не получился: {str(e)[:120]}")
+                code = getattr(getattr(e, "response", None), "status_code", None)
+                if code not in (429, 500, 502, 503, 504):
+                    _ai["dead"].add(model)
+            finally:
+                _ai["spent"] += time.time() - start
+        if text is None:
+            continue
+        mentions = set(re.findall(r"@\w+", text))
+        if 80 <= len(text) <= 900 and mentions == {"@PortfolioHazzer_bot"} and "http" not in text:
+            return text
+        print(f"  отклик от {model} отбракован: {text[:100]!r}")
+    return None
+
+
 def collect():
     leads, errors = [], []
     jobs = [("tg", ch) for ch in SOURCES.get("telegram", [])]
@@ -320,9 +372,14 @@ def card(lead):
         lines.append("✍️ Отклик оставляется прямо на сайте биржи, Telegram для этого не нужен")
     if lead["contacts"]:
         lines.append("✉️ Контакт: " + ", ".join(html.escape(c) for c in lead["contacts"]))
-    lines += ["", "<b>Черновик отклика</b> (нажми, чтобы скопировать):",
-              f"<code>{html.escape(draft(lead['kind'], lead))}</code>"]
+    lines += ["", "👇 Готовый отклик следующим сообщением"]
     return "\n".join(lines)
+
+
+def reply_message(lead):
+    """Отдельное сообщение с откликом: нажал, и текст скопирован."""
+    text = ai_draft(lead) or draft(lead["kind"], lead)
+    return f"<code>{html.escape(text)}</code>"
 
 
 def main():
@@ -368,6 +425,7 @@ def main():
     if args.dry_run:
         for lead in fresh:
             print("\n" + "=" * 60 + "\n" + html.unescape(re.sub(r"<[^>]+>", "", card(lead))))
+            print("--- отклик ---\n" + html.unescape(re.sub(r"<[^>]+>", "", reply_message(lead))))
         return
 
     # При копировании легко захватить пробел, перенос строки или кавычки.
@@ -384,9 +442,11 @@ def main():
                              + ("" if fresh else " Сейчас новых подходящих заявок нет."))
 
     for lead in fresh:
+        reply = reply_message(lead)
         for chat_id in chat_ids:
             try:
                 send(token, chat_id, card(lead))
+                send(token, chat_id, reply)
             except requests.RequestException as e:
                 log(f"не отправилось в чат {chat_id}: {e}")
         time.sleep(1.2)
