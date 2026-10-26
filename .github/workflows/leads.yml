@@ -31,6 +31,7 @@ jobs:
         env:
           LEADS_BOT_TOKEN: ${{ secrets.LEADS_BOT_TOKEN }}
           LEADS_CHAT_ID: ${{ secrets.LEADS_CHAT_ID }}
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
         run: python -u leads/finder.py
 
       - name: Запомнить, что уже прислано
