@@ -309,13 +309,28 @@ def fingerprint(text):
     return hashlib.md5(" ".join(words[:40]).encode()).hexdigest()
 
 
+def telegram(token, method, **params):
+    """Запрос к Telegram с повторами: соединение с api.telegram.org иногда рвётся на секунду."""
+    for attempt, wait in enumerate((3, 10, 0)):
+        try:
+            r = requests.post(f"https://api.telegram.org/bot{token}/{method}", timeout=20, json=params)
+        except (requests.ConnectionError, requests.Timeout):
+            if not wait:
+                raise
+            time.sleep(wait)
+            continue
+        if r.status_code == 429:
+            time.sleep(r.json().get("parameters", {}).get("retry_after", 5) + 1)
+        elif r.status_code >= 500 and wait:
+            time.sleep(wait)
+        else:
+            return r
+    return r
+
+
 def send(token, chat_id, text):
-    r = requests.post(f"https://api.telegram.org/bot{token}/sendMessage", timeout=20, json={
-        "chat_id": chat_id, "text": text, "parse_mode": "HTML", "disable_web_page_preview": True})
-    if r.status_code == 429:
-        time.sleep(r.json().get("parameters", {}).get("retry_after", 5) + 1)
-        return send(token, chat_id, text)
-    r.raise_for_status()
+    telegram(token, "sendMessage", chat_id=chat_id, text=text, parse_mode="HTML",
+             disable_web_page_preview=True).raise_for_status()
 
 
 def find_chat_ids(token, state):
@@ -326,7 +341,14 @@ def find_chat_ids(token, state):
     owners = {n.lstrip("@").lower() for n in SOURCES.get("owners", [])}
     if ids and not owners:
         return ids, []
-    r = requests.get(f"https://api.telegram.org/bot{token}/getUpdates", timeout=20).json()
+    try:
+        r = telegram(token, "getUpdates").json()
+    except requests.RequestException as e:
+        if not ids:
+            raise
+        # Новых получателей поищем в следующий раз, а заявки отправим уже известным.
+        log(f"Telegram не ответил на getUpdates: {e}")
+        return ids, []
     if not r.get("ok"):
         desc = r.get("description", "")
         if "webhook" in desc.lower():
