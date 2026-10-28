@@ -61,3 +61,4 @@
 2026-10-28 07:18 просмотрено 475, подходящих новых 2; не открылись: FL.ru: HTTPError 403 Client Error: Forbidden for url: https://www.fl.ru/rss/all.xml; FL.ru программирование: HTTPError 403 Client Error: Forbidden for url: https://www.fl.ru/rss/all.xml?category=5
 2026-10-28 08:18 просмотрено 595, подходящих новых 2
 2026-10-28 09:18 просмотрено 594, подходящих новых 3
+2026-10-28 10:18 просмотрено 595, подходящих новых 1
