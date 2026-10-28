@@ -220,6 +220,15 @@ def main():
                 err = str(e)[:300]
                 log("Ошибка загрузки на YouTube: " + err)
                 log(traceback.format_exc())
+            # Reels только после YouTube: иначе при повторе сценария в Instagram вышел бы дубль.
+            # Ошибка Instagram не мешает YouTube и не ломает запуск.
+            try:
+                import instagram
+                link = instagram.upload(tmp_video, sc, log) if video_id else None
+                if link:
+                    log("Опубликован в Instagram: " + link)
+            except Exception as e:
+                log("Ошибка публикации в Instagram: " + str(e)[:300])
 
         # в папке на рабочем столе остаётся только свежий ролик и его описание
         out_dir = output_dir(cfg)
