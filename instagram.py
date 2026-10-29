@@ -93,39 +93,89 @@ def upload(path, sc, log):
                 save_token(token)
                 log("Ключ страницы Facebook сохранён (бессрочный)")
         me = info["instagram_business_account"]["id"]
-        # rupload принимает только ключ пользователя (ключ страницы даёт ProcessingFailedError)
-        user = os.environ.get("INSTAGRAM_TOKEN", "").strip()
-        if user and not user.startswith("IG"):
-            token = user
-    r = requests.post("%s/%s/media" % (api, me), data={
-        "media_type": "REELS", "upload_type": "resumable", "caption": caption(sc),
-        "share_to_feed": "true", "access_token": token}, timeout=60)
-    if r.status_code != 200:
-        raise RuntimeError("Instagram не принял ролик (%s): %s" % (r.status_code, r.text[:300]))
-    cid, uri = r.json()["id"], r.json()["uri"]
-    size = os.path.getsize(path)
-    with open(path, "rb") as f:
-        body = f.read()
-    r = requests.post(uri, data=body, timeout=600, headers={
-        "Authorization": "OAuth " + token, "offset": "0", "file_size": str(size),
-        "Content-Type": "application/octet-stream"})
-    if r.status_code != 200:
-        st = requests.get(api + "/" + cid, params={"fields": "status_code,status,video_status",
-                                                  "access_token": token}, timeout=60).text
-        raise RuntimeError("Instagram: загрузка файла не прошла (%s): %s; uri=%s; контейнер: %s"
-                           % (r.status_code, r.text[:300], uri.split("?")[0], st[:600]))
-    for _ in range(60):  # обработка видео обычно занимает 30-90 секунд
-        time.sleep(10)
-        st = requests.get(api + "/" + cid, params={"fields": "status_code,status", "access_token": token}, timeout=60).json()
-        if st.get("status_code") == "FINISHED":
-            break
-        if st.get("status_code") == "ERROR":
-            raise RuntimeError("Instagram не смог обработать видео: %s" % st.get("status"))
-    else:
-        raise RuntimeError("Instagram слишком долго обрабатывает видео")
+    hosted = _host(path, log)
+    try:
+        params = {"media_type": "REELS", "caption": caption(sc), "share_to_feed": "true", "access_token": token}
+        if hosted:
+            params["video_url"] = hosted[0]
+        else:
+            params["upload_type"] = "resumable"
+        r = requests.post("%s/%s/media" % (api, me), data=params, timeout=60)
+        if r.status_code != 200:
+            raise RuntimeError("Instagram не принял ролик (%s): %s" % (r.status_code, r.text[:300]))
+        cid = r.json()["id"]
+        if not hosted:
+            _rupload(r.json()["uri"], path, token, api, cid)
+        _wait(api, cid, token)
+    finally:
+        if hosted:
+            hosted[1]()
     r = requests.post("%s/%s/media_publish" % (api, me), data={"creation_id": cid, "access_token": token}, timeout=60)
     if r.status_code != 200:
         raise RuntimeError("Instagram не опубликовал ролик (%s): %s" % (r.status_code, r.text[:300]))
     mid = r.json()["id"]
     link = requests.get(api + "/" + mid, params={"fields": "permalink", "access_token": token}, timeout=60).json().get("permalink")
     return link or ("id " + mid)
+
+
+def _rupload(uri, path, token, api, cid):
+    """Прямая загрузка файла (на пути через Facebook Meta её отклоняет, поэтому только запасной вариант)."""
+    import requests
+    with open(path, "rb") as f:
+        body = f.read()
+    r = requests.post(uri, data=body, timeout=600, headers={
+        "Authorization": "OAuth " + token, "offset": "0", "file_size": str(len(body)),
+        "Content-Type": "application/octet-stream"})
+    if r.status_code != 200:
+        st = requests.get(api + "/" + cid, params={"fields": "status_code,video_status",
+                                                  "access_token": token}, timeout=60).text
+        raise RuntimeError("Instagram: загрузка файла не прошла (%s): %s; контейнер: %s"
+                           % (r.status_code, r.text[:300], st[:500]))
+
+
+def _wait(api, cid, token):
+    import requests
+    for _ in range(60):  # обработка видео обычно занимает 30-90 секунд
+        time.sleep(10)
+        st = requests.get(api + "/" + cid, params={"fields": "status_code,status", "access_token": token}, timeout=60).json()
+        if st.get("status_code") == "FINISHED":
+            return
+        if st.get("status_code") == "ERROR":
+            raise RuntimeError("Instagram не смог обработать видео: %s" % st.get("status"))
+    raise RuntimeError("Instagram слишком долго обрабатывает видео")
+
+
+KV_LIMIT = 24 * 1024 * 1024  # в Cloudflare KV одно значение не больше 25 МБ
+
+
+def _host(path, log):
+    """Кладёт ролик на час в память бота-портфолио (Cloudflare KV), бот отдаёт его по ссылке,
+    Instagram скачивает ролик сам. Возвращает (ссылка, удалить) или None, если Cloudflare не настроен."""
+    import requests, secrets
+    acc, cf = os.environ.get("CLOUDFLARE_ACCOUNT_ID", "").strip(), os.environ.get("CLOUDFLARE_API_TOKEN", "").strip()
+    if not acc or not cf:
+        return None
+    base = "https://api.cloudflare.com/client/v4/accounts/" + acc
+    auth = {"Authorization": "Bearer " + cf}
+    ns = requests.get(base + "/storage/kv/namespaces", params={"per_page": 100}, headers=auth, timeout=60).json()
+    ns = next((n["id"] for n in ns.get("result") or [] if n["title"] == "portfolio-bot-state"), None)
+    sub = (requests.get(base + "/workers/subdomain", headers=auth, timeout=60).json().get("result") or {}).get("subdomain")
+    if not ns or not sub:
+        log("Cloudflare: не нашёл память или адрес бота, пробую прямую загрузку")
+        return None
+    if os.path.getsize(path) > KV_LIMIT:
+        small = path + ".ig.mp4"
+        from engine import FFMPEG
+        subprocess.run([FFMPEG, "-y", "-loglevel", "error", "-i", path, "-c:v", "libx264", "-preset", "medium",
+                        "-crf", "26", "-maxrate", "3M", "-bufsize", "6M", "-pix_fmt", "yuv420p",
+                        "-c:a", "aac", "-b:a", "128k", "-movflags", "+faststart", small], check=True)
+        path = small
+    key = "reel-%s.mp4" % secrets.token_hex(16)
+    url = "%s/storage/kv/namespaces/%s/values/%s" % (base, ns, key)
+    with open(path, "rb") as f:
+        r = requests.put(url, params={"expiration_ttl": 3600}, data=f.read(), headers=auth, timeout=300)
+    if not r.ok:
+        log("Cloudflare не принял ролик (%s), пробую прямую загрузку" % r.status_code)
+        return None
+    return "https://portfolio-bot.%s.workers.dev/ig/%s" % (sub, key), \
+        lambda: requests.delete(url, headers=auth, timeout=60)

@@ -15,6 +15,13 @@ const DAY = 24 * 3600;
 
 export default {
   async fetch(request, env) {
+    // Ролики для Instagram: автопилот кладёт файл в память на час, Instagram скачивает его отсюда.
+    const reel = new URL(request.url).pathname.match(/^\/ig\/(reel-[0-9a-f]{32}\.mp4)$/);
+    if (reel && request.method === "GET") {
+      const video = await env.STATE.get(reel[1], { type: "arrayBuffer" });
+      if (!video) return new Response("not found", { status: 404 });
+      return new Response(video, { headers: { "content-type": "video/mp4" } });
+    }
     if (request.method !== "POST") return new Response("Бот работает");
     if (request.headers.get("X-Telegram-Bot-Api-Secret-Token") !== (await webhookSecret(env.BOT_TOKEN))) {
       return new Response("forbidden", { status: 403 });
