@@ -30,6 +30,19 @@ export default {
       const icon = await env.ASSETS.fetch("https://assets/neznal-icon.jpg");
       return new Response(icon.body, { headers: { "content-type": "image/jpeg", "access-control-allow-origin": "*" } });
     }
+    // Описание для черновика TikTok: автопилот кладёт текст в KV и просит бота прислать его владельцу.
+    // Писать в KV может только автопилот, поэтому чужой запрос сюда ничего не отправит.
+    const note = pathname.match(/^\/tiktok\/note\/(tt_note-[0-9a-f]{32})$/);
+    if (note && request.method === "POST") {
+      const text = await env.STATE.get(note[1]);
+      if (!text) return new Response("not found", { status: 404 });
+      await env.STATE.delete(note[1]);
+      const bot = new Bot(env, origin);
+      for (const owner of await bot.ownerIds()) {
+        await bot.send(owner, `🎬 В TikTok пришёл новый черновик. Описание к нему (нажми на текст, чтобы скопировать):\n\n<pre>${esc(text)}</pre>`);
+      }
+      return new Response("ok");
+    }
     if (request.method === "GET") return tiktok.sitePage(pathname) || new Response("Бот работает");
     if (request.method !== "POST") return new Response("Бот работает");
     if (request.headers.get("X-Telegram-Bot-Api-Secret-Token") !== (await webhookSecret(env.BOT_TOKEN))) {
