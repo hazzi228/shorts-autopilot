@@ -1,0 +1,21 @@
+name: Bots video TTS
+on:
+  push:
+    branches: [bots-video-tts]
+    paths: [lines.json]
+permissions:
+  contents: write
+jobs:
+  tts:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+      - run: pip install -U edge-tts
+      - run: python -u tts.py
+      - run: |
+          git config user.name "github-actions"; git config user.email "actions@users.noreply.github.com"
+          git add tts && git commit -qm "TTS" && git push
