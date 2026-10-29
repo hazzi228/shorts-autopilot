@@ -1,0 +1,37 @@
+name: Демо-видео на час в память бота
+
+# Кладёт mp4 из папки demo/ указанной ветки в KV бота-портфолио на 2 часа
+# и печатает ссылки вида /ig/reel-....mp4 (нужно, чтобы загрузить демо в заявку TikTok).
+on:
+  workflow_dispatch:
+    inputs:
+      branch:
+        description: "Ветка с папкой demo/"
+        required: true
+
+jobs:
+  put:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/checkout@v5
+        with:
+          ref: ${{ inputs.branch }}
+          path: src
+      - run: pip install requests
+      - env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+        run: |
+          python -u - <<'PY'
+          import glob, os, secrets
+          from cfkv import KV
+          kv = KV()
+          bot = kv.bot_url()
+          for path in sorted(glob.glob("src/demo/*.mp4")):
+              key = "reel-%s.mp4" % secrets.token_hex(16)
+              with open(path, "rb") as f:
+                  ok = kv.put(key, f.read(), ttl=7200)
+              print(os.path.basename(path), "->", "%s/ig/%s" % (bot, key) if ok else "ОШИБКА")
+          PY

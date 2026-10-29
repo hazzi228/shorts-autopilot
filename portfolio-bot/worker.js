@@ -22,7 +22,7 @@ export default {
     if (reel && request.method === "GET") {
       const video = await env.STATE.get(reel[1], { type: "arrayBuffer" });
       if (!video) return new Response("not found", { status: 404 });
-      return new Response(video, { headers: { "content-type": "video/mp4" } });
+      return new Response(video, { headers: { "content-type": "video/mp4", "access-control-allow-origin": "*" } });
     }
     // Сайт канала и вход в TikTok (страницы нужны для заявки на аудит приложения TikTok).
     if (request.method === "GET" && pathname === "/tiktok/callback") return tiktok.callback(request, env);
