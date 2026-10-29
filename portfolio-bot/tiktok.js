@@ -105,7 +105,13 @@ in TikTok settings.</p>
 <h2>Contact</h2><p>${CONTACT}</p>`],
 };
 
+// Файлы подтверждения адреса для TikTok (URL properties в кабинете разработчика).
+const VERIFY = {
+  "/neznal/tiktokBAKPcjCph3oaIsiSU3vfNTWY9jzl3jQW.txt": "tiktok-developers-site-verification=BAKPcjCph3oaIsiSU3vfNTWY9jzl3jQW",
+};
+
 export function sitePage(pathname) {
+  if (VERIFY[pathname]) return new Response(VERIFY[pathname], { headers: { "content-type": "text/plain" } });
   const p = PAGES[pathname.replace(/\/$/, "")];
   return p ? page(...p) : null;
 }
