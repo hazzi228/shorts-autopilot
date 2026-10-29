@@ -1,0 +1,46 @@
+name: Instagram post (one scenario)
+
+on:
+  workflow_dispatch:
+    inputs:
+      id:
+        description: "id сценария, который уже вышел на YouTube"
+        required: true
+
+permissions:
+  contents: write
+
+concurrency:
+  group: autopilot
+  cancel-in-progress: false
+
+jobs:
+  post:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+          cache: pip
+      - run: pip install -r requirements.txt
+      - name: Голос из кэша
+        id: voice
+        uses: actions/cache@v5
+        with:
+          path: voice
+          key: voice-dmitri-medium-v1
+      - name: Собрать и выложить в Reels
+        env:
+          INSTAGRAM_TOKEN: ${{ secrets.INSTAGRAM_TOKEN }}
+          IG_KEY: ${{ secrets.IG_KEY }}
+          SCENARIO: ${{ inputs.id }}
+        run: |
+          python -u - <<'PY'
+          import json, os, engine, instagram
+          sc = next(s for s in json.load(open("scenarios.json", encoding="utf-8")) if s["id"] == os.environ["SCENARIO"])
+          os.makedirs("work", exist_ok=True)
+          engine.build(sc, "work/video.mp4", "work")
+          print("Reels:", instagram.upload("work/video.mp4", sc, print))
+          PY
