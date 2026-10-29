@@ -1,0 +1,44 @@
+name: Instagram check
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - run: pip install requests
+      - name: Проверить ключ и сохранить бессрочный ключ страницы
+        env:
+          INSTAGRAM_TOKEN: ${{ secrets.INSTAGRAM_TOKEN }}
+          IG_KEY: ${{ secrets.IG_KEY }}
+        run: |
+          python -u - <<'PY'
+          import requests, instagram
+          t = instagram.load_token()
+          assert t, "нет секрета INSTAGRAM_TOKEN"
+          me = requests.get(instagram.FB_API + "/me", params={"fields": "name,instagram_business_account", "access_token": t}, timeout=60).json()
+          if "instagram_business_account" not in me:
+              pages = requests.get(instagram.FB_API + "/me/accounts", params={"fields": "name,access_token,instagram_business_account", "access_token": t}, timeout=60).json()
+              page = next((p for p in pages.get("data", []) if p.get("instagram_business_account")), None)
+              assert page, "нет страницы с привязанным Instagram: %s" % str(pages)[:300]
+              t, me = page["access_token"], page
+              instagram.save_token(t)
+              print("Ключ страницы сохранён")
+          ig = requests.get(instagram.FB_API + "/" + me["instagram_business_account"]["id"], params={"fields": "username", "access_token": t}, timeout=60).json()
+          print("Страница:", me.get("name"), "| Instagram:", ig.get("username"))
+          dbg = requests.get(instagram.FB_API + "/debug_token", params={"input_token": t, "access_token": t}, timeout=60).json().get("data", {})
+          print("Ключ истекает:", dbg.get("expires_at"), "(0 = никогда)")
+          PY
+      - name: Сохранить ключ
+        run: |
+          git config user.name "shorts-autopilot"
+          git config user.email "actions@users.noreply.github.com"
+          git add $(ls ig_token.enc ig_token.json 2>/dev/null) || true
+          git diff --cached --quiet && exit 0
+          git commit -m "Ключ Instagram (зашифрован)"
+          for i in 1 2 3; do git pull --rebase && git push && break; sleep 5; done
