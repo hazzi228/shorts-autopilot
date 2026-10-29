@@ -93,6 +93,10 @@ def upload(path, sc, log):
                 save_token(token)
                 log("Ключ страницы Facebook сохранён (бессрочный)")
         me = info["instagram_business_account"]["id"]
+        # rupload принимает только ключ пользователя (ключ страницы даёт ProcessingFailedError)
+        user = os.environ.get("INSTAGRAM_TOKEN", "")
+        if user and not user.startswith("IG"):
+            token = user
     r = requests.post("%s/%s/media" % (api, me), data={
         "media_type": "REELS", "upload_type": "resumable", "caption": caption(sc),
         "share_to_feed": "true", "access_token": token}, timeout=60)
