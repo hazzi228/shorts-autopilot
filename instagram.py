@@ -82,7 +82,16 @@ def upload(path, sc, log):
         api = FB_API
         info = requests.get(FB_API + "/me", params={"fields": "instagram_business_account", "access_token": token}, timeout=60).json()
         if "instagram_business_account" not in info:
-            raise RuntimeError("к странице Facebook не привязан Instagram: %s" % str(info)[:200])
+            # это ключ пользователя: берём из него бессрочный ключ страницы с привязанным Instagram и сохраняем
+            pages = requests.get(FB_API + "/me/accounts", params={
+                "fields": "access_token,instagram_business_account", "access_token": token}, timeout=60).json()
+            page = next((p for p in pages.get("data", []) if p.get("instagram_business_account")), None)
+            if not page:
+                raise RuntimeError("нет страницы Facebook с привязанным Instagram: %s" % str(pages)[:200])
+            token, info = page["access_token"], page
+            if os.environ.get("IG_KEY"):
+                save_token(token)
+                log("Ключ страницы Facebook сохранён (бессрочный)")
         me = info["instagram_business_account"]["id"]
     r = requests.post("%s/%s/media" % (api, me), data={
         "media_type": "REELS", "upload_type": "resumable", "caption": caption(sc),
