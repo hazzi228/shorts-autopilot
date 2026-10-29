@@ -9,6 +9,7 @@
 // поэтому спам-блок аккаунта владельца переписке не мешает.
 
 import data from "./data.json";
+import * as tiktok from "./tiktok.js";
 
 const ORDER_KINDS = { bot: "🤖 Telegram-бот", site: "🌐 Сайт", other: "✨ Другое" };
 const DAY = 24 * 3600;
@@ -16,19 +17,23 @@ const DAY = 24 * 3600;
 export default {
   async fetch(request, env) {
     // Ролики для Instagram: автопилот кладёт файл в память на час, Instagram скачивает его отсюда.
-    const reel = new URL(request.url).pathname.match(/^\/ig\/(reel-[0-9a-f]{32}\.mp4)$/);
+    const { pathname, origin } = new URL(request.url);
+    const reel = pathname.match(/^\/ig\/(reel-[0-9a-f]{32}\.mp4)$/);
     if (reel && request.method === "GET") {
       const video = await env.STATE.get(reel[1], { type: "arrayBuffer" });
       if (!video) return new Response("not found", { status: 404 });
       return new Response(video, { headers: { "content-type": "video/mp4" } });
     }
+    // Сайт канала и вход в TikTok (страницы нужны для заявки на аудит приложения TikTok).
+    if (request.method === "GET" && pathname === "/tiktok/callback") return tiktok.callback(request, env);
+    if (request.method === "GET") return tiktok.sitePage(pathname) || new Response("Бот работает");
     if (request.method !== "POST") return new Response("Бот работает");
     if (request.headers.get("X-Telegram-Bot-Api-Secret-Token") !== (await webhookSecret(env.BOT_TOKEN))) {
       return new Response("forbidden", { status: 403 });
     }
     const update = await request.json();
     try {
-      const bot = new Bot(env);
+      const bot = new Bot(env, origin);
       if (update.callback_query) await onButton(bot, update.callback_query);
       else if (update.message?.chat?.type === "private") await onMessage(bot, update.message);
     } catch (e) {
@@ -81,8 +86,9 @@ export async function webhookSecret(token) {
 }
 
 class Bot {
-  constructor(env) {
+  constructor(env, origin) {
     this.env = env;
+    this.origin = origin;
     this.kv = env.STATE;
   }
 
@@ -270,6 +276,12 @@ async function onMessage(bot, msg) {
   const isCommand = msg.text?.startsWith("/");
 
   if ((await bot.ownerIds(user)).includes(user.id)) {
+    if (msg.text === "/tiktok") {
+      const link = await tiktok.loginLink(bot.env, bot.origin);
+      return bot.send(msg.chat.id, link
+        ? `Чтобы ролики приходили в черновики TikTok, войди в аккаунт канала по ссылке (действует 15 минут):\n${esc(link)}`
+        : "TikTok ещё не настроен: нет секрета TIKTOK_CLIENT_KEY.");
+    }
     if (isCommand) {
       await bot.send(msg.chat.id, "👋 Ты владелец бота. Сюда будут приходить заявки и сообщения клиентов. " +
         "Чтобы ответить, нажми на сообщение → «Ответить».");

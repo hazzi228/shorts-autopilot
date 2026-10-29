@@ -229,6 +229,12 @@ def main():
                     log("Опубликован в Instagram: " + link)
             except Exception as e:
                 log("Ошибка публикации в Instagram: " + str(e)[:300])
+            try:
+                import tiktok
+                if video_id and tiktok.upload(tmp_video, sc, log):
+                    log("Отправлен в черновики TikTok: " + sc["yt_title"])
+            except Exception as e:
+                log("Ошибка отправки в TikTok: " + str(e)[:300])
 
         # в папке на рабочем столе остаётся только свежий ролик и его описание
         out_dir = output_dir(cfg)

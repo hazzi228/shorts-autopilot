@@ -151,16 +151,11 @@ KV_LIMIT = 24 * 1024 * 1024  # в Cloudflare KV одно значение не �
 def _host(path, log):
     """Кладёт ролик на час в память бота-портфолио (Cloudflare KV), бот отдаёт его по ссылке,
     Instagram скачивает ролик сам. Возвращает (ссылка, удалить) или None, если Cloudflare не настроен."""
-    import requests, secrets
-    acc, cf = os.environ.get("CLOUDFLARE_ACCOUNT_ID", "").strip(), os.environ.get("CLOUDFLARE_API_TOKEN", "").strip()
-    if not acc or not cf:
-        return None
-    base = "https://api.cloudflare.com/client/v4/accounts/" + acc
-    auth = {"Authorization": "Bearer " + cf}
-    ns = requests.get(base + "/storage/kv/namespaces", params={"per_page": 100}, headers=auth, timeout=60).json()
-    ns = next((n["id"] for n in ns.get("result") or [] if n["title"] == "portfolio-bot-state"), None)
-    sub = (requests.get(base + "/workers/subdomain", headers=auth, timeout=60).json().get("result") or {}).get("subdomain")
-    if not ns or not sub:
+    import secrets
+    from cfkv import KV
+    kv = KV()
+    bot = kv.bot_url() if kv.ok else None
+    if not bot:
         log("Cloudflare: не нашёл память или адрес бота, пробую прямую загрузку")
         return None
     if os.path.getsize(path) > KV_LIMIT:
@@ -171,11 +166,8 @@ def _host(path, log):
                         "-c:a", "aac", "-b:a", "128k", "-movflags", "+faststart", small], check=True)
         path = small
     key = "reel-%s.mp4" % secrets.token_hex(16)
-    url = "%s/storage/kv/namespaces/%s/values/%s" % (base, ns, key)
     with open(path, "rb") as f:
-        r = requests.put(url, params={"expiration_ttl": 3600}, data=f.read(), headers=auth, timeout=300)
-    if not r.ok:
-        log("Cloudflare не принял ролик (%s), пробую прямую загрузку" % r.status_code)
-        return None
-    return "https://portfolio-bot.%s.workers.dev/ig/%s" % (sub, key), \
-        lambda: requests.delete(url, headers=auth, timeout=60)
+        if not kv.put(key, f.read(), ttl=3600):
+            log("Cloudflare не принял ролик, пробую прямую загрузку")
+            return None
+    return "%s/ig/%s" % (bot, key), lambda: kv.delete(key)
