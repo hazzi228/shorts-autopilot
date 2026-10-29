@@ -71,6 +71,8 @@ jobs:
           IG_KEY: ${{ secrets.IG_KEY }}
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          TIKTOK_CLIENT_KEY: ${{ secrets.TIKTOK_CLIENT_KEY }}
+          TIKTOK_CLIENT_SECRET: ${{ secrets.TIKTOK_CLIENT_SECRET }}
         run: |
           if [ -z "$YOUTUBE_TOKEN" ]; then echo "Нет секрета YOUTUBE_TOKEN (см. README)"; exit 1; fi
           printf '%s' "$YOUTUBE_TOKEN" > token.json
