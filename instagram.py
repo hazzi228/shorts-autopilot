@@ -105,10 +105,15 @@ def upload(path, sc, log):
     cid, uri = r.json()["id"], r.json()["uri"]
     size = os.path.getsize(path)
     with open(path, "rb") as f:
-        r = requests.post(uri, data=f, timeout=600, headers={
-            "Authorization": "OAuth " + token, "offset": "0", "file_size": str(size)})
+        body = f.read()
+    r = requests.post(uri, data=body, timeout=600, headers={
+        "Authorization": "OAuth " + token, "offset": "0", "file_size": str(size),
+        "Content-Type": "application/octet-stream"})
     if r.status_code != 200:
-        raise RuntimeError("Instagram: загрузка файла не прошла (%s): %s" % (r.status_code, r.text[:300]))
+        st = requests.get(api + "/" + cid, params={"fields": "status_code,status,video_status",
+                                                  "access_token": token}, timeout=60).text
+        raise RuntimeError("Instagram: загрузка файла не прошла (%s): %s; uri=%s; контейнер: %s"
+                           % (r.status_code, r.text[:300], uri.split("?")[0], st[:600]))
     for _ in range(60):  # обработка видео обычно занимает 30-90 секунд
         time.sleep(10)
         st = requests.get(api + "/" + cid, params={"fields": "status_code,status", "access_token": token}, timeout=60).json()
