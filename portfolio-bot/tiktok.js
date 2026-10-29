@@ -68,6 +68,7 @@ const CONTACT = 'Telegram: <a href="https://t.me/PortfolioHazzer_bot">@Portfolio
 
 const PAGES = {
   "/neznal": ["Не знал? | IT-факты", `
+<img src="/neznal/icon.jpg" alt="" width="96" height="96" style="border-radius:20px">
 <h1>Не знал? | IT-факты</h1>
 <p><b>Neznal autopilot</b> is a personal tool that publishes short vertical videos about the history of technology
 and surprising IT facts for the channel «Не знал? | IT-факты» (YouTube Shorts, Instagram Reels and TikTok).</p>

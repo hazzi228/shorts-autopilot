@@ -26,6 +26,10 @@ export default {
     }
     // Сайт канала и вход в TikTok (страницы нужны для заявки на аудит приложения TikTok).
     if (request.method === "GET" && pathname === "/tiktok/callback") return tiktok.callback(request, env);
+    if (request.method === "GET" && pathname === "/neznal/icon.jpg") {
+      const icon = await env.ASSETS.fetch("https://assets/neznal-icon.jpg");
+      return new Response(icon.body, { headers: { "content-type": "image/jpeg", "access-control-allow-origin": "*" } });
+    }
     if (request.method === "GET") return tiktok.sitePage(pathname) || new Response("Бот работает");
     if (request.method !== "POST") return new Response("Бот работает");
     if (request.headers.get("X-Telegram-Bot-Api-Secret-Token") !== (await webhookSecret(env.BOT_TOKEN))) {
