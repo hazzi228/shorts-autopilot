@@ -93,3 +93,9 @@
 google.auth.exceptions.RefreshError: ('invalid_grant: Token has been expired or revoked.', {'error': 'invalid_grant', 'error_description': 'Token has been expired or revoked.'})
 
 [2026-10-29 19:08:50] Готово: 2026-10-29 19-08 goldfish.mp4
+[2026-10-29 19:39:32] Собираю ролик: goldfish (Внимание как у золотой рыбки? Это миф 🐟), осталось сценариев: 19
+[2026-10-29 19:41:15] Ролик собран
+[2026-10-29 19:41:17] Загружен на YouTube: https://youtube.com/shorts/hv-NrAGh42c
+[2026-10-29 19:41:18] Ошибка публикации в Instagram: нет страницы Facebook с привязанным Instagram: {'error': {'message': 'Cannot call API for app 1637898594737569 on behalf of user 122097795171531580', 'type': 'OAuthException', 'code': 200, 'fbtrace_id': 'APony-jKzvwY7nD8pTqIaGw'}}
+[2026-10-29 19:41:56] Отправлен в черновики TikTok: Внимание как у золотой рыбки? Это миф 🐟
+[2026-10-29 19:41:56] Готово: 2026-10-29 19-41 goldfish.mp4
