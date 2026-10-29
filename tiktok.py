@@ -7,7 +7,7 @@
 Ключ доступа живёт сутки, поэтому каждый раз получаем новый по refresh_token и сохраняем обновлённый.
 Нужны секреты TIKTOK_CLIENT_KEY, TIKTOK_CLIENT_SECRET и CLOUDFLARE_* (как для Instagram).
 """
-import os, json, time
+import os, json, time, secrets
 
 API = "https://open.tiktokapis.com/v2"
 KEY = "tiktok_auth"
@@ -30,6 +30,23 @@ def _access_token(kv, log):
         auth["refresh_token"] = r["refresh_token"]
         kv.put(KEY, json.dumps(auth), ttl=max(86400, int(r.get("refresh_expires_in") or 365 * 86400)))
     return r["access_token"]
+
+
+def caption(sc):
+    desc = sc["description"].replace("#shorts", "#fyp")
+    return (sc["yt_title"] + "\n\n" + desc)[:2100]
+
+
+def notify(kv, sc, log):
+    """Присылает владельцу в бот-портфолио описание для черновика: API черновиков текст не принимает."""
+    import requests
+    key = "tt_note-" + secrets.token_hex(16)
+    url = kv.bot_url()
+    if not url or not kv.put(key, caption(sc).encode(), ttl=3600):
+        return
+    r = requests.post(url + "/tiktok/note/" + key, timeout=60)
+    if not r.ok:
+        log("Не удалось прислать описание для TikTok в Telegram: %s" % r.text[:200])
 
 
 def upload(path, sc, log):
@@ -63,8 +80,10 @@ def upload(path, sc, log):
         st = requests.post(API + "/post/publish/status/fetch/", headers=head, timeout=60,
                            json={"publish_id": pid}).json().get("data") or {}
         if st.get("status") in ("SEND_TO_USER_INBOX", "PUBLISH_COMPLETE"):
+            notify(kv, sc, log)
             return pid
         if st.get("status") == "FAILED":
             raise RuntimeError("TikTok не обработал ролик: %s" % st.get("fail_reason"))
     log("TikTok ещё обрабатывает ролик, черновик придёт позже")
+    notify(kv, sc, log)
     return pid
