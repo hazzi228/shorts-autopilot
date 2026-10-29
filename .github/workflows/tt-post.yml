@@ -1,0 +1,48 @@
+name: TikTok draft (one scenario)
+
+on:
+  workflow_dispatch:
+    inputs:
+      id:
+        description: "id сценария"
+        required: true
+
+permissions:
+  contents: write
+
+concurrency:
+  group: autopilot
+  cancel-in-progress: false
+
+jobs:
+  post:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+          cache: pip
+      - run: pip install -r requirements.txt
+      - name: Голос из кэша
+        id: voice
+        uses: actions/cache@v5
+        with:
+          path: voice
+          key: voice-dmitri-medium-v1
+      - name: Собрать и отправить в черновики TikTok
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          TIKTOK_CLIENT_KEY: ${{ secrets.TIKTOK_CLIENT_KEY }}
+          TIKTOK_CLIENT_SECRET: ${{ secrets.TIKTOK_CLIENT_SECRET }}
+          SCENARIO: ${{ inputs.id }}
+        run: |
+          python -u - <<'PY'
+          import json, os, engine, tiktok
+          sc = next(s for s in json.load(open("scenarios.json", encoding="utf-8")) if s["id"] == os.environ["SCENARIO"])
+          os.makedirs("work", exist_ok=True)
+          engine.build(sc, "work/video.mp4", "work")
+          print("TikTok:", tiktok.upload("work/video.mp4", sc, print))
+          PY
