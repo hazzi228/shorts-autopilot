@@ -99,3 +99,10 @@ google.auth.exceptions.RefreshError: ('invalid_grant: Token has been expired or 
 [2026-10-29 19:41:18] Ошибка публикации в Instagram: нет страницы Facebook с привязанным Instagram: {'error': {'message': 'Cannot call API for app 1637898594737569 on behalf of user 122097795171531580', 'type': 'OAuthException', 'code': 200, 'fbtrace_id': 'APony-jKzvwY7nD8pTqIaGw'}}
 [2026-10-29 19:41:56] Отправлен в черновики TikTok: Внимание как у золотой рыбки? Это миф 🐟
 [2026-10-29 19:41:56] Готово: 2026-10-29 19-41 goldfish.mp4
+[2026-10-30 07:05:59] Собираю ролик: bluetooth (Значок Bluetooth — это подпись викинга 👑), осталось сценариев: 18
+[2026-10-30 07:07:42] Ролик собран
+[2026-10-30 07:07:43] Загружен на YouTube: https://youtube.com/shorts/c4bkYZhW674
+[2026-10-30 07:08:27] Опубликован в Instagram: https://www.instagram.com/reel/DfHAmcRh0-j/
+[2026-10-30 07:13:45] TikTok ещё обрабатывает ролик, черновик придёт позже
+[2026-10-30 07:13:47] Отправлен в черновики TikTok: Значок Bluetooth — это подпись викинга 👑
+[2026-10-30 07:13:47] Готово: 2026-10-30 07-13 bluetooth.mp4
