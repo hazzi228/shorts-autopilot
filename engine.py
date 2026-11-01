@@ -424,38 +424,65 @@ def tts_gemini_all(texts):
 
 
 def split_by_pauses(a, sr, lens):
+    """Режет общую дорожку на сцены по паузам. Всегда возвращает n кусков:
+    если явной паузы у границы нет, режет в самом тихом месте рядом с ожидаемой точкой."""
     n = len(lens)
     if n == 1:
         return [a]
     hop = int(0.02 * sr)
     rms = np.sqrt(np.convolve(a ** 2, np.ones(hop) / hop, mode="same")[::hop])
-    quiet = rms < 0.012
+    loud = np.percentile(rms, 80) if len(rms) else 0
+    quiet = rms < max(0.004, loud * 0.12)
     runs, i = [], 0
     while i < len(quiet):
         if quiet[i]:
             j = i
             while j < len(quiet) and quiet[j]:
                 j += 1
-            if (j - i) * 0.02 >= 0.18:
+            if (j - i) * 0.02 >= 0.08:
                 runs.append(((i + j) / 2 * 0.02, (j - i) * 0.02))
             i = j
         else:
             i += 1
     total = len(a) / sr
-    cum = np.cumsum(lens) / sum(lens)
-    cuts, prev = [], 0.0
-    for k in range(n - 1):
-        e = cum[k] * total
-        cand = [(ln - abs(pos - e) * 0.25, pos) for pos, ln in runs if pos > prev + 0.5 and abs(pos - e) < total * 0.15]
-        if not cand:
-            return None
-        prev = max(cand)[1]
-        cuts.append(prev)
+    exp = list(np.cumsum(lens)[:-1] / sum(lens) * total)
+    # динамика: выбираем n-1 пауз по порядку с лучшей суммой (длина паузы минус отклонение от ожидаемой точки)
+    m = len(runs)
+    NEG = -1e9
+    best = [[NEG] * m for _ in range(n - 1)]
+    back = [[-1] * m for _ in range(n - 1)]
+    def sc(k, r):
+        pos, ln = runs[r]
+        dev = abs(pos - exp[k])
+        return NEG if dev > total * 0.2 else min(ln, 0.8) - dev * 0.35
+    for r in range(m):
+        best[0][r] = sc(0, r)
+    for k in range(1, n - 1):
+        for r in range(m):
+            s = sc(k, r)
+            if s <= NEG / 2:
+                continue
+            for q in range(r):
+                if best[k - 1][q] > NEG / 2 and runs[r][0] - runs[q][0] > 0.4 and best[k - 1][q] + s > best[k][r]:
+                    best[k][r], back[k][r] = best[k - 1][q] + s, q
+    cuts = None
+    if m and max(best[n - 2]) > NEG / 2:
+        r = int(np.argmax(best[n - 2]))
+        cuts = []
+        for k in range(n - 2, -1, -1):
+            cuts.append(runs[r][0])
+            r = back[k][r]
+        cuts = cuts[::-1]
+    if cuts is None:
+        print("Gemini TTS: пауз мало, режу по самым тихим местам")
+        cuts, prev = [], 0.0
+        for e in exp:
+            lo = max(prev + 0.4, e - 1.2)
+            hi = max(lo + 0.1, e + 1.2)
+            seg = rms[int(lo / 0.02): int(hi / 0.02) + 1]
+            prev = lo + (int(np.argmin(seg)) * 0.02 if len(seg) else 0)
+            cuts.append(prev)
     bounds = [0.0] + cuts + [total]
-    for k in range(n):
-        d, exp = bounds[k + 1] - bounds[k], lens[k] / sum(lens) * total
-        if not (0.45 * exp < d < 1.9 * exp):
-            return None
     return [a[int(bounds[k] * sr): int(bounds[k + 1] * sr)] for k in range(n)]
 
 
