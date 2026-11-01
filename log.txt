@@ -173,3 +173,9 @@ RuntimeError: raqm_layout() failed.
 [2026-11-01 13:29:35] Опубликован в Instagram: https://www.instagram.com/reel/DfM1z1rBqKu/
 [2026-11-01 13:30:13] Отправлен в черновики TikTok: На логотипе Firefox вовсе не лиса 🦊
 [2026-11-01 13:30:13] Готово: 2026-11-01 13-30 firefox.mp4
+[2026-11-01 19:06:04] Собираю ролик: ctrl-alt-del (Билл Гейтс признал: эта кнопка была ошибкой ⌨️), осталось сценариев: 22
+[2026-11-01 19:07:51] Ролик собран
+[2026-11-01 19:07:53] Загружен на YouTube: https://youtube.com/shorts/uZKHbzyYv28
+[2026-11-01 19:08:36] Опубликован в Instagram: https://www.instagram.com/reel/DfNcmxJz0XX/
+[2026-11-01 19:09:48] Ошибка отправки в TikTok: Expecting value: line 1 column 1 (char 0)
+[2026-11-01 19:09:48] Готово: 2026-11-01 19-09 ctrl-alt-del.mp4
