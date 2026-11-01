@@ -495,7 +495,7 @@ def build(v, out_path, work):
         timeline.append(dict(sc, start=t, voice_end=t + d, end=t + d + gap))
         audio_parts.append((t, a))
         t += d + gap
-    total = t + 0.5
+    total = t + (1.3 if v["scenes"][-1].get("ad") else 0.5)  # ссылку в финале успевают прочитать
     timeline[-1]["end"] = total
     n = int(total * sr)
     voice = np.zeros(n)
