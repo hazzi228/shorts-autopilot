@@ -620,6 +620,9 @@ def commons_photo(query):
             credit = ""
             if not lic.lower().startswith(("public domain", "pd", "cc0")):
                 author = re.sub(r"<[^>]+>", "", html_.unescape(md.get("Artist", {}).get("value", ""))).strip()
+                # оставляем только латиницу/кириллицу: иначе шрифт падает на редких символах в имени автора
+                author = re.sub(r"\s+", " ", re.sub(r"[^0-9A-Za-zА-Яа-яЁё .,'()&-]", " ", author)).strip(" ,.-")
+                lic = re.sub(r"[^0-9A-Za-z .-]", "", lic).strip()
                 credit = "Фото: %s, %s" % ((author or "Wikimedia Commons")[:40], lic)
             res = (im, credit)
             break
@@ -668,10 +671,13 @@ def frame_photo(big, lt, seg, accent, credit, label, overlay):
         tw = text_width(label.upper(), f)
         draw_mixed(img, (int((PHOTO_W - tw) / 2), PHOTO_H - 120), label.upper(), f, (255, 255, 255), stroke=6)
     if credit:
-        f = font(MED, 22)
-        tw = text_width(credit, f)
-        d.rounded_rectangle((PHOTO_W - tw - 44, 20, PHOTO_W - 20, 56), 12, fill=(0, 0, 0, 150))
-        draw_mixed(img, (PHOTO_W - tw - 32, 24), credit, f, (230, 230, 230))
+        try:
+            f = font(MED, 22)
+            tw = text_width(credit, f)
+            d.rounded_rectangle((PHOTO_W - tw - 44, 20, PHOTO_W - 20, 56), 12, fill=(0, 0, 0, 150))
+            draw_mixed(img, (PHOTO_W - tw - 32, 24), credit, f, (230, 230, 230))
+        except Exception as e:
+            print("Подпись к фото пропущена:", e)
     return img
 
 
