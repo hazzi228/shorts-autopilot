@@ -32,6 +32,8 @@ jobs:
           cp vits-piper-ru_RU-dmitri-medium/ru_RU-dmitri-medium.onnx vits-piper-ru_RU-dmitri-medium/ru_RU-dmitri-medium.onnx.json voice/
           rm -rf v.tar.bz2 vits-piper-ru_RU-dmitri-medium
       - run: python run.py --no-upload && cat log.txt
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
       - name: Сохранить ролик в ветку samples
         run: |
           mkdir -p /tmp/s && cp out/*.mp4 /tmp/s/test.mp4

@@ -363,6 +363,94 @@ def tts(text, path):
     return tts_piper(text, path)
 
 
+# Живой голос Google Gemini (бесплатный ключ). Лимит маленький, поэтому весь ролик — один запрос,
+# потом аудио режется на сцены по паузам. Если что-то не так — озвучка по сценам через edge-tts.
+GEMINI_KEY = os.environ.get("GEMINI_API_KEY", "")
+GEMINI_VOICE = os.environ.get("GEMINI_VOICE", "Enceladus")
+GEMINI_TTS = ["gemini-3.8-flash-tts", "gemini-2.5-flash-preview-tts"]
+GEMINI_STYLE = ("Озвучь текст как популярный русский блогер в коротком видео: живо, уверенно, с естественной "
+                "интонацией, паузами на точках и запятых, интригой в первой фразе. Между абзацами делай паузу "
+                "около секунды. Читай точно по тексту, ничего не добавляй. Текст:\n\n")
+
+
+def tts_gemini_all(texts):
+    if not GEMINI_KEY:
+        return None
+    import base64, requests
+    body = {"contents": [{"parts": [{"text": GEMINI_STYLE + "\n\n".join(texts)}]}],
+            "generationConfig": {"responseModalities": ["AUDIO"], "speechConfig": {
+                "voiceConfig": {"prebuiltVoiceConfig": {"voiceName": GEMINI_VOICE}}}}}
+    pcm = None
+    for model in GEMINI_TTS:
+        for attempt in range(3):
+            try:
+                r = requests.post("https://generativelanguage.googleapis.com/v1beta/models/%s:generateContent" % model,
+                                  params={"key": GEMINI_KEY}, json=body, timeout=180)
+                if r.status_code == 200:
+                    pcm = base64.b64decode(r.json()["candidates"][0]["content"]["parts"][0]["inlineData"]["data"])
+                    break
+                print("Gemini TTS %s: %s %s" % (model, r.status_code, r.text[:120]))
+                if r.status_code not in (429, 500, 503):
+                    break
+            except Exception as e:
+                print("Gemini TTS %s: %s" % (model, e))
+            time.sleep(25 * (attempt + 1))
+        if pcm:
+            break
+    if not pcm:
+        return None
+    sr = 24000
+    a = np.frombuffer(pcm, dtype=np.int16).astype(np.float32) / 32768
+    parts = split_by_pauses(a, sr, [len(t) for t in texts])
+    if not parts:
+        print("Gemini TTS: не получилось разрезать на сцены, озвучиваю по сценам")
+        return None
+    out = []
+    for p_ in parts:
+        nz = np.where(np.abs(p_) > 0.01)[0]
+        if len(nz):
+            p_ = p_[max(0, nz[0] - 200): nz[-1] + 1500]
+        out.append((p_, sr))
+    print("Озвучено голосом %s" % GEMINI_VOICE)
+    return out
+
+
+def split_by_pauses(a, sr, lens):
+    n = len(lens)
+    if n == 1:
+        return [a]
+    hop = int(0.02 * sr)
+    rms = np.sqrt(np.convolve(a ** 2, np.ones(hop) / hop, mode="same")[::hop])
+    quiet = rms < 0.012
+    runs, i = [], 0
+    while i < len(quiet):
+        if quiet[i]:
+            j = i
+            while j < len(quiet) and quiet[j]:
+                j += 1
+            if (j - i) * 0.02 >= 0.18:
+                runs.append(((i + j) / 2 * 0.02, (j - i) * 0.02))
+            i = j
+        else:
+            i += 1
+    total = len(a) / sr
+    cum = np.cumsum(lens) / sum(lens)
+    cuts, prev = [], 0.0
+    for k in range(n - 1):
+        e = cum[k] * total
+        cand = [(ln - abs(pos - e) * 0.25, pos) for pos, ln in runs if pos > prev + 0.5 and abs(pos - e) < total * 0.15]
+        if not cand:
+            return None
+        prev = max(cand)[1]
+        cuts.append(prev)
+    bounds = [0.0] + cuts + [total]
+    for k in range(n):
+        d, exp = bounds[k + 1] - bounds[k], lens[k] / sum(lens) * total
+        if not (0.45 * exp < d < 1.9 * exp):
+            return None
+    return [a[int(bounds[k] * sr): int(bounds[k + 1] * sr)] for k in range(n)]
+
+
 def read_voice(path):
     with wave.open(path, "rb") as wf:
         a = np.frombuffer(wf.readframes(wf.getnframes()), dtype=np.int16).astype(np.float32) / 32768
@@ -575,8 +663,9 @@ def build(v, out_path, work):
     GAP = 0.14  # паузы короче: монтаж без провисаний
     audio_parts, timeline, t = [], [], 0.12
     sr = SR
+    pre = tts_gemini_all([sc["say"] for sc in v["scenes"]])
     for i, sc in enumerate(v["scenes"]):
-        a, sr = tts(sc["say"], os.path.join(work, "s%02d.wav" % i))
+        a, sr = pre[i] if pre else tts(sc["say"], os.path.join(work, "s%02d.wav" % i))
         d = len(a) / sr
         gap = GAP + (0.15 if (sc.get("ad") != v["scenes"][min(i + 1, len(v["scenes"]) - 1)].get("ad")) else 0)
         timeline.append(dict(sc, start=t, voice_end=t + d, end=t + d + gap))
