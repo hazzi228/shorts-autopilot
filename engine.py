@@ -368,7 +368,8 @@ def tts(text, path):
 GEMINI_KEY = os.environ.get("GEMINI_API_KEY", "")
 GEMINI_VOICE = os.environ.get("GEMINI_VOICE", "Enceladus")
 GEMINI_TTS = ["gemini-3.8-flash-tts", "gemini-2.5-flash-preview-tts"]
-GEMINI_STYLE = ("Озвучь текст как популярный русский блогер в коротком видео: живо, уверенно, с естественной "
+GEMINI_TEMPO = os.environ.get("GEMINI_TEMPO", "1.3")
+GEMINI_STYLE = ("Озвучь текст как популярный русский блогер в коротком видео: бодро, в быстром темпе, уверенно, с естественной "
                 "интонацией, паузами на точках и запятых, интригой в первой фразе. Между абзацами делай паузу "
                 "около секунды. Читай точно по тексту, ничего не добавляй. Текст:\n\n")
 
@@ -400,7 +401,14 @@ def tts_gemini_all(texts):
     if not pcm:
         return None
     sr = 24000
-    a = np.frombuffer(pcm, dtype=np.int16).astype(np.float32) / 32768
+    # Gemini читает медленнее, чем принято в шортсах: ускоряем без изменения тембра
+    raw = os.path.join(os.environ.get("TMPDIR", "/tmp"), "gemini_tts")
+    with wave.open(raw + ".wav", "wb") as wf:
+        wf.setnchannels(1); wf.setsampwidth(2); wf.setframerate(sr); wf.writeframes(pcm)
+    subprocess.run([FFMPEG, "-loglevel", "error", "-y", "-i", raw + ".wav", "-af", "atempo=%s,highpass=f=70" % GEMINI_TEMPO,
+                    "-ar", str(sr), "-ac", "1", raw + "_fast.wav"], check=True)
+    with wave.open(raw + "_fast.wav", "rb") as wf:
+        a = np.frombuffer(wf.readframes(wf.getnframes()), dtype=np.int16).astype(np.float32) / 32768
     parts = split_by_pauses(a, sr, [len(t) for t in texts])
     if not parts:
         print("Gemini TTS: не получилось разрезать на сцены, озвучиваю по сценам")
