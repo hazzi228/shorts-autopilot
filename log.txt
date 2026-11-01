@@ -148,3 +148,21 @@ google.auth.exceptions.RefreshError: ('invalid_grant: Token has been expired or 
 [2026-11-01 07:14:49] TikTok ещё обрабатывает ролик, черновик придёт позже
 [2026-11-01 07:14:52] Отправлен в черновики TikTok: Интернет мог стать платным. Его спас один человек 🌍
 [2026-11-01 07:14:52] Готово: 2026-11-01 07-14 www-day.mp4
+[2026-11-01 13:06:05] Собираю ролик: firefox (На логотипе Firefox вовсе не лиса 🦊), осталось сценариев: 11
+[2026-11-01 13:07:01] Ошибка: Traceback (most recent call last):
+  File "/home/runner/work/shorts-autopilot/shorts-autopilot/run.py", line 211, in main
+    engine.build(sc, tmp_video, work)
+  File "/home/runner/work/shorts-autopilot/shorts-autopilot/engine.py", line 853, in build
+    card = frame_photo(big_, plt, seg, accent, credit, sc["hero"][2] if len(sc["hero"]) > 2 else "", ov)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/shorts-autopilot/shorts-autopilot/engine.py", line 672, in frame_photo
+    tw = text_width(credit, f)
+         ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/shorts-autopilot/shorts-autopilot/engine.py", line 69, in text_width
+    w += int(f.size * 1.05) if kind == "e" else f.getlength(s)
+                                                ^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.12.15/x64/lib/python3.12/site-packages/PIL/ImageFont.py", line 407, in getlength
+    return self.font.getlength(text, mode, direction, features, language) / 64
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: raqm_layout() failed.
+
