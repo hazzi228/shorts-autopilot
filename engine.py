@@ -465,6 +465,93 @@ def hit_sfx(sr):
     return (boom + noise) * 0.45
 
 
+# ---------- фото из Wikimedia Commons ----------
+# Настоящие картинки по теме держат зрителя лучше эмодзи. Берём только свободные лицензии,
+# для CC BY / BY-SA подписываем автора прямо на фото.
+COMMONS = "https://commons.wikimedia.org/w/api.php"
+UA = {"User-Agent": "shorts-autopilot/1.0 (https://t.me/PortfolioHazzer_bot)"}
+FREE_LIC = ("public domain", "pd", "cc0", "cc by", "cc-by")
+_photo_cache = {}
+
+
+def commons_photo(query):
+    if query in _photo_cache:
+        return _photo_cache[query]
+    res = None
+    try:
+        import io, html as html_, requests
+        r = requests.get(COMMONS, headers=UA, timeout=20, params=dict(
+            action="query", format="json", generator="search", gsrsearch=query + " filetype:bitmap",
+            gsrnamespace=6, gsrlimit=10, prop="imageinfo", iiprop="url|extmetadata|size|mime", iiurlwidth=1200)).json()
+        pages = sorted(r.get("query", {}).get("pages", {}).values(), key=lambda p: p.get("index", 99))
+        for pg in pages:
+            ii = (pg.get("imageinfo") or [{}])[0]
+            if ii.get("mime") not in ("image/jpeg", "image/png") or ii.get("width", 0) < 600 or not ii.get("thumburl"):
+                continue
+            md = ii.get("extmetadata", {})
+            lic = md.get("LicenseShortName", {}).get("value", "")
+            if not lic.lower().startswith(FREE_LIC) or "nc" in lic.lower() or "nd" in lic.lower().split("-"):
+                continue
+            data = requests.get(ii["thumburl"], headers=UA, timeout=30).content
+            im = Image.open(io.BytesIO(data)).convert("RGB")
+            credit = ""
+            if not lic.lower().startswith(("public domain", "pd", "cc0")):
+                author = re.sub(r"<[^>]+>", "", html_.unescape(md.get("Artist", {}).get("value", ""))).strip()
+                credit = "Фото: %s, %s" % ((author or "Wikimedia Commons")[:40], lic)
+            res = (im, credit)
+            break
+    except Exception as e:
+        print("фото не нашлось (%s): %s" % (query, e))
+    _photo_cache[query] = res
+    return res
+
+
+PHOTO_W, PHOTO_H = 960, 1060
+
+
+def photo_card(im, accent):
+    """Фото, обрезанное под карточку, с запасом 18% под медленный наезд камеры."""
+    k = 1.18
+    tw, th = int(PHOTO_W * k), int(PHOTO_H * k)
+    sc = max(tw / im.width, th / im.height)
+    im = im.resize((max(tw, int(im.width * sc)), max(th, int(im.height * sc))), Image.LANCZOS)
+    l, t = (im.width - tw) // 2, (im.height - th) // 3
+    return im.crop((l, t, l + tw, t + th)).convert("RGBA")
+
+
+def frame_photo(big, lt, seg, accent, credit, label, overlay):
+    p = min(1.0, max(0.0, lt / max(0.5, seg)))
+    z = 1.0 + 0.18 * (1 - p)  # медленный отъезд
+    cw, ch = int(PHOTO_W * z), int(PHOTO_H * z)
+    ox = (big.width - cw) // 2 + int((big.width - cw) * 0.3 * (p - 0.5))
+    oy = (big.height - ch) // 2
+    img = big.crop((ox, oy, ox + cw, oy + ch)).resize((PHOTO_W, PHOTO_H), Image.BILINEAR)
+    img.putalpha(rounded_mask((PHOTO_W, PHOTO_H), 48))
+    shade = Image.new("RGBA", (PHOTO_W, PHOTO_H), (0, 0, 0, 0))
+    sd = ImageDraw.Draw(shade)
+    for y in range(PHOTO_H - 320, PHOTO_H):
+        sd.line([(0, y), (PHOTO_W, y)], fill=(0, 0, 0, int(170 * (y - PHOTO_H + 320) / 320)))
+    shade.putalpha(Image.composite(shade.split()[3], Image.new("L", shade.size, 0), rounded_mask((PHOTO_W, PHOTO_H), 48)))
+    img.alpha_composite(shade)
+    d = ImageDraw.Draw(img)
+    d.rounded_rectangle((0, 0, PHOTO_W - 1, PHOTO_H - 1), 48, outline=accent + (255,), width=5)
+    if overlay is not None:
+        ov = overlay
+        if ov.width > 760:
+            ov = ov.resize((760, int(ov.height * 760 / ov.width)), Image.BILINEAR)
+        img.alpha_composite(ov, ((PHOTO_W - ov.width) // 2, PHOTO_H - ov.height - 40))
+    elif label:
+        f = font(BLACK, 56)
+        tw = text_width(label.upper(), f)
+        draw_mixed(img, (int((PHOTO_W - tw) / 2), PHOTO_H - 120), label.upper(), f, (255, 255, 255), stroke=6)
+    if credit:
+        f = font(MED, 22)
+        tw = text_width(credit, f)
+        d.rounded_rectangle((PHOTO_W - tw - 44, 20, PHOTO_W - 20, 56), 12, fill=(0, 0, 0, 150))
+        draw_mixed(img, (PHOTO_W - tw - 32, 24), credit, f, (230, 230, 230))
+    return img
+
+
 # ---------- captions ----------
 def chunk_caption(text):
     words = text.split()
@@ -531,6 +618,12 @@ def build(v, out_path, work):
     heroes = []
     for sc in timeline:
         h = sc["hero"]
+        sc["photos"] = []
+        if not sc.get("ad"):
+            for q in sc.get("img", [])[:3]:
+                ph = commons_photo(q)
+                if ph:
+                    sc["photos"].append((photo_card(ph[0], accent), ph[1]))
         if h[0] == "big":
             heroes.append(hero_big(h[1], h[2], accent))
         elif h[0] == "emoji":
@@ -625,6 +718,23 @@ def build(v, out_path, work):
         if si == 0:
             pop = fade = 1  # первый кадр сразу с картинкой: по нему зритель решает, листать ли дальше
         float_y = int(12 * math.sin(t * 2.2))
+        if sc["photos"]:
+            # фото меняется каждые 1,5-2 секунды, с наездом и вспышкой на смене
+            n_ = len(sc["photos"])
+            seg = (sc["end"] - sc["start"]) / n_
+            pi = min(n_ - 1, int(lt / seg))
+            plt = lt - pi * seg
+            big_, credit = sc["photos"][pi]
+            ov = hero if k == "big" else None
+            card = frame_photo(big_, plt, seg, accent, credit, sc["hero"][2] if len(sc["hero"]) > 2 else "", ov)
+            ps = 0.9 + 0.1 * ease_out_back(plt / 0.3) if (si or pi) else 1.0
+            if ps != 1.0:
+                card = card.resize((max(1, int(card.width * ps)), max(1, int(card.height * ps))), Image.BILINEAR)
+            fr.alpha_composite(card,
+                               ((W - card.width) // 2, hero_cy - card.height // 2 + float_y // 2))
+            if pi and plt < 0.07:
+                fr.alpha_composite(Image.new("RGBA", (W, H), (255, 255, 255, int(120 * (1 - plt / 0.07)))))
+            hero, k = None, "photo"
         if k == "timer":
             hero = hero_timer(max(0, lt - 0.2) * 3.0 / max(1.0, (sc["voice_end"] - sc["start"]) * 0.45), accent)
         if hero is not None and k not in ("cta", "reviews"):
