@@ -369,7 +369,7 @@ GEMINI_KEY = os.environ.get("GEMINI_API_KEY", "")
 GEMINI_VOICE = os.environ.get("GEMINI_VOICE", "Enceladus")
 GEMINI_TTS = ["gemini-3.8-flash-tts", "gemini-2.5-flash-preview-tts"]
 GEMINI_TEMPO = os.environ.get("GEMINI_TEMPO", "1.3")
-GEMINI_STYLE = "Say in Russian, like an energetic YouTube Shorts narrator, fast and natural: "
+GEMINI_STYLE = ""  # любую подсказку стиля Gemini зачитывает вслух, поэтому шлём только текст
 
 
 def tts_gemini_all(texts):
