@@ -1,0 +1,29 @@
+name: Voice samples Gemini
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  samples:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+      - run: pip install --upgrade edge-tts requests
+      - run: python tools/voice_gemini.py samples
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+      - name: Сохранить в ветку samples
+        run: |
+          git config user.name "shorts-autopilot"
+          git config user.email "actions@users.noreply.github.com"
+          git checkout --orphan samples
+          git rm -rqf --cached .
+          git add samples
+          git commit -qm "Примеры голосов"
+          git push -f origin samples
