@@ -16,7 +16,8 @@ def models():
     r = requests.get(API + "/models", params={"key": KEY, "pageSize": 200}, timeout=30).json()
     names = [m["name"].split("/")[-1] for m in r.get("models", []) if "tts" in m["name"]]
     print("TTS-модели:", names)
-    return sorted(names, key=lambda n: ("preview" in n, n), reverse=True)
+    pref = ["gemini-3.8-flash-tts", "gemini-2.5-flash-preview-tts", "gemini-3.1-flash-tts-preview"]
+    return [m for m in pref if m in names]
 
 
 def gemini(model, voice, path):
@@ -28,11 +29,9 @@ def gemini(model, voice, path):
         raise RuntimeError("%s %s" % (r.status_code, r.text[:200]))
     part = r.json()["candidates"][0]["content"]["parts"][0]["inlineData"]
     pcm = base64.b64decode(part["data"])
-    raw = path + ".pcm"
-    open(raw, "wb").write(pcm)
-    subprocess.run(["ffmpeg", "-loglevel", "error", "-y", "-f", "s16le", "-ar", "24000", "-ac", "1", "-i", raw,
-                    "-b:a", "128k", path], check=True)
-    os.remove(raw)
+    import wave
+    with wave.open(path, "wb") as wf:
+        wf.setnchannels(1); wf.setsampwidth(2); wf.setframerate(24000); wf.writeframes(pcm)
 
 
 async def edge(out):
@@ -51,11 +50,11 @@ def main(out):
     for i, v in enumerate(VOICES):
         for m in ms:
             try:
-                gemini(m, v, os.path.join(out, "%02d-Google-%s.mp3" % (i + 1, v)))
+                gemini(m, v, os.path.join(out, "%02d-Google-%s.wav" % (i + 1, v)))
                 print("ok", v, m)
                 break
             except Exception as e:
-                print("fail", v, m, e)
+                print("fail", v, m, str(e)[:150])
         time.sleep(21)  # бесплатный лимит — несколько запросов в минуту
     asyncio.run(edge(out))
     ok = [f for f in os.listdir(out) if os.path.getsize(os.path.join(out, f)) > 5000]
