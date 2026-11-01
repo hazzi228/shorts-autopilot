@@ -77,8 +77,12 @@ def upload(path, sc, log):
     pid = data["publish_id"]
     for _ in range(30):
         time.sleep(10)
-        st = requests.post(API + "/post/publish/status/fetch/", headers=head, timeout=60,
-                           json={"publish_id": pid}).json().get("data") or {}
+        try:  # TikTok иногда отвечает не JSON (сбой на их стороне): просто спрашиваем ещё раз
+            st = requests.post(API + "/post/publish/status/fetch/", headers=head, timeout=60,
+                               json={"publish_id": pid}).json().get("data") or {}
+        except Exception as e:
+            log("TikTok: статус пока не получен (%s)" % e)
+            continue
         if st.get("status") in ("SEND_TO_USER_INBOX", "PUBLISH_COMPLETE"):
             notify(kv, sc, log)
             return pid
