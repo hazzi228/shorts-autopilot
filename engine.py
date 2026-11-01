@@ -369,9 +369,7 @@ GEMINI_KEY = os.environ.get("GEMINI_API_KEY", "")
 GEMINI_VOICE = os.environ.get("GEMINI_VOICE", "Enceladus")
 GEMINI_TTS = ["gemini-3.8-flash-tts", "gemini-2.5-flash-preview-tts"]
 GEMINI_TEMPO = os.environ.get("GEMINI_TEMPO", "1.3")
-GEMINI_STYLE = ("Озвучь текст как популярный русский блогер в коротком видео: бодро, в быстром темпе, уверенно, с естественной "
-                "интонацией, паузами на точках и запятых, интригой в первой фразе. Между абзацами делай паузу "
-                "около секунды. Читай точно по тексту, ничего не добавляй. Текст:\n\n")
+GEMINI_STYLE = "Say in Russian, like an energetic YouTube Shorts narrator, fast and natural: "
 
 
 def tts_gemini_all(texts):
@@ -409,6 +407,7 @@ def tts_gemini_all(texts):
                     "-ar", str(sr), "-ac", "1", raw + "_fast.wav"], check=True)
     with wave.open(raw + "_fast.wav", "rb") as wf:
         a = np.frombuffer(wf.readframes(wf.getnframes()), dtype=np.int16).astype(np.float32) / 32768
+    print("Gemini TTS: %.1f с на %d символов" % (len(a) / sr, sum(len(t) for t in texts)))
     parts = split_by_pauses(a, sr, [len(t) for t in texts])
     if not parts:
         print("Gemini TTS: не получилось разрезать на сцены, озвучиваю по сценам")
