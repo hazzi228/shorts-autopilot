@@ -167,3 +167,9 @@ google.auth.exceptions.RefreshError: ('invalid_grant: Token has been expired or 
 RuntimeError: raqm_layout() failed.
 
 [2026-11-01 13:13:52] Собираю ролик: firefox (На логотипе Firefox вовсе не лиса 🦊), осталось сценариев: 11
+[2026-11-01 13:27:49] Собираю ролик: firefox (На логотипе Firefox вовсе не лиса 🦊), осталось сценариев: 11
+[2026-11-01 13:28:52] Ролик собран
+[2026-11-01 13:28:54] Загружен на YouTube: https://youtube.com/shorts/dHKAKNEAQc8
+[2026-11-01 13:29:35] Опубликован в Instagram: https://www.instagram.com/reel/DfM1z1rBqKu/
+[2026-11-01 13:30:13] Отправлен в черновики TikTok: На логотипе Firefox вовсе не лиса 🦊
+[2026-11-01 13:30:13] Готово: 2026-11-01 13-30 firefox.mp4
