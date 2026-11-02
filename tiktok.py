@@ -32,6 +32,11 @@ def _access_token(kv, log):
     return r["access_token"]
 
 
+def direct():
+    """Публиковать сразу, а не в черновики: включается переменной TIKTOK_MODE=direct в настройках GitHub."""
+    return os.environ.get("TIKTOK_MODE", "").strip().lower() == "direct"
+
+
 def caption(sc):
     desc = sc["description"].replace("#shorts", "#fyp").replace("?start=shorts", "?start=tiktok")
     return (sc["yt_title"] + "\n\n" + desc)[:2100]
@@ -63,9 +68,22 @@ def upload(path, sc, log):
         return None
     size = os.path.getsize(path)
     head = {"Authorization": "Bearer " + token, "Content-Type": "application/json; charset=UTF-8"}
+    source = {"source": "FILE_UPLOAD", "video_size": size, "chunk_size": size, "total_chunk_count": 1}
     # Одним куском можно до 64 МБ, наши ролики меньше.
-    r = requests.post(API + "/post/publish/inbox/video/init/", headers=head, timeout=60, json={
-        "source_info": {"source": "FILE_UPLOAD", "video_size": size, "chunk_size": size, "total_chunk_count": 1}}).json()
+    if direct():
+        # Сразу публикация (после аудита Direct Post): текст идёт вместе с роликом, черновик не нужен.
+        info = requests.post(API + "/post/publish/creator_info/query/", headers=head, timeout=60).json().get("data") or {}
+        opts = info.get("privacy_level_options") or ["SELF_ONLY"]
+        privacy = "PUBLIC_TO_EVERYONE" if "PUBLIC_TO_EVERYONE" in opts else opts[0]
+        if privacy != "PUBLIC_TO_EVERYONE":
+            log("TikTok разрешает только приватность %s: аудит Direct Post ещё не пройден" % privacy)
+        r = requests.post(API + "/post/publish/video/init/", headers=head, timeout=60, json={
+            "post_info": {"title": caption(sc)[:2200], "privacy_level": privacy, "disable_comment": False,
+                          "disable_duet": False, "disable_stitch": False},
+            "source_info": source}).json()
+    else:
+        r = requests.post(API + "/post/publish/inbox/video/init/", headers=head, timeout=60,
+                          json={"source_info": source}).json()
     data = r.get("data") or {}
     if not data.get("upload_url"):
         raise RuntimeError("TikTok не принял ролик: %s" % str(r.get("error") or r)[:300])
@@ -86,7 +104,8 @@ def upload(path, sc, log):
             log("TikTok: статус пока не получен (%s)" % e)
             continue
         if st.get("status") in ("SEND_TO_USER_INBOX", "PUBLISH_COMPLETE"):
-            notify(kv, sc, log)
+            if not direct():
+                notify(kv, sc, log)
             return pid
         if st.get("status") == "FAILED":
             raise RuntimeError("TikTok не обработал ролик: %s" % st.get("fail_reason"))

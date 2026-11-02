@@ -37,6 +37,7 @@ jobs:
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           TIKTOK_CLIENT_KEY: ${{ secrets.TIKTOK_CLIENT_KEY }}
           TIKTOK_CLIENT_SECRET: ${{ secrets.TIKTOK_CLIENT_SECRET }}
+          TIKTOK_MODE: ${{ vars.TIKTOK_MODE }}
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
           SCENARIO: ${{ inputs.id }}
         run: |

@@ -26,6 +26,7 @@ jobs:
       GH_DISPATCH_TOKEN: ${{ secrets.GH_DISPATCH_TOKEN }}
       TIKTOK_CLIENT_KEY: ${{ secrets.TIKTOK_CLIENT_KEY }}
       TIKTOK_CLIENT_SECRET: ${{ secrets.TIKTOK_CLIENT_SECRET }}
+      TIKTOK_MODE: ${{ vars.TIKTOK_MODE }}
     steps:
       - uses: actions/checkout@v5
 
@@ -72,7 +73,7 @@ jobs:
             echo "Нет секрета GH_DISPATCH_TOKEN: таймер не запускает ролики и поиск заказов (см. portfolio-bot/README.md)"
           fi
           # Ключи приложения TikTok: вход владельца командой /tiktok (см. portfolio-bot/tiktok.js).
-          for s in TIKTOK_CLIENT_KEY TIKTOK_CLIENT_SECRET; do
+          for s in TIKTOK_CLIENT_KEY TIKTOK_CLIENT_SECRET TIKTOK_MODE; do
             if [ -n "${!s}" ]; then printf '%s' "${!s}" | tr -d '[:space:]' | npx --yes wrangler@4.148.0 secret put $s; fi
           done
 
