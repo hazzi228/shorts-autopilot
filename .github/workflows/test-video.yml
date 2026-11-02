@@ -7,6 +7,10 @@ on:
         description: "Рекламный ролик (слот 12:00) вместо факта"
         type: boolean
         default: false
+      id:
+        description: "Собрать конкретный сценарий (id), например для ручной загрузки"
+        required: false
+        default: ""
 
 permissions:
   contents: write
@@ -36,7 +40,18 @@ jobs:
           tar -xjf v.tar.bz2
           cp vits-piper-ru_RU-dmitri-medium/ru_RU-dmitri-medium.onnx vits-piper-ru_RU-dmitri-medium/ru_RU-dmitri-medium.onnx.json voice/
           rm -rf v.tar.bz2 vits-piper-ru_RU-dmitri-medium
-      - run: python run.py --no-upload ${{ inputs.ad && '--ad' || '--fact' }} && cat log.txt
+      - run: |
+          if [ -n "${{ inputs.id }}" ]; then
+            python -u - <<'PY'
+          import json, os, engine
+          sid = "${{ inputs.id }}"
+          sc = next(s for s in json.load(open("scenarios.json", encoding="utf-8")) + json.load(open("ads.json", encoding="utf-8")) if s["id"] == sid)
+          os.makedirs("out", exist_ok=True)
+          engine.build(sc, "out/%s.mp4" % sid, "work")
+          PY
+          else
+            python run.py --no-upload ${{ inputs.ad && '--ad' || '--fact' }} && cat log.txt
+          fi
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
       - name: Сохранить ролик в ветку samples
