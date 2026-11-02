@@ -16,7 +16,9 @@ export async function loginLink(env, origin) {
   const state = crypto.randomUUID().replace(/-/g, "");
   await env.STATE.put(`tiktok_state:${state}`, "1", { expirationTtl: 900 });
   const q = new URLSearchParams({
-    client_key: env.TIKTOK_CLIENT_KEY, scope: SCOPES, response_type: "code",
+    client_key: env.TIKTOK_CLIENT_KEY, response_type: "code",
+    // TIKTOK_MODE=direct: просим ещё право публиковать сразу (нужен одобренный Direct Post)
+    scope: env.TIKTOK_MODE === "direct" ? SCOPES + ",video.publish" : SCOPES,
     redirect_uri: `${origin}/tiktok/callback`, state,
   });
   return `${AUTH_URL}?${q}`;

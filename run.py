@@ -247,7 +247,7 @@ def main():
             try:
                 import tiktok
                 if video_id and tiktok.upload(tmp_video, sc, log):
-                    log("Отправлен в черновики TikTok: " + sc["yt_title"])
+                    log(("Опубликован в TikTok: " if tiktok.direct() else "Отправлен в черновики TikTok: ") + sc["yt_title"])
             except Exception as e:
                 log("Ошибка отправки в TikTok: " + str(e)[:300])
 
