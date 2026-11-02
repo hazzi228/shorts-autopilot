@@ -185,3 +185,9 @@ RuntimeError: raqm_layout() failed.
 [2026-11-02 05:08:30] Опубликован в Instagram: https://www.instagram.com/reel/DfOhQWYtbVX/
 [2026-11-02 05:10:09] Отправлен в черновики TikTok: Android сначала делали вовсе не для телефонов 📷
 [2026-11-02 05:10:09] Готово: 2026-11-02 05-10 android-camera.mp4
+[2026-11-02 09:05:54] Собираю рекламный ролик: ad-sleep (Пока я сплю, бот продаёт на Playerok 😴)
+[2026-11-02 09:06:51] Ролик собран
+[2026-11-02 09:06:53] Загружен на YouTube: https://youtube.com/shorts/q0fC_ZXeYmw
+[2026-11-02 09:07:46] Опубликован в Instagram: https://www.instagram.com/reel/DfO8osKNkyh/
+[2026-11-02 09:12:41] Отправлен в черновики TikTok: Пока я сплю, бот продаёт на Playerok 😴
+[2026-11-02 09:12:41] Готово: 2026-11-02 09-12 ad-sleep.mp4
