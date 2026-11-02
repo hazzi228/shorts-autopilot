@@ -43,6 +43,27 @@ export default {
       }
       return new Response("ok");
     }
+    // Ролик не дошёл до TikTok: автопилот кладёт ролик и описание в KV, бот присылает их владельцу для ручной загрузки.
+    const fail = pathname.match(/^\/tiktok\/fail\/([0-9a-f]{32})$/);
+    if (fail && request.method === "POST") {
+      const meta = await env.STATE.get(`tt_fail-${fail[1]}`);
+      const video = await env.STATE.get(`tt_vid-${fail[1]}`, "arrayBuffer");
+      if (!meta || !video) return new Response("not found", { status: 404 });
+      await env.STATE.delete(`tt_fail-${fail[1]}`);
+      await env.STATE.delete(`tt_vid-${fail[1]}`);
+      const { why, caption } = JSON.parse(meta);
+      const bot = new Bot(env, origin);
+      for (const owner of await bot.ownerIds()) {
+        const form = new FormData();
+        form.append("chat_id", String(owner));
+        form.append("caption", `⚠️ ${why}. Загрузи ролик в TikTok вручную, описание ниже.`);
+        form.append("supports_streaming", "true");
+        form.append("video", new Blob([video], { type: "video/mp4" }), "tiktok.mp4");
+        await bot.call("sendVideo", null, form);
+        await bot.send(owner, `Описание (нажми на текст, чтобы скопировать):\n\n<pre>${esc(caption)}</pre>`);
+      }
+      return new Response("ok");
+    }
     if (request.method === "GET") return tiktok.sitePage(pathname) || new Response("Бот работает");
     if (request.method !== "POST") return new Response("Бот работает");
     if (request.headers.get("X-Telegram-Bot-Api-Secret-Token") !== (await webhookSecret(env.BOT_TOKEN))) {

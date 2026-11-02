@@ -6,6 +6,10 @@ on:
       id:
         description: "id сценария"
         required: true
+      fallback:
+        description: "Не слать в TikTok, а проверить отправку ролика в бот"
+        type: boolean
+        default: false
 
 permissions:
   contents: write
@@ -40,6 +44,7 @@ jobs:
           TIKTOK_MODE: ${{ vars.TIKTOK_MODE }}
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
           SCENARIO: ${{ inputs.id }}
+          TIKTOK_TEST_FALLBACK: ${{ inputs.fallback && '1' || '' }}
         run: |
           python -u - <<'PY'
           import json, os, engine, tiktok
