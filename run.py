@@ -10,6 +10,7 @@ S = os.path.dirname(os.path.abspath(__file__))
 os.chdir(S)
 CONFIG = os.path.join(S, "config.json")
 SCEN = os.path.join(S, "scenarios.json")
+ADS = os.path.join(S, "ads.json")  # рекламные ролики для слота 12:00, идут по кругу
 STATE = os.path.join(S, "state.json")
 TOKEN = os.path.join(S, "token.json")
 LOG = os.path.join(S, "log.txt")
@@ -136,8 +137,9 @@ def pid_alive(pid):
         return False
 
 
-SLOTS_MSK = [10, 16, 22]  # во сколько по Москве выходят ролики
-SLOT_WINDOW_H = 5          # если GitHub совсем опоздал, ролик всё равно выходит в течение 5 часов после слота
+SLOTS_MSK = [8, 12, 16, 22]  # во сколько по Москве выходят ролики
+AD_SLOT_MSK = 12             # в этот слот выходит реклама бота для продавцов Playerok (ads.json), в остальные факты
+SLOT_WINDOW_H = 3            # если GitHub опоздал, ролик всё равно выходит в течение 3 часов после слота
 
 
 def last_upload_utc():
@@ -157,14 +159,21 @@ def last_upload_utc():
         return None
 
 
-def slot_due():
-    """Пора ли выпускать ролик: идёт окно слота, а в этом слоте ролика ещё не было.
-    Расписание GitHub часто опаздывает на час-два, поэтому оно запускается каждый час, а решает этот код."""
+def current_slot():
+    """Последний начавшийся слот: (час по Москве, начало слота по UTC)."""
     now = datetime.datetime.now(datetime.timezone.utc).replace(tzinfo=None)
     msk = now + datetime.timedelta(hours=3)
     starts = [msk.replace(hour=h, minute=0, second=0, microsecond=0) - datetime.timedelta(days=d)
               for d in (0, 1) for h in SLOTS_MSK]
-    start = max(t for t in starts if t <= msk) - datetime.timedelta(hours=3)  # обратно в UTC
+    start = max(t for t in starts if t <= msk)
+    return start.hour, start - datetime.timedelta(hours=3)
+
+
+def slot_due():
+    """Пора ли выпускать ролик: идёт окно слота, а в этом слоте ролика ещё не было.
+    Расписание GitHub часто опаздывает на час-два, поэтому оно запускается каждый час, а решает этот код."""
+    now = datetime.datetime.now(datetime.timezone.utc).replace(tzinfo=None)
+    start = current_slot()[1]
     if now - start > datetime.timedelta(hours=SLOT_WINDOW_H):
         return False
     last = last_upload_utc()
@@ -196,12 +205,18 @@ def main():
         cfg = load_json(CONFIG, {})
         scenarios = load_json(SCEN, [])
         state = load_json(STATE, {"used": []})
+        ads = load_json(ADS, [])
+        is_ad = bool(ads) and ("--ad" in sys.argv or ("--fact" not in sys.argv and current_slot()[0] == AD_SLOT_MSK))
         todo = [s for s in scenarios if s["id"] not in state["used"]]
-        if not todo:
+        if is_ad:
+            sc = ads[state.get("ads_done", 0) % len(ads)]
+            log("Собираю рекламный ролик: %s (%s)" % (sc["id"], sc["yt_title"]))
+        elif not todo:
             log("Сценарии закончились. Попроси Claude сделать новую пачку и положить scenarios.json в эту папку.")
             return
-        sc = todo[0]
-        log("Собираю ролик: %s (%s), осталось сценариев: %d" % (sc["id"], sc["yt_title"], len(todo) - 1))
+        else:
+            sc = todo[0]
+            log("Собираю ролик: %s (%s), осталось сценариев: %d" % (sc["id"], sc["yt_title"], len(todo) - 1))
 
         import engine
         work = os.path.join(S, "work")
@@ -249,7 +264,10 @@ def main():
 
         # если загрузка не удалась, сценарий не помечаем: в следующий запуск попробуем снова
         if not no_upload and (video_id or not cfg.get("upload", True)):
-            state["used"].append(sc["id"])
+            if is_ad:
+                state["ads_done"] = state.get("ads_done", 0) + 1
+            else:
+                state["used"].append(sc["id"])
             save_json(STATE, state)
         log("Готово: " + fname)
         shutil.rmtree(work, ignore_errors=True)

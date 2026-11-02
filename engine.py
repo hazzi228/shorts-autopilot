@@ -20,6 +20,11 @@ SERIF_B = os.path.join(FONT_DIR, "DejaVuSerif-Bold.ttf")
 EMOJI = os.path.join(FONT_DIR, "NotoColorEmoji.ttf")
 VOICE = os.path.join(S, "voice", "ru_RU-dmitri-medium.onnx")
 HANDLE = "@PortfolioHazzer_bot"
+# Что показывает финальная карточка рекламы. Рекламные ролики (слот 12:00) подменяют это полем "cta" в сценарии.
+CTA_DEFAULT = dict(handle=HANDLE, name="Hazzer", subtitle="Telegram-боты и сайты под ключ", chip="Портфолио: " + HANDLE,
+                   items=["Оплата: СБП, карта, крипта", "Личный кабинет и админ-панель", "От идеи до запуска", "Приятная цена"],
+                   stars="отзывы клиентов")
+CTA = dict(CTA_DEFAULT)
 
 _fonts = {}
 def font(path, size):
@@ -239,12 +244,12 @@ def hero_cta(accent):
     im = Image.new("RGBA", (w, h), (0, 0, 0, 0))
     d = ImageDraw.Draw(im)
     d.rounded_rectangle((0, 0, w - 1, h - 1), 56, fill=(18, 20, 30, 235), outline=accent + (255,), width=4)
-    d.text((60, 60), "Hazzer", font=font(BLACK, 96), fill=(255, 255, 255))
+    d.text((60, 60), CTA["name"], font=font(BLACK, 96 if len(CTA["name"]) < 14 else 76), fill=(255, 255, 255))
     y = 180
-    for ln in wrap("Telegram-боты и сайты под ключ", font(BOLD, 60), 820):
+    for ln in wrap(CTA["subtitle"], font(BOLD, 60), 820):
         d.text((60, y), ln, font=font(BOLD, 60), fill=accent); y += 72
     y += 30
-    for item in ["Оплата: СБП, карта, крипта", "Личный кабинет и админ-панель", "От идеи до запуска", "Приятная цена"]:
+    for item in CTA["items"]:
         d.ellipse((60, y + 12, 96, y + 48), fill=accent)
         d.line((69, y + 30, 76, y + 38), fill=(255, 255, 255), width=5)
         d.line((76, y + 38, 89, y + 22), fill=(255, 255, 255), width=5)
@@ -253,11 +258,11 @@ def hero_cta(accent):
     x = 60
     for _ in range(5):
         e = emoji_img("⭐", 58); im.alpha_composite(e, (x, y)); x += 66
-    d.text((x + 16, y + 4), "отзывы клиентов", font=font(MED, 44), fill=(200, 204, 220))
+    d.text((x + 16, y + 4), CTA["stars"], font=font(MED, 44), fill=(200, 204, 220))
     return im, y + 100
 
 def cta_button(accent, pulse):
-    label = "✈  " + HANDLE
+    label = "✈  " + CTA["handle"]
     size = 84
     f = font(BLACK, size)
     while text_width(label, f) > 760:
@@ -699,6 +704,7 @@ def chunk_caption(text):
 # ---------- main ----------
 def build(v, out_path, work):
     os.makedirs(work, exist_ok=True)
+    CTA.clear(); CTA.update(CTA_DEFAULT, **(v.get("cta") or {}))
     accent = tuple(v["accent"])
     GAP = 0.14  # паузы короче: монтаж без провисаний
     audio_parts, timeline, t = [], [], 0.12
@@ -749,6 +755,11 @@ def build(v, out_path, work):
         h = sc["hero"]
         sc["photos"] = []
         if not sc.get("ad"):
+            for fn in sc.get("files", [])[:3]:  # свои картинки из репозитория (скриншоты, карточки)
+                try:
+                    sc["photos"].append((photo_card(Image.open(os.path.join(S, fn)).convert("RGB"), accent), ""))
+                except Exception as e:
+                    print("Картинка %s не открылась: %s" % (fn, e))
             for q in sc.get("img", [])[:3]:
                 ph = commons_photo(q)
                 if ph:
@@ -949,7 +960,7 @@ def build(v, out_path, work):
 
         # верхняя плашка
         if is_ad:
-            c = chip("Портфолио: " + HANDLE, accent + (230,))
+            c = chip(CTA["chip"], accent + (230,))
         else:
             c = chip(v["title"], (255, 255, 255, 30))
         fr.alpha_composite(c, ((W - c.width) // 2, 130))

@@ -65,7 +65,7 @@ def maybe_refresh(token, log):
 
 
 def caption(sc):
-    desc = sc["description"].replace("#shorts", "#reels")
+    desc = sc["description"].replace("#shorts", "#reels").replace("?start=shorts", "?start=reels")
     return (sc["yt_title"] + "\n\n" + desc)[:2100]
 
 
