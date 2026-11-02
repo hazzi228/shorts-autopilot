@@ -1,7 +1,7 @@
 [
  {
   "id": "ad-sleep",
-  "title": "Бот для продавцов Playerok",
+  "title": "Бот: t.me/SellerPlayerok_bot",
   "accent": [
    255,
    140,
@@ -18,10 +18,10 @@
    "автовыдача"
   ],
   "cta": {
-   "handle": "@SellerPlayerok_bot",
+   "handle": "t.me/SellerPlayerok_bot",
    "name": "Seller Bot",
    "subtitle": "Бот для продавцов Playerok",
-   "chip": "Бот для продавцов: @SellerPlayerok_bot",
+   "chip": "Бот: t.me/SellerPlayerok_bot",
    "items": [
     "Автовыдача сразу после оплаты",
     "Автоответы покупателям",
@@ -38,9 +38,6 @@
      "emoji",
      "😴",
      "24/7"
-    ],
-    "img": [
-     "Sleeping person bed"
     ]
    },
    {
@@ -62,9 +59,6 @@
      "emoji",
      "📈",
      "лоты наверху"
-    ],
-    "img": [
-     "Smartphone notification"
     ]
    },
    {
@@ -72,14 +66,14 @@
     "hero": [
      "cta"
     ],
-    "say": "Селлер Плеерок бот. Три дня бесплатно, ссылка в описании.",
-    "show": "3 дня бесплатно 👉 @SellerPlayerok_bot"
+    "say": "Селлер Плеерок бот. Три дня бесплатно, ссылка на экране и в описании.",
+    "show": "3 дня бесплатно 👉 t.me/SellerPlayerok_bot"
    }
   ]
  },
  {
   "id": "ad-phone",
-  "title": "Бот для продавцов Playerok",
+  "title": "Бот: t.me/SellerPlayerok_bot",
   "accent": [
    0,
    190,
@@ -96,10 +90,10 @@
    "автовыдача"
   ],
   "cta": {
-   "handle": "@SellerPlayerok_bot",
+   "handle": "t.me/SellerPlayerok_bot",
    "name": "Seller Bot",
    "subtitle": "Бот для продавцов Playerok",
-   "chip": "Бот для продавцов: @SellerPlayerok_bot",
+   "chip": "Бот: t.me/SellerPlayerok_bot",
    "items": [
     "Автовыдача сразу после оплаты",
     "Автоответы покупателям",
@@ -116,9 +110,6 @@
      "emoji",
      "📱",
      "ждать не надо"
-    ],
-    "img": [
-     "Person holding smartphone"
     ]
    },
    {
@@ -140,9 +131,6 @@
      "emoji",
      "🔑",
      "склад"
-    ],
-    "img": [
-     "Keys"
     ]
    },
    {
@@ -150,14 +138,14 @@
     "hero": [
      "cta"
     ],
-    "say": "Селлер Плеерок бот. Три дня бесплатно, ссылка в описании.",
-    "show": "3 дня бесплатно 👉 @SellerPlayerok_bot"
+    "say": "Селлер Плеерок бот. Три дня бесплатно, ссылка на экране и в описании.",
+    "show": "3 дня бесплатно 👉 t.me/SellerPlayerok_bot"
    }
   ]
  },
  {
   "id": "ad-lots",
-  "title": "Бот для продавцов Playerok",
+  "title": "Бот: t.me/SellerPlayerok_bot",
   "accent": [
    170,
    90,
@@ -174,10 +162,10 @@
    "автовыдача"
   ],
   "cta": {
-   "handle": "@SellerPlayerok_bot",
+   "handle": "t.me/SellerPlayerok_bot",
    "name": "Seller Bot",
    "subtitle": "Бот для продавцов Playerok",
-   "chip": "Бот для продавцов: @SellerPlayerok_bot",
+   "chip": "Бот: t.me/SellerPlayerok_bot",
    "items": [
     "Автовыдача сразу после оплаты",
     "Автоответы покупателям",
@@ -194,9 +182,6 @@
      "emoji",
      "📉",
      "лот внизу"
-    ],
-    "img": [
-     "Scrolling smartphone"
     ]
    },
    {
@@ -218,9 +203,6 @@
      "emoji",
      "📊",
      "сводка продаж"
-    ],
-    "img": [
-     "Spreadsheet on laptop"
     ]
    },
    {
@@ -228,14 +210,14 @@
     "hero": [
      "cta"
     ],
-    "say": "Селлер Плеерок бот. Три дня бесплатно, ссылка в описании.",
-    "show": "3 дня бесплатно 👉 @SellerPlayerok_bot"
+    "say": "Селлер Плеерок бот. Три дня бесплатно, ссылка на экране и в описании.",
+    "show": "3 дня бесплатно 👉 t.me/SellerPlayerok_bot"
    }
   ]
  },
  {
   "id": "ad-guides",
-  "title": "Бот для продавцов Playerok",
+  "title": "Бот: t.me/SellerPlayerok_bot",
   "accent": [
    40,
    210,
@@ -252,10 +234,10 @@
    "автовыдача"
   ],
   "cta": {
-   "handle": "@SellerPlayerok_bot",
+   "handle": "t.me/SellerPlayerok_bot",
    "name": "Seller Bot",
    "subtitle": "Бот для продавцов Playerok",
-   "chip": "Бот для продавцов: @SellerPlayerok_bot",
+   "chip": "Бот: t.me/SellerPlayerok_bot",
    "items": [
     "Автовыдача сразу после оплаты",
     "Автоответы покупателям",
@@ -284,9 +266,6 @@
      "emoji",
      "✍️",
      "текст пишет ИИ"
-    ],
-    "img": [
-     "Laptop typing"
     ]
    },
    {
@@ -296,9 +275,6 @@
      "emoji",
      "🎨",
      "обложка"
-    ],
-    "img": [
-     "Video game controller"
     ]
    },
    {
@@ -306,14 +282,14 @@
     "hero": [
      "cta"
     ],
-    "say": "Селлер Плеерок бот. Три дня бесплатно, ссылка в описании.",
-    "show": "3 дня бесплатно 👉 @SellerPlayerok_bot"
+    "say": "Селлер Плеерок бот. Три дня бесплатно, ссылка на экране и в описании.",
+    "show": "3 дня бесплатно 👉 t.me/SellerPlayerok_bot"
    }
   ]
  },
  {
   "id": "ad-setup",
-  "title": "Бот для продавцов Playerok",
+  "title": "Бот: t.me/SellerPlayerok_bot",
   "accent": [
    255,
    70,
@@ -330,10 +306,10 @@
    "автовыдача"
   ],
   "cta": {
-   "handle": "@SellerPlayerok_bot",
+   "handle": "t.me/SellerPlayerok_bot",
    "name": "Seller Bot",
    "subtitle": "Бот для продавцов Playerok",
-   "chip": "Бот для продавцов: @SellerPlayerok_bot",
+   "chip": "Бот: t.me/SellerPlayerok_bot",
    "items": [
     "Автовыдача сразу после оплаты",
     "Автоответы покупателям",
@@ -350,9 +326,6 @@
      "big",
      "5 мин",
      "подключение"
-    ],
-    "img": [
-     "Stopwatch"
     ]
    },
    {
@@ -374,9 +347,6 @@
      "big",
      "299 ₽",
      "в месяц"
-    ],
-    "img": [
-     "Calendar"
     ]
    },
    {
@@ -384,14 +354,14 @@
     "hero": [
      "cta"
     ],
-    "say": "Селлер Плеерок бот. Три дня бесплатно, ссылка в описании.",
-    "show": "3 дня бесплатно 👉 @SellerPlayerok_bot"
+    "say": "Селлер Плеерок бот. Три дня бесплатно, ссылка на экране и в описании.",
+    "show": "3 дня бесплатно 👉 t.me/SellerPlayerok_bot"
    }
   ]
  },
  {
   "id": "ad-night",
-  "title": "Бот для продавцов Playerok",
+  "title": "Бот: t.me/SellerPlayerok_bot",
   "accent": [
    255,
    200,
@@ -408,10 +378,10 @@
    "автовыдача"
   ],
   "cta": {
-   "handle": "@SellerPlayerok_bot",
+   "handle": "t.me/SellerPlayerok_bot",
    "name": "Seller Bot",
    "subtitle": "Бот для продавцов Playerok",
-   "chip": "Бот для продавцов: @SellerPlayerok_bot",
+   "chip": "Бот: t.me/SellerPlayerok_bot",
    "items": [
     "Автовыдача сразу после оплаты",
     "Автоответы покупателям",
@@ -428,9 +398,6 @@
      "emoji",
      "🌙",
      "3:00"
-    ],
-    "img": [
-     "Night city lights"
     ]
    },
    {
@@ -452,9 +419,6 @@
      "emoji",
      "👍",
      "когда удобно"
-    ],
-    "img": [
-     "Smartphone messaging"
     ]
    },
    {
@@ -462,8 +426,8 @@
     "hero": [
      "cta"
     ],
-    "say": "Селлер Плеерок бот. Три дня бесплатно, ссылка в описании.",
-    "show": "3 дня бесплатно 👉 @SellerPlayerok_bot"
+    "say": "Селлер Плеерок бот. Три дня бесплатно, ссылка на экране и в описании.",
+    "show": "3 дня бесплатно 👉 t.me/SellerPlayerok_bot"
    }
   ]
  }
