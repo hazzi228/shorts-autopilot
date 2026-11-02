@@ -75,7 +75,9 @@ def upload(path, sc, log):
     if up.status_code not in (200, 201):
         raise RuntimeError("TikTok: загрузка файла не прошла (%s): %s" % (up.status_code, up.text[:300]))
     pid = data["publish_id"]
-    for _ in range(30):
+    log("TikTok: ролик загружен, publish_id " + pid)
+    st = {}
+    for _ in range(90):  # до 15 минут: в часы пик TikTok обрабатывает ролик дольше 5 минут
         time.sleep(10)
         try:  # TikTok иногда отвечает не JSON (сбой на их стороне): просто спрашиваем ещё раз
             st = requests.post(API + "/post/publish/status/fetch/", headers=head, timeout=60,
@@ -88,6 +90,6 @@ def upload(path, sc, log):
             return pid
         if st.get("status") == "FAILED":
             raise RuntimeError("TikTok не обработал ролик: %s" % st.get("fail_reason"))
-    log("TikTok ещё обрабатывает ролик, черновик придёт позже")
+    log("TikTok за 15 минут не обработал ролик (статус %s), черновик может прийти позже или не прийти" % st.get("status"))
     notify(kv, sc, log)
     return pid
