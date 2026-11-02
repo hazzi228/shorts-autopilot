@@ -4,7 +4,7 @@
         python run.py --no-upload — собрать ролик без загрузки (проверка)
         python run.py --check     — только сказать, пора ли выпускать ролик (для облака)
 """
-import os, sys, json, glob, shutil, datetime, traceback, time
+import os, re, sys, json, glob, shutil, datetime, traceback, time
 
 S = os.path.dirname(os.path.abspath(__file__))
 os.chdir(S)
@@ -46,6 +46,27 @@ def output_dir(cfg):
     d = cfg.get("output_dir") or os.path.join(os.path.expanduser("~"), "Desktop", "Рекламные ролики")
     os.makedirs(d, exist_ok=True)
     return d
+
+
+NATRIA = os.path.join(S, "natria", "banner.mp4")
+
+
+def with_natria(sc):
+    """Ролик-факт под программу NATRIA: баннер в середине, без своей рекламы (правила 2.4 и 4.5), хэштег #natriavpn (2.9)."""
+    sc = dict(sc, banner="natria/banner.mp4")
+    sc["scenes"] = [x for x in sc["scenes"] if not x.get("ad")]
+    keep = []
+    for par in sc["description"].strip().split("\n\n"):
+        if re.search(r"@\w|t\.me/|🤖|Telegram-бот", par) and not par.lstrip().startswith("#"):
+            continue  # абзац с рекламой наших ботов
+        if par.lstrip().startswith("#"):
+            par = " ".join(w for w in par.split() if w.lower() not in ("#телеграмбот", "#telegrambot")) + " #natriavpn"
+        keep.append(par)
+    if not any(p.lstrip().startswith("#") for p in keep):
+        keep.append("#natriavpn #shorts")
+    sc["description"] = "\n\n".join(keep)
+    sc["tags"] = [t for t in sc.get("tags", []) if t.lower() != "телеграмбот"] + ["natriavpn"]
+    return sc
 
 
 def description_text(sc):
@@ -217,6 +238,9 @@ def main():
         else:
             sc = todo[0]
             log("Собираю ролик: %s (%s), осталось сценариев: %d" % (sc["id"], sc["yt_title"], len(todo) - 1))
+            if os.path.exists(NATRIA) and cfg.get("natria", True) and os.environ.get("NATRIA", "1") != "0":
+                sc = with_natria(sc)
+                log("Ролик с баннером NATRIA, без своей рекламы")
 
         import engine
         work = os.path.join(S, "work")

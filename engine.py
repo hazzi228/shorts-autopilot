@@ -702,6 +702,29 @@ def chunk_caption(text):
     return chunks
 
 # ---------- main ----------
+BANNER_SPEED = 1.3  # правила NATRIA 3.6: баннер можно ускорить максимум в 1,3 раза
+BANNER_W = 1120     # 3.2: не меньше 25% экрана (1080 по ширине дают только 23,9%), края по 20 px уходят за кадр
+
+
+def add_banner(path, total, banner):
+    """Анимированный баннер (зелёный фон вырезается) ровно по центру экрана и ровно в середине ролика."""
+    out = subprocess.run([FFMPEG, "-i", banner], capture_output=True, text=True).stderr
+    m = re.search(r"Duration: (\d+):(\d+):([\d.]+)", out)
+    bd = (int(m.group(1)) * 3600 + int(m.group(2)) * 60 + float(m.group(3))) / BANNER_SPEED
+    st = max(0.0, total / 2 - bd / 2)
+    ms = int(st * 1000)
+    fc = ("[1:v]setpts=(PTS-STARTPTS)/{sp}+{st}/TB,format=yuva420p,chromakey=0x00FE00:0.28:0.06,despill=green,"
+          "scale={bw}:-2[b];[0:v][b]overlay=(W-w)/2:(H-h)/2:eof_action=pass[v];"
+          "[1:a]atempo={sp},adelay={ms}|{ms},volume=0.8[ba];[0:a][ba]amix=inputs=2:duration=first:normalize=0[a]"
+          ).format(sp=BANNER_SPEED, st=st, bw=BANNER_W, ms=ms)
+    tmp = path[:-4] + "_b.mp4"
+    subprocess.run([FFMPEG, "-loglevel", "error", "-y", "-i", path, "-i", banner, "-filter_complex", fc,
+                    "-map", "[v]", "-map", "[a]", "-c:v", "libx264", "-preset", "medium", "-crf", "20",
+                    "-pix_fmt", "yuv420p", "-c:a", "aac", "-b:a", "192k", "-ar", "44100", "-ac", "2", tmp], check=True)
+    os.replace(tmp, path)
+    print("Баннер: %.2f-%.2f с из %.2f с" % (st, st + bd, total))
+
+
 def build(v, out_path, work):
     os.makedirs(work, exist_ok=True)
     CTA.clear(); CTA.update(CTA_DEFAULT, **(v.get("cta") or {}))
@@ -1005,6 +1028,8 @@ def build(v, out_path, work):
     ff.wait()
     if ff.returncode != 0:
         raise RuntimeError("ffmpeg не смог собрать видео")
+    if v.get("banner"):
+        add_banner(out_path, total, os.path.join(S, v["banner"]))
     final = out_path[:-4] + "_n.mp4"
     subprocess.run([FFMPEG, "-loglevel", "error", "-y", "-i", out_path, "-c:v", "copy", "-af",
                     "loudnorm=I=-14:TP=-1.5:LRA=11", "-ar", "44100", "-c:a", "aac", "-b:a", "192k",
