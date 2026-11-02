@@ -54,18 +54,17 @@ def notify(kv, sc, log):
         log("Не удалось прислать описание для TikTok в Telegram: %s" % r.text[:200])
 
 
-def upload(path, sc, log):
-    """Отправляет ролик в черновики TikTok. Возвращает publish_id или None, если TikTok не подключён."""
+def _upload(path, sc, log, kv):
+    """Отправляет ролик в черновики TikTok. Возвращает publish_id, None, если TikTok не подключён, или False, если не обработал."""
     import requests
     if not os.environ.get("TIKTOK_CLIENT_KEY", "").strip():
         return None
-    from cfkv import KV
-    kv = KV()
-    if not kv.ok:
-        return None
+    if os.environ.get("TIKTOK_TEST_FALLBACK"):  # проверка запасного пути из tt-post.yml
+        return False
     token = _access_token(kv, log)
     if not token:
-        return None
+        log("TikTok не подключён: напиши боту /tiktok")
+        return False
     size = os.path.getsize(path)
     head = {"Authorization": "Bearer " + token, "Content-Type": "application/json; charset=UTF-8"}
     source = {"source": "FILE_UPLOAD", "video_size": size, "chunk_size": size, "total_chunk_count": 1}
@@ -109,6 +108,41 @@ def upload(path, sc, log):
             return pid
         if st.get("status") == "FAILED":
             raise RuntimeError("TikTok не обработал ролик: %s" % st.get("fail_reason"))
-    log("TikTok за 15 минут не обработал ролик (статус %s), черновик может прийти позже или не прийти" % st.get("status"))
-    notify(kv, sc, log)
+    log("TikTok за 15 минут не обработал ролик (статус %s)" % st.get("status"))
+    return False
+
+
+def upload(path, sc, log):
+    """Отправляет ролик в TikTok. Если не вышло, присылает владельцу в бот сам ролик и описание для ручной загрузки."""
+    if not os.environ.get("TIKTOK_CLIENT_KEY", "").strip():
+        return None
+    from cfkv import KV
+    kv = KV()
+    if not kv.ok:
+        return None
+    try:
+        pid = _upload(path, sc, log, kv)
+    except Exception as e:
+        send_fallback(kv, path, sc, "TikTok не принял ролик: %s" % str(e)[:200], log)
+        raise
+    if pid is False:
+        send_fallback(kv, path, sc, "TikTok за 15 минут не обработал ролик", log)
     return pid
+
+
+def send_fallback(kv, path, sc, why, log):
+    """Кладёт ролик и описание в KV на час и просит бота прислать их владельцу."""
+    import requests
+    try:
+        key = secrets.token_hex(16)
+        url = kv.bot_url()
+        with open(path, "rb") as f:
+            ok = url and kv.put("tt_vid-" + key, f.read(), ttl=3600) and \
+                kv.put("tt_fail-" + key, json.dumps({"why": why, "caption": caption(sc)}).encode(), ttl=3600)
+        if not ok:
+            log("Не удалось подготовить ролик для отправки в бот")
+            return
+        r = requests.post(url + "/tiktok/fail/" + key, timeout=180)
+        log("Ролик и описание для TikTok отправлены в бот" if r.ok else "Бот не прислал ролик: %s" % r.text[:200])
+    except Exception as e:
+        log("Не удалось прислать ролик в бот: %s" % str(e)[:200])
