@@ -33,7 +33,7 @@ def _access_token(kv, log):
 
 
 def caption(sc):
-    desc = sc["description"].replace("#shorts", "#fyp")
+    desc = sc["description"].replace("#shorts", "#fyp").replace("?start=shorts", "?start=tiktok")
     return (sc["yt_title"] + "\n\n" + desc)[:2100]
 
 

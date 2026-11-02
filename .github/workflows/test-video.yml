@@ -2,6 +2,11 @@ name: Test video (no upload)
 
 on:
   workflow_dispatch:
+    inputs:
+      ad:
+        description: "Рекламный ролик (слот 12:00) вместо факта"
+        type: boolean
+        default: false
 
 permissions:
   contents: write
@@ -31,7 +36,7 @@ jobs:
           tar -xjf v.tar.bz2
           cp vits-piper-ru_RU-dmitri-medium/ru_RU-dmitri-medium.onnx vits-piper-ru_RU-dmitri-medium/ru_RU-dmitri-medium.onnx.json voice/
           rm -rf v.tar.bz2 vits-piper-ru_RU-dmitri-medium
-      - run: python run.py --no-upload && cat log.txt
+      - run: python run.py --no-upload ${{ inputs.ad && '--ad' || '--fact' }} && cat log.txt
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
       - name: Сохранить ролик в ветку samples
