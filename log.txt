@@ -179,3 +179,9 @@ RuntimeError: raqm_layout() failed.
 [2026-11-01 19:08:36] Опубликован в Instagram: https://www.instagram.com/reel/DfNcmxJz0XX/
 [2026-11-01 19:09:48] Ошибка отправки в TikTok: Expecting value: line 1 column 1 (char 0)
 [2026-11-01 19:09:48] Готово: 2026-11-01 19-09 ctrl-alt-del.mp4
+[2026-11-02 05:05:54] Собираю ролик: android-camera (Android сначала делали вовсе не для телефонов 📷), осталось сценариев: 21
+[2026-11-02 05:07:43] Ролик собран
+[2026-11-02 05:07:45] Загружен на YouTube: https://youtube.com/shorts/irxxTl-h0JY
+[2026-11-02 05:08:30] Опубликован в Instagram: https://www.instagram.com/reel/DfOhQWYtbVX/
+[2026-11-02 05:10:09] Отправлен в черновики TikTok: Android сначала делали вовсе не для телефонов 📷
+[2026-11-02 05:10:09] Готово: 2026-11-02 05-10 android-camera.mp4
