@@ -1,8 +1,5 @@
 {
  "ids": [
-  "tg:FrWork3/16209",
-  "tg:FrWork3/16210",
-  "tg:FreeWorkFeed/4164",
   "tg:FreeWorkFeed/4165",
   "tg:freelancetaverna/4083",
   "tg:onlinevakansii/10720",
@@ -4999,7 +4996,10 @@
   "tg:zakazy_freelance/76651",
   "tg:zakazy_freelance/76652",
   "tg:zakazy_freelance/76653",
-  "tg:zakazy_freelance/76654"
+  "tg:zakazy_freelance/76654",
+  "tg:digitaltender/5584",
+  "tg:freegolup/4443",
+  "tg:zakazy_freelance/76655"
  ],
  "prints": [
   "26a9ac8a749827aab4ad7fd9b96c0cd5",
