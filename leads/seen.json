@@ -1,12 +1,5 @@
 {
  "ids": [
-  "tg:sova_freelance/16615",
-  "tg:sova_freelance/16616",
-  "tg:sova_freelance/16617",
-  "tg:freelancce/16493",
-  "tg:freelancce/16494",
-  "tg:freelancce/16495",
-  "tg:sova_freelance/16618",
   "tg:freelancce/16496",
   "tg:freelancce/16497",
   "kwork:3269392",
@@ -4999,7 +4992,14 @@
   "tg:program_job/6598",
   "tg:zakazy_freelance/76964",
   "tg:zakazy_freelance/76965",
-  "tg:zakazy_freelance/76966"
+  "tg:zakazy_freelance/76966",
+  "tg:workfreelan/1176",
+  "tg:WebWorkerr/1255",
+  "tg:zakazy_freelance/76967",
+  "tg:zakazy_freelance/76968",
+  "tg:zakazy_freelance/76969",
+  "tg:zakazy_freelance/76970",
+  "tg:zakazy_freelance/76971"
  ],
  "prints": [
   "26a9ac8a749827aab4ad7fd9b96c0cd5",
