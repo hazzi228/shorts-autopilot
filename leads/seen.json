@@ -1,6 +1,5 @@
 {
  "ids": [
-  "tg:FreeWorkFeed/4172",
   "tg:zakazy_it/229",
   "kwork:1998266",
   "tg:theyseeku/39832",
@@ -4999,7 +4998,8 @@
   "tg:zakazy_freelance/76872",
   "tg:zakazy_freelance/76873",
   "tg:zakazy_freelance/76874",
-  "rss:https://www.fl.ru/projects/5528142/vesti-kanal-na-yutub.html"
+  "rss:https://www.fl.ru/projects/5528142/vesti-kanal-na-yutub.html",
+  "tg:zakazy_freelance/76875"
  ],
  "prints": [
   "26a9ac8a749827aab4ad7fd9b96c0cd5",
