@@ -305,3 +305,11 @@ RuntimeError: raqm_layout() failed.
 [2026-11-06 05:08:17] TikTok: ролик загружен, publish_id v_inbox_file~v2.7704920228546938882
 [2026-11-06 05:22:34] Отправлен в черновики TikTok: Название iPod взяли из фантастики 🚀
 [2026-11-06 05:22:34] Готово: 2026-11-06 05-22 ipod-name.mp4
+[2026-11-06 09:05:53] Собираю рекламный ролик: ad-setup (Автовыдача на Playerok за 5 минут ⏱️)
+[2026-11-06 09:06:56] Ролик собран
+[2026-11-06 09:06:59] Загружен на YouTube: https://youtube.com/shorts/yfLbexnfZo8
+[2026-11-06 09:08:12] Опубликован в Instagram: https://www.instagram.com/reel/DfZP4hwNI6d/
+[2026-11-06 09:08:14] TikTok: ролик загружен, publish_id v_inbox_file~v2.7704982622879090710
+[2026-11-06 09:23:35] Не удалось прислать ролик в бот: Expecting value: line 1 column 1 (char 0)
+[2026-11-06 09:23:35] Ошибка отправки в TikTok: Expecting value: line 1 column 1 (char 0)
+[2026-11-06 09:23:35] Готово: 2026-11-06 09-23 ad-setup.mp4
