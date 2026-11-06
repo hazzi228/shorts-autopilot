@@ -320,3 +320,10 @@ RuntimeError: raqm_layout() failed.
 [2026-11-06 13:08:47] Ролик и описание для TikTok отправлены в бот
 [2026-11-06 13:08:47] Ошибка отправки в TikTok: TikTok не принял ролик: {'code': 'spam_risk_too_many_pending_share', 'message': 'spam_risk_too_many_pending_share', 'log_id': '202611061308394A2C1810243E99548BA8'}
 [2026-11-06 13:08:47] Готово: 2026-11-06 13-08 yahoo-name.mp4
+[2026-11-06 19:05:56] Собираю ролик: python-name (Python назван вовсе не в честь змеи 🐍), осталось сценариев: 7
+[2026-11-06 19:07:45] Ролик собран
+[2026-11-06 19:07:47] Загружен на YouTube: https://youtube.com/shorts/dJEm0TURMPI
+[2026-11-06 19:08:35] Опубликован в Instagram: https://www.instagram.com/reel/DfaUk7_hC-F/
+[2026-11-06 19:08:39] TikTok: ролик загружен, publish_id v_inbox_file~v2.7705137329871194134
+[2026-11-06 19:19:28] Отправлен в черновики TikTok: Python назван вовсе не в честь змеи 🐍
+[2026-11-06 19:19:28] Готово: 2026-11-06 19-19 python-name.mp4
