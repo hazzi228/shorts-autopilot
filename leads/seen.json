@@ -1,10 +1,5 @@
 {
  "ids": [
-  "tg:freelance_zakazy/451177",
-  "tg:freelance_zakazy/451178",
-  "tg:freelance_zakazy/451179",
-  "tg:zakazy_freelance/74441",
-  "tg:freelance_zakazy/451180",
   "tg:zakazy_freelance/74442",
   "tg:freelance_zakazy/451181",
   "tg:freelance_zakazy/451182",
@@ -4999,7 +4994,12 @@
   "tg:zakazy_freelance/77794",
   "rss:https://www.fl.ru/projects/5528477/sdelat-rils-.html",
   "tg:zakazy_freelance/77795",
-  "tg:zakazy_freelance/77796"
+  "tg:zakazy_freelance/77796",
+  "tg:zakazy_freelance/77797",
+  "tg:onlinevakansii/10771",
+  "tg:zakazy_freelance/77798",
+  "tg:zakazy_freelance/77799",
+  "tg:zakazy_freelance/77800"
  ],
  "prints": [
   "26a9ac8a749827aab4ad7fd9b96c0cd5",
