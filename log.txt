@@ -362,3 +362,14 @@ RuntimeError: raqm_layout() failed.
 [2026-11-08 05:08:28] TikTok: ролик загружен, publish_id v_inbox_file~v2.7705662345225717782
 [2026-11-08 05:17:58] Отправлен в черновики TikTok: Pac-Man сначала звали иначе, и это была проблема 👾
 [2026-11-08 05:17:58] Готово: 2026-11-08 05-17 pac-man.mp4
+[2026-11-08 09:05:52] Собираю рекламный ролик: ad-sleep (Пока я сплю, бот продаёт на Playerok 😴)
+[2026-11-08 09:07:03] Ролик собран
+[2026-11-08 09:07:05] Загружен на YouTube: https://youtube.com/shorts/5mC3rVrDL3s
+[2026-11-08 09:07:46] Опубликован в Instagram: https://www.instagram.com/reel/DfeZaMbJumD/
+[2026-11-08 09:07:48] TikTok: ролик загружен, publish_id v_inbox_file~v2.7705724669227239446
+[2026-11-08 09:18:00] Не удалось прислать описание для TikTok в Telegram: <!DOCTYPE html>
+<!--[if lt IE 7]> <html class="no-js ie6 oldie" lang="en-US"> <![endif]-->
+<!--[if IE 7]>    <html class="no-js ie7 oldie" lang="en-US"> <![endif]-->
+<!--[if IE 8]>    <html class="no-
+[2026-11-08 09:18:00] Отправлен в черновики TikTok: Пока я сплю, бот продаёт на Playerok 😴
+[2026-11-08 09:18:00] Готово: 2026-11-08 09-18 ad-sleep.mp4
