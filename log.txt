@@ -388,3 +388,10 @@ RuntimeError: raqm_layout() failed.
 [2026-11-08 19:07:44] TikTok: ролик загружен, publish_id v_inbox_file~v2.7705879193170757654
 [2026-11-08 19:18:56] Отправлен в черновики TikTok: Почему символ Linux — пингвин 🐧
 [2026-11-08 19:18:56] Готово: 2026-11-08 19-18 tux-penguin.mp4
+[2026-11-09 05:05:56] Собираю ролик: konami-code (Самый известный чит придумали от бессилия 🎮), осталось сценариев: 4
+[2026-11-09 05:08:10] Ролик собран
+[2026-11-09 05:08:13] Загружен на YouTube: https://youtube.com/shorts/c1ADxrcIqQM
+[2026-11-09 05:08:14] Ошибка публикации в Instagram: нет страницы Facebook с привязанным Instagram: {'error': {'message': 'This Page access token belongs to a Page that is not accessible.', 'type': 'OAuthException', 'code': 190, 'fbtrace_id': 'AwjVvniItazWuq4qMKlGmsk'}}
+[2026-11-09 05:08:18] TikTok: ролик загружен, publish_id v_inbox_file~v2.7706033609794390038
+[2026-11-09 05:23:04] Отправлен в черновики TikTok: Самый известный чит придумали от бессилия 🎮
+[2026-11-09 05:23:04] Готово: 2026-11-09 05-23 konami-code.mp4
