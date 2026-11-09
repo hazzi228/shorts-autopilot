@@ -409,3 +409,10 @@ RuntimeError: raqm_layout() failed.
 [2026-11-09 13:08:08] TikTok: ролик загружен, publish_id v_inbox_file~v2.7706157589155055618
 [2026-11-09 13:22:23] Отправлен в черновики TikTok: Почему Google пришлось создать поиск по картинкам? 👗
 [2026-11-09 13:22:23] Готово: 2026-11-09 13-22 google-images-jlo.mp4
+[2026-11-09 19:05:55] Собираю ролик: playstation-origin (Главная ошибка Nintendo, создавшая PlayStation 🎮), осталось сценариев: 2
+[2026-11-09 19:07:14] Ролик собран
+[2026-11-09 19:07:16] Загружен на YouTube: https://youtube.com/shorts/JoROhGwW6j0
+[2026-11-09 19:07:16] Ошибка публикации в Instagram: нет страницы Facebook с привязанным Instagram: {'error': {'message': 'This Page access token belongs to a Page that is not accessible.', 'type': 'OAuthException', 'code': 190, 'fbtrace_id': 'AQw9b0Vl2V6xKUc9TRLvNcN'}}
+[2026-11-09 19:07:20] TikTok: ролик загружен, publish_id v_inbox_file~v2.7706250172485060630
+[2026-11-09 19:20:35] Отправлен в черновики TikTok: Главная ошибка Nintendo, создавшая PlayStation 🎮
+[2026-11-09 19:20:35] Готово: 2026-11-09 19-20 playstation-origin.mp4
