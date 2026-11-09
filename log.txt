@@ -402,3 +402,10 @@ RuntimeError: raqm_layout() failed.
 [2026-11-09 09:07:48] TikTok: ролик загружен, publish_id v_inbox_file~v2.7706095750354192406
 [2026-11-09 09:18:43] Отправлен в черновики TikTok: Бот украдёт деньги с Playerok? Разбираем 🔒
 [2026-11-09 09:18:43] Готово: 2026-11-09 09-18 ad-safety.mp4
+[2026-11-09 13:06:02] Собираю ролик: google-images-jlo (Почему Google пришлось создать поиск по картинкам? 👗), осталось сценариев: 3
+[2026-11-09 13:08:01] Ролик собран
+[2026-11-09 13:08:03] Загружен на YouTube: https://youtube.com/shorts/V5N8xLaADtE
+[2026-11-09 13:08:04] Ошибка публикации в Instagram: нет страницы Facebook с привязанным Instagram: {'error': {'message': 'This Page access token belongs to a Page that is not accessible.', 'type': 'OAuthException', 'code': 190, 'fbtrace_id': 'AOfEiU8UolN1fiPMjRvFjog'}}
+[2026-11-09 13:08:08] TikTok: ролик загружен, publish_id v_inbox_file~v2.7706157589155055618
+[2026-11-09 13:22:23] Отправлен в черновики TikTok: Почему Google пришлось создать поиск по картинкам? 👗
+[2026-11-09 13:22:23] Готово: 2026-11-09 13-22 google-images-jlo.mp4
