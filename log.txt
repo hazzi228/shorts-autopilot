@@ -423,3 +423,11 @@ RuntimeError: raqm_layout() failed.
 [2026-11-10 05:08:24] TikTok: ролик загружен, publish_id v_inbox_file~v2.7706404433323821078
 [2026-11-10 05:18:49] Отправлен в черновики TikTok: Самая странная первая покупка в истории интернета 🔦
 [2026-11-10 05:18:49] Готово: 2026-11-10 05-18 ebay-laser.mp4
+[2026-11-10 09:05:51] Собираю рекламный ролик: ad-phone (Хватит ждать покупателя с телефоном в руках 📱)
+[2026-11-10 09:06:31] Ролик собран
+[2026-11-10 09:06:32] Загружен на YouTube: https://youtube.com/shorts/vY_sDGMYAIA
+[2026-11-10 09:06:33] Ошибка публикации в Instagram: нет страницы Facebook с привязанным Instagram: {'error': {'message': 'This Page access token belongs to a Page that is not accessible.', 'type': 'OAuthException', 'code': 190, 'fbtrace_id': 'AfYxQnXHJq8wAgmPdnnEcdx'}}
+[2026-11-10 09:06:37] TikTok: ролик загружен, publish_id v_inbox_file~v2.7706466630292965398
+[2026-11-10 09:22:05] TikTok за 15 минут не обработал ролик (статус PROCESSING_UPLOAD)
+[2026-11-10 09:22:11] Ролик и описание для TikTok отправлены в бот
+[2026-11-10 09:22:12] Готово: 2026-11-10 09-22 ad-phone.mp4
