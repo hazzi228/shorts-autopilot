@@ -416,3 +416,10 @@ RuntimeError: raqm_layout() failed.
 [2026-11-09 19:07:20] TikTok: ролик загружен, publish_id v_inbox_file~v2.7706250172485060630
 [2026-11-09 19:20:35] Отправлен в черновики TikTok: Главная ошибка Nintendo, создавшая PlayStation 🎮
 [2026-11-09 19:20:35] Готово: 2026-11-09 19-20 playstation-origin.mp4
+[2026-11-10 05:05:58] Собираю ролик: ebay-laser (Самая странная первая покупка в истории интернета 🔦), осталось сценариев: 1
+[2026-11-10 05:08:16] Ролик собран
+[2026-11-10 05:08:19] Загружен на YouTube: https://youtube.com/shorts/yPAT_Xk63hA
+[2026-11-10 05:08:20] Ошибка публикации в Instagram: нет страницы Facebook с привязанным Instagram: {'error': {'message': 'This Page access token belongs to a Page that is not accessible.', 'type': 'OAuthException', 'code': 190, 'fbtrace_id': 'A6wJvZ93MJy5SJFSxbUnc0L'}}
+[2026-11-10 05:08:24] TikTok: ролик загружен, publish_id v_inbox_file~v2.7706404433323821078
+[2026-11-10 05:18:49] Отправлен в черновики TikTok: Самая странная первая покупка в истории интернета 🔦
+[2026-11-10 05:18:49] Готово: 2026-11-10 05-18 ebay-laser.mp4
