@@ -431,3 +431,10 @@ RuntimeError: raqm_layout() failed.
 [2026-11-10 09:22:05] TikTok за 15 минут не обработал ролик (статус PROCESSING_UPLOAD)
 [2026-11-10 09:22:11] Ролик и описание для TikTok отправлены в бот
 [2026-11-10 09:22:12] Готово: 2026-11-10 09-22 ad-phone.mp4
+[2026-11-10 13:06:00] Собираю ролик: netflix-apollo (Один штраф за фильм изменил киноиндустрию навсегда 🎬), осталось сценариев: 0
+[2026-11-10 13:08:14] Ролик собран
+[2026-11-10 13:08:16] Загружен на YouTube: https://youtube.com/shorts/E41zyPy3k5c
+[2026-11-10 13:08:16] Ошибка публикации в Instagram: нет страницы Facebook с привязанным Instagram: {'error': {'message': 'This Page access token belongs to a Page that is not accessible.', 'type': 'OAuthException', 'code': 190, 'fbtrace_id': 'ANPddXJlRtrMhXk0wwa7dLs'}}
+[2026-11-10 13:08:20] TikTok: ролик загружен, publish_id v_inbox_file~v2.7706528685138085910
+[2026-11-10 13:19:24] Отправлен в черновики TikTok: Один штраф за фильм изменил киноиндустрию навсегда 🎬
+[2026-11-10 13:19:24] Готово: 2026-11-10 13-19 netflix-apollo.mp4
