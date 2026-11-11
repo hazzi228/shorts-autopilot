@@ -1,16 +1,5 @@
 {
  "ids": [
-  "tg:freelancce/16563",
-  "tg:getwork25/5074",
-  "tg:zakazy_freelance/75266",
-  "tg:zakazy_freelance/75267",
-  "rss:https://www.fl.ru/projects/5527489/proektirovanie-svetovoy-konstruktsii.html",
-  "tg:zakazy_freelance/75268",
-  "tg:zakazy_it/277",
-  "tg:zakazy_freelance/75269",
-  "tg:zakazy_freelance/75270",
-  "rss:https://www.fl.ru/projects/5527491/proyti-kyc-v-claudeai.html",
-  "tg:zakazy_freelance/75271",
   "tg:zakazy_freelance/75272",
   "tg:zakazy_freelance/75273",
   "tg:zakazy_freelance/75274",
@@ -4999,7 +4988,18 @@
   "tg:zakazy_freelance/78738",
   "tg:zakazy_freelance/78739",
   "tg:workk_on/19113",
-  "tg:frilancekomfort/14402"
+  "tg:frilancekomfort/14402",
+  "tg:zakazy_freelance/78740",
+  "tg:freegolup/4477",
+  "tg:zakazy_freelance/78741",
+  "tg:zakazy_freelance/78742",
+  "rss:https://www.fl.ru/projects/5528875/nujen-lending-pod-web3-produkt-nedorogo.html",
+  "tg:theyseeku/40362",
+  "rss:https://www.fl.ru/projects/5528876/razrabotka-3-originalnyih-dizaynov-dlya-brenda.html",
+  "tg:zakazy_freelance/78743",
+  "rss:https://www.fl.ru/projects/5528877/razrabotka-dizayna-upakovki-zubnoy-schtki-ruchki.html",
+  "tg:zakazy_freelance/78744",
+  "tg:zakazy_freelance/78745"
  ],
  "prints": [
   "26a9ac8a749827aab4ad7fd9b96c0cd5",
@@ -5276,7 +5276,8 @@
   "39ffc8b627a799391747fa0720b3f558",
   "5504bae8ff29231bbbc59b186eb17234",
   "415f12ca2ada5a2993c2b4b013edd543",
-  "6a575b8138003abca1dc042af749dbb7"
+  "6a575b8138003abca1dc042af749dbb7",
+  "c09dedbd3eb6e4074a04734599ec5063"
  ],
  "chat_ids": [
   "5884708943",
