@@ -465,3 +465,10 @@ RuntimeError: raqm_layout() failed.
 [2026-11-11 13:08:01] TikTok: ролик загружен, publish_id v_inbox_file~v2.7706899714373060630
 [2026-11-11 13:21:10] Отправлен в черновики TikTok: Самый жуткий монстр в играх появился из-за банального бага 💣
 [2026-11-11 13:21:10] Готово: 2026-11-11 13-21 creeper-origin.mp4
+[2026-11-11 19:05:53] Собираю ролик: drive-c (Куда навсегда пропали диски А и Б на компьютере? 💻), осталось сценариев: 11
+[2026-11-11 19:07:40] Ролик собран
+[2026-11-11 19:07:42] Загружен на YouTube: https://youtube.com/shorts/ZR-bQkUgnU0
+[2026-11-11 19:07:43] Ошибка публикации в Instagram: нет страницы Facebook с привязанным Instagram: {'error': {'message': 'This Page access token belongs to a Page that is not accessible.', 'type': 'OAuthException', 'code': 190, 'fbtrace_id': 'A1hblXcXB7-yNztcsRBaLiK'}}
+[2026-11-11 19:07:47] TikTok: ролик загружен, publish_id v_inbox_file~v2.7706992515613984791
+[2026-11-11 19:22:00] Отправлен в черновики TikTok: Куда навсегда пропали диски А и Б на компьютере? 💻
+[2026-11-11 19:22:00] Готово: 2026-11-11 19-22 drive-c.mp4
