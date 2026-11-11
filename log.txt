@@ -443,3 +443,10 @@ RuntimeError: raqm_layout() failed.
 [2026-11-10 20:50:00] Сценарии закончились. Попроси Claude сделать новую пачку и положить scenarios.json в эту папку.
 [2026-11-10 21:05:54] Сценарии закончились. Попроси Claude сделать новую пачку и положить scenarios.json в эту папку.
 [2026-11-11 05:05:55] Сценарии закончились. Попроси Claude сделать новую пачку и положить scenarios.json в эту папку.
+[2026-11-11 06:06:06] Собираю ролик: first-cell-call (Кому на самом деле был сделан первый мобильный звонок? 📞), осталось сценариев: 5
+[2026-11-11 06:07:58] Ролик собран
+[2026-11-11 06:08:01] Загружен на YouTube: https://youtube.com/shorts/GF5G3Apkkkw
+[2026-11-11 06:08:01] Ошибка публикации в Instagram: нет страницы Facebook с привязанным Instagram: {'error': {'message': 'This Page access token belongs to a Page that is not accessible.', 'type': 'OAuthException', 'code': 190, 'fbtrace_id': 'ARM3edtiIPGuctwdB5Yn51a'}}
+[2026-11-11 06:08:05] TikTok: ролик загружен, publish_id v_inbox_file~v2.7706791318361524227
+[2026-11-11 06:19:54] Отправлен в черновики TikTok: Кому на самом деле был сделан первый мобильный звонок? 📞
+[2026-11-11 06:19:54] Готово: 2026-11-11 06-19 first-cell-call.mp4
