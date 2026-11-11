@@ -458,3 +458,10 @@ RuntimeError: raqm_layout() failed.
 [2026-11-11 09:22:18] TikTok за 15 минут не обработал ролик (статус PROCESSING_UPLOAD)
 [2026-11-11 09:22:29] Ролик и описание для TikTok отправлены в бот
 [2026-11-11 09:22:29] Готово: 2026-11-11 09-22 ad-lots.mp4
+[2026-11-11 13:05:53] Собираю ролик: creeper-origin (Самый жуткий монстр в играх появился из-за банального бага 💣), осталось сценариев: 12
+[2026-11-11 13:07:54] Ролик собран
+[2026-11-11 13:07:57] Загружен на YouTube: https://youtube.com/shorts/GeBZQRTdQ9M
+[2026-11-11 13:07:58] Ошибка публикации в Instagram: нет страницы Facebook с привязанным Instagram: {'error': {'message': 'This Page access token belongs to a Page that is not accessible.', 'type': 'OAuthException', 'code': 190, 'fbtrace_id': 'AYpwxnh43MerPHPN_1rQbba'}}
+[2026-11-11 13:08:01] TikTok: ролик загружен, publish_id v_inbox_file~v2.7706899714373060630
+[2026-11-11 13:21:10] Отправлен в черновики TikTok: Самый жуткий монстр в играх появился из-за банального бага 💣
+[2026-11-11 13:21:10] Готово: 2026-11-11 13-21 creeper-origin.mp4
