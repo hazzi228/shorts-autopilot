@@ -450,3 +450,11 @@ RuntimeError: raqm_layout() failed.
 [2026-11-11 06:08:05] TikTok: ролик загружен, publish_id v_inbox_file~v2.7706791318361524227
 [2026-11-11 06:19:54] Отправлен в черновики TikTok: Кому на самом деле был сделан первый мобильный звонок? 📞
 [2026-11-11 06:19:54] Готово: 2026-11-11 06-19 first-cell-call.mp4
+[2026-11-11 09:05:54] Собираю рекламный ролик: ad-lots (Почему твой лот на Playerok никто не видит 👀)
+[2026-11-11 09:06:46] Ролик собран
+[2026-11-11 09:06:48] Загружен на YouTube: https://youtube.com/shorts/xTQgYvvfmQE
+[2026-11-11 09:06:48] Ошибка публикации в Instagram: нет страницы Facebook с привязанным Instagram: {'error': {'message': 'This Page access token belongs to a Page that is not accessible.', 'type': 'OAuthException', 'code': 190, 'fbtrace_id': 'AqikW2y--y3lqIXfp6WFQwu'}}
+[2026-11-11 09:06:51] TikTok: ролик загружен, publish_id v_inbox_file~v2.7706837761165166614
+[2026-11-11 09:22:18] TikTok за 15 минут не обработал ролик (статус PROCESSING_UPLOAD)
+[2026-11-11 09:22:29] Ролик и описание для TikTok отправлены в бот
+[2026-11-11 09:22:29] Готово: 2026-11-11 09-22 ad-lots.mp4
