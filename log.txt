@@ -493,3 +493,11 @@ RuntimeError: raqm_layout() failed.
 [2026-11-12 09:07:11] TikTok: ролик загружен, publish_id v_inbox_file~v2.7707208938575661078
 [2026-11-12 09:18:38] Отправлен в черновики TikTok: Бот сам выкладывает лоты на Playerok 🧠
 [2026-11-12 09:18:38] Готово: 2026-11-12 09-18 ad-guides.mp4
+[2026-11-12 13:05:55] Собираю ролик: windows-sound-mac (Главный звук Windows создали на компьютере врага 🎹), осталось сценариев: 9
+[2026-11-12 13:07:59] Ролик собран
+[2026-11-12 13:08:01] Загружен на YouTube: https://youtube.com/shorts/WfOmUEJbYB4
+[2026-11-12 13:08:01] Ошибка публикации в Instagram: нет страницы Facebook с привязанным Instagram: {'error': {'message': 'This Page access token belongs to a Page that is not accessible.', 'type': 'OAuthException', 'code': 190, 'fbtrace_id': 'A2UGSpfPEEM7zydLR1CEVTd'}}
+[2026-11-12 13:08:05] TikTok: ролик загружен, publish_id v_inbox_file~v2.7707270907731052566
+[2026-11-12 13:23:36] TikTok за 15 минут не обработал ролик (статус PROCESSING_UPLOAD)
+[2026-11-12 13:23:44] Ролик и описание для TikTok отправлены в бот
+[2026-11-12 13:23:44] Готово: 2026-11-12 13-23 windows-sound-mac.mp4
