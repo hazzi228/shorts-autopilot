@@ -486,3 +486,10 @@ RuntimeError: raqm_layout() failed.
 </html>
 
 [2026-11-12 05:07:47] Готово: 2026-11-12 05-07 chrome-dino.mp4
+[2026-11-12 09:06:00] Собираю рекламный ролик: ad-guides (Бот сам выкладывает лоты на Playerok 🧠)
+[2026-11-12 09:07:05] Ролик собран
+[2026-11-12 09:07:07] Загружен на YouTube: https://youtube.com/shorts/Pv10yFGqua8
+[2026-11-12 09:07:08] Ошибка публикации в Instagram: нет страницы Facebook с привязанным Instagram: {'error': {'message': 'This Page access token belongs to a Page that is not accessible.', 'type': 'OAuthException', 'code': 190, 'fbtrace_id': 'AP6x9lR1hmdQCWkQ-PoVutZ'}}
+[2026-11-12 09:07:11] TikTok: ролик загружен, publish_id v_inbox_file~v2.7707208938575661078
+[2026-11-12 09:18:38] Отправлен в черновики TikTok: Бот сам выкладывает лоты на Playerok 🧠
+[2026-11-12 09:18:38] Готово: 2026-11-12 09-18 ad-guides.mp4
