@@ -472,3 +472,17 @@ RuntimeError: raqm_layout() failed.
 [2026-11-11 19:07:47] TikTok: ролик загружен, publish_id v_inbox_file~v2.7706992515613984791
 [2026-11-11 19:22:00] Отправлен в черновики TikTok: Куда навсегда пропали диски А и Б на компьютере? 💻
 [2026-11-11 19:22:00] Готово: 2026-11-11 19-22 drive-c.mp4
+[2026-11-12 05:05:54] Собираю ролик: chrome-dino (Почему при сбое интернета появляется именно динозавр? 🦖), осталось сценариев: 10
+[2026-11-12 05:07:35] Ролик собран
+[2026-11-12 05:07:38] Загружен на YouTube: https://youtube.com/shorts/842ebVknLAg
+[2026-11-12 05:07:38] Ошибка публикации в Instagram: нет страницы Facebook с привязанным Instagram: {'error': {'message': 'This Page access token belongs to a Page that is not accessible.', 'type': 'OAuthException', 'code': 190, 'fbtrace_id': 'AW-2YtMkGgVhivpH4ETKi-4'}}
+[2026-11-12 05:07:47] Ролик и описание для TikTok отправлены в бот
+[2026-11-12 05:07:47] Ошибка отправки в TikTok: TikTok: загрузка файла не прошла (500): <html>
+<head><title>500 Internal Server Error</title></head>
+<body>
+<center><h1>500 Internal Server Error</h1></center>
+<hr><center>TLB</center>
+</body>
+</html>
+
+[2026-11-12 05:07:47] Готово: 2026-11-12 05-07 chrome-dino.mp4
