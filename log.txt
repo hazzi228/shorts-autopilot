@@ -501,3 +501,10 @@ RuntimeError: raqm_layout() failed.
 [2026-11-12 13:23:36] TikTok за 15 минут не обработал ролик (статус PROCESSING_UPLOAD)
 [2026-11-12 13:23:44] Ролик и описание для TikTok отправлены в бот
 [2026-11-12 13:23:44] Готово: 2026-11-12 13-23 windows-sound-mac.mp4
+[2026-11-12 19:05:58] Собираю ролик: windows-xp-bliss (Самое просматриваемое фото в истории — без фотошопа 🌄), осталось сценариев: 8
+[2026-11-12 19:08:33] Ролик собран
+[2026-11-12 19:08:36] Загружен на YouTube: https://youtube.com/shorts/Ije8mnp7jkU
+[2026-11-12 19:08:37] Ошибка публикации в Instagram: нет страницы Facebook с привязанным Instagram: {'error': {'message': 'This Page access token belongs to a Page that is not accessible.', 'type': 'OAuthException', 'code': 190, 'fbtrace_id': 'AMTe74YRu0qnX_JqEoFNW4p'}}
+[2026-11-12 19:08:41] TikTok: ролик загружен, publish_id v_inbox_file~v2.7707363592831797270
+[2026-11-12 19:23:24] Отправлен в черновики TikTok: Самое просматриваемое фото в истории — без фотошопа 🌄
+[2026-11-12 19:23:24] Готово: 2026-11-12 19-23 windows-xp-bliss.mp4
