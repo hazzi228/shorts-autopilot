@@ -508,3 +508,10 @@ RuntimeError: raqm_layout() failed.
 [2026-11-12 19:08:41] TikTok: ролик загружен, publish_id v_inbox_file~v2.7707363592831797270
 [2026-11-12 19:23:24] Отправлен в черновики TikTok: Самое просматриваемое фото в истории — без фотошопа 🌄
 [2026-11-12 19:23:24] Готово: 2026-11-12 19-23 windows-xp-bliss.mp4
+[2026-11-13 05:05:52] Собираю ролик: first-smartphone (Кто создал первый смартфон на самом деле? 📱), осталось сценариев: 7
+[2026-11-13 05:07:31] Ролик собран
+[2026-11-13 05:07:33] Загружен на YouTube: https://youtube.com/shorts/UStkucWCpcI
+[2026-11-13 05:07:33] Ошибка публикации в Instagram: нет страницы Facebook с привязанным Instagram: {'error': {'message': 'This Page access token belongs to a Page that is not accessible.', 'type': 'OAuthException', 'code': 190, 'fbtrace_id': 'ADt2XGY8XuZYS1P68RniNWJ'}}
+[2026-11-13 05:07:36] TikTok: ролик загружен, publish_id v_inbox_file~v2.7707517860091971606
+[2026-11-13 05:17:26] Отправлен в черновики TikTok: Кто создал первый смартфон на самом деле? 📱
+[2026-11-13 05:17:26] Готово: 2026-11-13 05-17 first-smartphone.mp4
