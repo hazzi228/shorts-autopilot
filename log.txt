@@ -522,3 +522,10 @@ RuntimeError: raqm_layout() failed.
 [2026-11-13 09:06:59] TikTok: ролик загружен, publish_id v_inbox_file~v2.7707579991316498454
 [2026-11-13 09:20:27] Отправлен в черновики TikTok: Автовыдача на Playerok за 5 минут ⏱️
 [2026-11-13 09:20:27] Готово: 2026-11-13 09-20 ad-setup.mp4
+[2026-11-13 13:05:59] Собираю ролик: playstation-symbols (Что значат эти символы на геймпаде? 🎮), осталось сценариев: 6
+[2026-11-13 13:07:56] Ролик собран
+[2026-11-13 13:07:59] Загружен на YouTube: https://youtube.com/shorts/O5Mh81c0Mvo
+[2026-11-13 13:07:59] Ошибка публикации в Instagram: нет страницы Facebook с привязанным Instagram: {'error': {'message': 'This Page access token belongs to a Page that is not accessible.', 'type': 'OAuthException', 'code': 190, 'fbtrace_id': 'AtCT2SXwVinmoUVbDkoTULr'}}
+[2026-11-13 13:08:03] TikTok: ролик загружен, publish_id v_inbox_file~v2.7707642046361651222
+[2026-11-13 13:23:33] Отправлен в черновики TikTok: Что значат эти символы на геймпаде? 🎮
+[2026-11-13 13:23:33] Готово: 2026-11-13 13-23 playstation-symbols.mp4
