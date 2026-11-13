@@ -1,14 +1,5 @@
 {
  "ids": [
-  "tg:zakazy_freelance/75891",
-  "tg:workk_on/19051",
-  "rss:https://www.fl.ru/projects/5527691/ischu-tsifrovogo-hudojnika-illyustratora-dlya-dorabotki-ai-illyustratsii-pechat-3--2-m.html",
-  "tg:zakazy_freelance/75892",
-  "tg:zakazy_freelance/75893",
-  "tg:zakazy_freelance/75894",
-  "tg:zakazy_freelance/75895",
-  "tg:zakazy_it/293",
-  "tg:zakazy_freelance/75896",
   "tg:zakazy_freelance/75897",
   "tg:zakazy_freelance/75898",
   "tg:zakazy_freelance/75899",
@@ -4999,7 +4990,16 @@
   "tg:zakazy_freelance/79378",
   "tg:theyseeku/40426",
   "tg:program_job/6751",
-  "tg:zakazy_freelance/79379"
+  "tg:zakazy_freelance/79379",
+  "rss:https://www.fl.ru/projects/5521574/zapustit-reklamu-v-yandeks-direkte-.html",
+  "tg:makingmoney/221",
+  "rss:https://www.fl.ru/projects/5529107/programmist-1szup-zagruzka-zarplatyi-iz-oblachnyih-tablits-po-api-i-otpravka-vedomostey-v-sberbank.html",
+  "rss:https://www.fl.ru/projects/5529109/model-schitov-elektriki-v-revit-2021.html",
+  "rss:https://www.fl.ru/projects/5529110/nujen-sayt.html",
+  "tg:FrWork3/16337",
+  "tg:zakazy_freelance/79380",
+  "tg:FreelanceBay/16773",
+  "tg:zakazy_freelance/79381"
  ],
  "prints": [
   "26a9ac8a749827aab4ad7fd9b96c0cd5",
@@ -5289,7 +5289,8 @@
   "d22a5f1205093b961f8c7ee39890b6bc",
   "3cd22ed9b061f327a86c9f016ce08e43",
   "b9bf8b84a98ada8af864956f8ef0c742",
-  "08c9fa184b97903bd9da1c5c0f83caae"
+  "08c9fa184b97903bd9da1c5c0f83caae",
+  "82515bd62371f92a4ab4808220847b37"
  ],
  "chat_ids": [
   "5884708943",
