@@ -529,3 +529,10 @@ RuntimeError: raqm_layout() failed.
 [2026-11-13 13:08:03] TikTok: ролик загружен, publish_id v_inbox_file~v2.7707642046361651222
 [2026-11-13 13:23:33] Отправлен в черновики TikTok: Что значат эти символы на геймпаде? 🎮
 [2026-11-13 13:23:33] Готово: 2026-11-13 13-23 playstation-symbols.mp4
+[2026-11-13 19:05:54] Собираю ролик: cursor-tilt (Почему стрелка мыши на экране наклонена? 🖱️), осталось сценариев: 5
+[2026-11-13 19:07:42] Ролик собран
+[2026-11-13 19:07:44] Загружен на YouTube: https://youtube.com/shorts/idSjBX6BbcU
+[2026-11-13 19:07:44] Ошибка публикации в Instagram: нет страницы Facebook с привязанным Instagram: {'error': {'message': 'This Page access token belongs to a Page that is not accessible.', 'type': 'OAuthException', 'code': 190, 'fbtrace_id': 'AnrybxWoT97s0uWVX8XL7d_'}}
+[2026-11-13 19:07:55] Ролик и описание для TikTok отправлены в бот
+[2026-11-13 19:07:55] Ошибка отправки в TikTok: TikTok не принял ролик: {'code': 'spam_risk_too_many_pending_share', 'message': 'spam_risk_too_many_pending_share', 'log_id': '20261113190746C26B6A09A97E22CED843'}
+[2026-11-13 19:07:55] Готово: 2026-11-13 19-07 cursor-tilt.mp4
