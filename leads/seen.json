@@ -1,9 +1,5 @@
 {
  "ids": [
-  "tg:zakazy_freelance/76222",
-  "tg:program_job/6535",
-  "tg:zakazy_freelance/76223",
-  "tg:zakazy_freelance/76224",
   "tg:theyseeku/40112",
   "tg:freelancce/16599",
   "tg:getwork25/5085",
@@ -4999,7 +4995,11 @@
   "tg:zakazy_freelance/79754",
   "tg:zakazy_freelance/79755",
   "tg:theyseeku/40465",
-  "tg:freelancce/16742"
+  "tg:freelancce/16742",
+  "tg:zakazy_freelance/79756",
+  "tg:zakazy_freelance/79757",
+  "tg:zakazy_freelance/79758",
+  "tg:zakazy_freelance/79759"
  ],
  "prints": [
   "26a9ac8a749827aab4ad7fd9b96c0cd5",
