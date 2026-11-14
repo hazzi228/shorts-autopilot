@@ -550,3 +550,10 @@ RuntimeError: raqm_layout() failed.
 [2026-11-14 09:07:08] TikTok: ролик загружен, publish_id v_inbox_file~v2.7707951052142643222
 [2026-11-14 09:21:30] Отправлен в черновики TikTok: Покупатель пишет в 3 ночи. Кто ответит? 🌙
 [2026-11-14 09:21:30] Готово: 2026-11-14 09-21 ad-night.mp4
+[2026-11-14 13:05:55] Собираю ролик: compact-disc-beethoven (Почему компакт-диск звучит именно 74 минуты? 💿), осталось сценариев: 3
+[2026-11-14 13:08:04] Ролик собран
+[2026-11-14 13:08:06] Загружен на YouTube: https://youtube.com/shorts/z1Exw4WWoB8
+[2026-11-14 13:08:06] Ошибка публикации в Instagram: нет страницы Facebook с привязанным Instagram: {'error': {'message': 'This Page access token belongs to a Page that is not accessible.', 'type': 'OAuthException', 'code': 190, 'fbtrace_id': 'A5xI4KurFmORo8NiCd74G_2'}}
+[2026-11-14 13:08:10] TikTok: ролик загружен, publish_id v_inbox_file~v2.7708013118840031254
+[2026-11-14 13:23:35] Отправлен в черновики TikTok: Почему компакт-диск звучит именно 74 минуты? 💿
+[2026-11-14 13:23:35] Готово: 2026-11-14 13-23 compact-disc-beethoven.mp4
