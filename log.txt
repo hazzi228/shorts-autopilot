@@ -557,3 +557,10 @@ RuntimeError: raqm_layout() failed.
 [2026-11-14 13:08:10] TikTok: ролик загружен, publish_id v_inbox_file~v2.7708013118840031254
 [2026-11-14 13:23:35] Отправлен в черновики TikTok: Почему компакт-диск звучит именно 74 минуты? 💿
 [2026-11-14 13:23:35] Готово: 2026-11-14 13-23 compact-disc-beethoven.mp4
+[2026-11-14 19:05:57] Собираю ролик: twitter-140-limit (Откуда взялся лимит в 140 символов в Twitter? 🐦), осталось сценариев: 2
+[2026-11-14 19:07:47] Ролик собран
+[2026-11-14 19:07:49] Загружен на YouTube: https://youtube.com/shorts/6jrPZqzO-1o
+[2026-11-14 19:07:50] Ошибка публикации в Instagram: нет страницы Facebook с привязанным Instagram: {'error': {'message': 'This Page access token belongs to a Page that is not accessible.', 'type': 'OAuthException', 'code': 190, 'fbtrace_id': 'AVLoSZ_ibrHnH12K09xjw5y'}}
+[2026-11-14 19:07:54] TikTok: ролик загружен, publish_id v_inbox_file~v2.7708105739902060567
+[2026-11-14 19:21:48] Отправлен в черновики TikTok: Откуда взялся лимит в 140 символов в Twitter? 🐦
+[2026-11-14 19:21:48] Готово: 2026-11-14 19-21 twitter-140-limit.mp4
