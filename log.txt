@@ -543,3 +543,10 @@ RuntimeError: raqm_layout() failed.
 [2026-11-14 05:08:43] TikTok: ролик загружен, publish_id v_inbox_file~v2.7707888970054699030
 [2026-11-14 05:20:46] Отправлен в черновики TikTok: Тайна чёрной водолазки Стива Джобса 👕
 [2026-11-14 05:20:46] Готово: 2026-11-14 05-20 jobs-turtleneck.mp4
+[2026-11-14 09:05:55] Собираю рекламный ролик: ad-night (Покупатель пишет в 3 ночи. Кто ответит? 🌙)
+[2026-11-14 09:07:01] Ролик собран
+[2026-11-14 09:07:03] Загружен на YouTube: https://youtube.com/shorts/XoHZ2UpxoTo
+[2026-11-14 09:07:03] Ошибка публикации в Instagram: нет страницы Facebook с привязанным Instagram: {'error': {'message': 'This Page access token belongs to a Page that is not accessible.', 'type': 'OAuthException', 'code': 190, 'fbtrace_id': 'AJz-UmvesGnRii3FfeQ-Ycf'}}
+[2026-11-14 09:07:08] TikTok: ролик загружен, publish_id v_inbox_file~v2.7707951052142643222
+[2026-11-14 09:21:30] Отправлен в черновики TikTok: Покупатель пишет в 3 ночи. Кто ответит? 🌙
+[2026-11-14 09:21:30] Готово: 2026-11-14 09-21 ad-night.mp4
