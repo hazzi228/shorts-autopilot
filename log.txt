@@ -564,3 +564,10 @@ RuntimeError: raqm_layout() failed.
 [2026-11-14 19:07:54] TikTok: ролик загружен, publish_id v_inbox_file~v2.7708105739902060567
 [2026-11-14 19:21:48] Отправлен в черновики TikTok: Откуда взялся лимит в 140 символов в Twitter? 🐦
 [2026-11-14 19:21:48] Готово: 2026-11-14 19-21 twitter-140-limit.mp4
+[2026-11-15 05:05:57] Собираю ролик: windows-solitaire (Секретная цель легендарной «Косынки» 🃏), осталось сценариев: 1
+[2026-11-15 05:07:50] Ролик собран
+[2026-11-15 05:07:52] Загружен на YouTube: https://youtube.com/shorts/lJ1Jkf0zmwk
+[2026-11-15 05:07:52] Ошибка публикации в Instagram: нет страницы Facebook с привязанным Instagram: {'error': {'message': 'This Page access token belongs to a Page that is not accessible.', 'type': 'OAuthException', 'code': 190, 'fbtrace_id': 'AHLVpTD3jC820DqH8kp7D_S'}}
+[2026-11-15 05:07:56] TikTok: ролик загружен, publish_id v_inbox_file~v2.7708260203032037398
+[2026-11-15 05:16:29] Отправлен в черновики TikTok: Секретная цель легендарной «Косынки» 🃏
+[2026-11-15 05:16:29] Готово: 2026-11-15 05-16 windows-solitaire.mp4
