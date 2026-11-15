@@ -1,8 +1,5 @@
 {
  "ids": [
-  "tg:zakazy_freelance/76513",
-  "tg:theyseeku/40140",
-  "tg:zakazy_freelance/76514",
   "tg:zakazy_freelance/76515",
   "tg:zakazy_freelance/76516",
   "rss:https://www.fl.ru/projects/5527982/produkt-igra-chislo-pi-simulyator-it-arhitekturyi.html",
@@ -4999,7 +4996,10 @@
   "rss:https://www.fl.ru/projects/5529345/razrabotka-logotipa.html",
   "tg:zakazy_freelance/80084",
   "tg:zakazy_freelance/80085",
-  "tg:zakazy_freelance/80086"
+  "tg:zakazy_freelance/80086",
+  "tg:freegolup/4464",
+  "tg:freegolup/4465",
+  "tg:zakazy_freelance/80087"
  ],
  "prints": [
   "26a9ac8a749827aab4ad7fd9b96c0cd5",
