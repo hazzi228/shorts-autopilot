@@ -1,16 +1,5 @@
 {
  "ids": [
-  "tg:zakazy_freelance/76385",
-  "tg:zakazy_freelance/76386",
-  "rss:https://www.fl.ru/projects/5527932/montaj-korotkih-videorolikov-shorts-tiktok-i-td-.html",
-  "rss:https://www.fl.ru/projects/5527933/vosstanovlenie-i-modernizatsiya-wordpress-sayta-na-novom-hostinge.html",
-  "tg:zakazy_freelance/76387",
-  "tg:zakazy_freelance/76388",
-  "tg:zakazy_freelance/76389",
-  "tg:zakazy_freelance/76390",
-  "tg:zakazy_freelance/76391",
-  "tg:zakazy_freelance/76392",
-  "tg:zakazy_freelance/76393",
   "tg:zakazy_freelance/76394",
   "tg:zakazy_freelance/76395",
   "tg:zakazy_freelance/76396",
@@ -4999,7 +4988,18 @@
   "tg:zakazy_freelance/79994",
   "rss:https://www.fl.ru/projects/5529305/tablitsa-notion.html",
   "tg:zakazy_freelance/79995",
-  "tg:zakazy_freelance/79996"
+  "tg:zakazy_freelance/79996",
+  "tg:program_job/6775",
+  "rss:https://www.fl.ru/projects/5529306/sozdanie-sayta-gipnologa-regressologa-.html",
+  "tg:program_job/6776",
+  "tg:rabotka_zdes/13621",
+  "tg:zakazy_freelance/79997",
+  "tg:zakazy_freelance/79998",
+  "tg:theyseeku/40482",
+  "tg:zakazy_freelance/79999",
+  "rss:https://www.fl.ru/projects/5529307/oformlenie-sots-setey.html",
+  "tg:zakazy_freelance/80000",
+  "tg:zakazy_freelance/80001"
  ],
  "prints": [
   "26a9ac8a749827aab4ad7fd9b96c0cd5",
@@ -5306,7 +5306,9 @@
   "32499c1a205291dd116cc158b0140dda",
   "56385ac330a1eb341acd05f00b15b102",
   "85d5f8ca415eaaa665de35a472caf189",
-  "2eb02483eab0fb770b7b7c7bdd8a29e7"
+  "2eb02483eab0fb770b7b7c7bdd8a29e7",
+  "6440e62822e55ffae7c71042833bc6d8",
+  "3d65bca9cff54ab6779db59ffc79e2ca"
  ],
  "chat_ids": [
   "5884708943",
