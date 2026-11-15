@@ -579,3 +579,11 @@ RuntimeError: raqm_layout() failed.
 [2026-11-15 09:22:27] TikTok за 15 минут не обработал ролик (статус PROCESSING_UPLOAD)
 [2026-11-15 09:22:33] Ролик и описание для TikTok отправлены в бот
 [2026-11-15 09:22:33] Готово: 2026-11-15 09-22 ad-sleep.mp4
+[2026-11-15 13:05:52] Собираю ролик: atm-pin-code (Почему в пин-коде карты именно 4 цифры 💳), осталось сценариев: 0
+[2026-11-15 13:07:48] Ролик собран
+[2026-11-15 13:07:50] Загружен на YouTube: https://youtube.com/shorts/CV813sWn-HI
+[2026-11-15 13:07:51] Ошибка публикации в Instagram: нет страницы Facebook с привязанным Instagram: {'error': {'message': 'This Page access token belongs to a Page that is not accessible.', 'type': 'OAuthException', 'code': 190, 'fbtrace_id': 'AOpd4-IE9LB3JWweyESCjjA'}}
+[2026-11-15 13:07:55] TikTok: ролик загружен, publish_id v_inbox_file~v2.7708384073504737302
+[2026-11-15 13:23:26] TikTok за 15 минут не обработал ролик (статус PROCESSING_UPLOAD)
+[2026-11-15 13:23:33] Ролик и описание для TikTok отправлены в бот
+[2026-11-15 13:23:33] Готово: 2026-11-15 13-23 atm-pin-code.mp4
