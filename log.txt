@@ -587,3 +587,14 @@ RuntimeError: raqm_layout() failed.
 [2026-11-15 13:23:26] TikTok за 15 минут не обработал ролик (статус PROCESSING_UPLOAD)
 [2026-11-15 13:23:33] Ролик и описание для TikTok отправлены в бот
 [2026-11-15 13:23:33] Готово: 2026-11-15 13-23 atm-pin-code.mp4
+[2026-11-15 19:05:58] Собираю ролик: apple-clock-time (Почему в рекламе Apple всегда одно и то же время? ⏰), осталось сценариев: 11
+[2026-11-15 19:07:50] Ролик собран
+[2026-11-15 19:07:52] Загружен на YouTube: https://youtube.com/shorts/feXmeR-AxNA
+[2026-11-15 19:07:53] Ошибка публикации в Instagram: нет страницы Facebook с привязанным Instagram: {'error': {'message': 'This Page access token belongs to a Page that is not accessible.', 'type': 'OAuthException', 'code': 190, 'fbtrace_id': 'A-nMP9HaY_YrNf4wxiXPPYQ'}}
+[2026-11-15 19:07:58] TikTok: ролик загружен, publish_id v_inbox_file~v2.7708476893028206614
+[2026-11-15 19:23:34] TikTok за 15 минут не обработал ролик (статус PROCESSING_UPLOAD)
+[2026-11-15 19:23:39] Бот не прислал ролик: <!DOCTYPE html>
+<!--[if lt IE 7]> <html class="no-js ie6 oldie" lang="en-US"> <![endif]-->
+<!--[if IE 7]>    <html class="no-js ie7 oldie" lang="en-US"> <![endif]-->
+<!--[if IE 8]>    <html class="no-
+[2026-11-15 19:23:40] Готово: 2026-11-15 19-23 apple-clock-time.mp4
