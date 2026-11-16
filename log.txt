@@ -620,3 +620,13 @@ RuntimeError: raqm_layout() failed.
 <!--[if IE 8]>    <html class="no-
 [2026-11-16 09:21:37] Отправлен в черновики TikTok: Бот украдёт деньги с Playerok? Разбираем 🔒
 [2026-11-16 09:21:37] Готово: 2026-11-16 09-21 ad-safety.mp4
+[2026-11-16 13:05:51] Собираю ролик: matrix-code (Что на самом деле зашифровано в Матрице? 🟢), осталось сценариев: 9
+[2026-11-16 13:07:19] Ролик собран
+[2026-11-16 13:07:20] Загружен на YouTube: https://youtube.com/shorts/uZOX5qMXQtY
+[2026-11-16 13:07:21] Ошибка публикации в Instagram: нет страницы Facebook с привязанным Instagram: {'error': {'message': 'This Page access token belongs to a Page that is not accessible.', 'type': 'OAuthException', 'code': 190, 'fbtrace_id': 'AqDzHIisNp2C6hYzedpFuSF'}}
+[2026-11-16 13:07:30] Бот не прислал ролик: <!DOCTYPE html>
+<!--[if lt IE 7]> <html class="no-js ie6 oldie" lang="en-US"> <![endif]-->
+<!--[if IE 7]>    <html class="no-js ie7 oldie" lang="en-US"> <![endif]-->
+<!--[if IE 8]>    <html class="no-
+[2026-11-16 13:07:30] Ошибка отправки в TikTok: TikTok не принял ролик: {'code': 'spam_risk_too_many_pending_share', 'message': 'spam_risk_too_many_pending_share', 'log_id': '2026111613072365E240F74341818EFE16'}
+[2026-11-16 13:07:30] Готово: 2026-11-16 13-07 matrix-code.mp4
