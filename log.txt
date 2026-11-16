@@ -630,3 +630,14 @@ RuntimeError: raqm_layout() failed.
 <!--[if IE 8]>    <html class="no-
 [2026-11-16 13:07:30] Ошибка отправки в TikTok: TikTok не принял ролик: {'code': 'spam_risk_too_many_pending_share', 'message': 'spam_risk_too_many_pending_share', 'log_id': '2026111613072365E240F74341818EFE16'}
 [2026-11-16 13:07:30] Готово: 2026-11-16 13-07 matrix-code.mp4
+[2026-11-16 19:05:54] Собираю ролик: iphone-snooze (Почему будильник на iPhone звонит через 9 минут? ⏰), осталось сценариев: 8
+[2026-11-16 19:08:09] Ролик собран
+[2026-11-16 19:08:12] Загружен на YouTube: https://youtube.com/shorts/xcjItcRGqrw
+[2026-11-16 19:08:12] Ошибка публикации в Instagram: нет страницы Facebook с привязанным Instagram: {'error': {'message': 'This Page access token belongs to a Page that is not accessible.', 'type': 'OAuthException', 'code': 190, 'fbtrace_id': 'AeIeXUbaOijlBSzXDGHtxal'}}
+[2026-11-16 19:08:16] TikTok: ролик загружен, publish_id v_inbox_file~v2.7708848036176414742
+[2026-11-16 19:21:12] Не удалось прислать описание для TikTok в Telegram: <!DOCTYPE html>
+<!--[if lt IE 7]> <html class="no-js ie6 oldie" lang="en-US"> <![endif]-->
+<!--[if IE 7]>    <html class="no-js ie7 oldie" lang="en-US"> <![endif]-->
+<!--[if IE 8]>    <html class="no-
+[2026-11-16 19:21:12] Отправлен в черновики TikTok: Почему будильник на iPhone звонит через 9 минут? ⏰
+[2026-11-16 19:21:12] Готово: 2026-11-16 19-21 iphone-snooze.mp4
