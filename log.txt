@@ -609,3 +609,14 @@ RuntimeError: raqm_layout() failed.
 <!--[if IE 8]>    <html class="no-
 [2026-11-16 05:16:08] Отправлен в черновики TikTok: Что на самом деле означает слово Wi-Fi? 📶
 [2026-11-16 05:16:09] Готово: 2026-11-16 05-16 wifi-meaning.mp4
+[2026-11-16 09:06:23] Собираю рекламный ролик: ad-safety (Бот украдёт деньги с Playerok? Разбираем 🔒)
+[2026-11-16 09:07:30] Ролик собран
+[2026-11-16 09:07:33] Загружен на YouTube: https://youtube.com/shorts/3q3NQOfJ-Ro
+[2026-11-16 09:07:33] Ошибка публикации в Instagram: нет страницы Facebook с привязанным Instagram: {'error': {'message': 'This Page access token belongs to a Page that is not accessible.', 'type': 'OAuthException', 'code': 190, 'fbtrace_id': 'AZAby0Mp4X0UrH4_qX__dRZ'}}
+[2026-11-16 09:07:36] TikTok: ролик загружен, publish_id v_inbox_file~v2.7708693341340370966
+[2026-11-16 09:21:37] Не удалось прислать описание для TikTok в Telegram: <!DOCTYPE html>
+<!--[if lt IE 7]> <html class="no-js ie6 oldie" lang="en-US"> <![endif]-->
+<!--[if IE 7]>    <html class="no-js ie7 oldie" lang="en-US"> <![endif]-->
+<!--[if IE 8]>    <html class="no-
+[2026-11-16 09:21:37] Отправлен в черновики TikTok: Бот украдёт деньги с Playerok? Разбираем 🔒
+[2026-11-16 09:21:37] Готово: 2026-11-16 09-21 ad-safety.mp4
