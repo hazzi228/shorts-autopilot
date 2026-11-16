@@ -598,3 +598,14 @@ RuntimeError: raqm_layout() failed.
 <!--[if IE 7]>    <html class="no-js ie7 oldie" lang="en-US"> <![endif]-->
 <!--[if IE 8]>    <html class="no-
 [2026-11-15 19:23:40] Готово: 2026-11-15 19-23 apple-clock-time.mp4
+[2026-11-16 05:06:00] Собираю ролик: wifi-meaning (Что на самом деле означает слово Wi-Fi? 📶), осталось сценариев: 10
+[2026-11-16 05:07:57] Ролик собран
+[2026-11-16 05:07:58] Загружен на YouTube: https://youtube.com/shorts/Fw8_FCn9TLc
+[2026-11-16 05:07:59] Ошибка публикации в Instagram: нет страницы Facebook с привязанным Instagram: {'error': {'message': 'This Page access token belongs to a Page that is not accessible.', 'type': 'OAuthException', 'code': 190, 'fbtrace_id': 'Ak2FQ56Z0J41mysHCwUK81P'}}
+[2026-11-16 05:08:03] TikTok: ролик загружен, publish_id v_inbox_file~v2.7708631299820423190
+[2026-11-16 05:16:08] Не удалось прислать описание для TikTok в Telegram: <!DOCTYPE html>
+<!--[if lt IE 7]> <html class="no-js ie6 oldie" lang="en-US"> <![endif]-->
+<!--[if IE 7]>    <html class="no-js ie7 oldie" lang="en-US"> <![endif]-->
+<!--[if IE 8]>    <html class="no-
+[2026-11-16 05:16:08] Отправлен в черновики TikTok: Что на самом деле означает слово Wi-Fi? 📶
+[2026-11-16 05:16:09] Готово: 2026-11-16 05-16 wifi-meaning.mp4
