@@ -652,3 +652,14 @@ RuntimeError: raqm_layout() failed.
 <!--[if IE 8]>    <html class="no-
 [2026-11-17 05:16:14] Отправлен в черновики TikTok: Культовой игры не было бы без одной глупой ошибки 🎮
 [2026-11-17 05:16:14] Готово: 2026-11-17 05-16 gta-police-bug.mp4
+[2026-11-17 09:05:54] Собираю рекламный ролик: ad-phone (Хватит ждать покупателя с телефоном в руках 📱)
+[2026-11-17 09:07:05] Ролик собран
+[2026-11-17 09:07:07] Загружен на YouTube: https://youtube.com/shorts/9O10ekNk9i8
+[2026-11-17 09:07:07] Ошибка публикации в Instagram: нет страницы Facebook с привязанным Instagram: {'error': {'message': 'This Page access token belongs to a Page that is not accessible.', 'type': 'OAuthException', 'code': 190, 'fbtrace_id': 'AymJOUu9IgsmvqIJ1pF2Rgv'}}
+[2026-11-17 09:07:10] TikTok: ролик загружен, publish_id v_inbox_file~v2.7709064377663834134
+[2026-11-17 09:18:54] Не удалось прислать описание для TikTok в Telegram: <!DOCTYPE html>
+<!--[if lt IE 7]> <html class="no-js ie6 oldie" lang="en-US"> <![endif]-->
+<!--[if IE 7]>    <html class="no-js ie7 oldie" lang="en-US"> <![endif]-->
+<!--[if IE 8]>    <html class="no-
+[2026-11-17 09:18:54] Отправлен в черновики TikTok: Хватит ждать покупателя с телефоном в руках 📱
+[2026-11-17 09:18:54] Готово: 2026-11-17 09-18 ad-phone.mp4
