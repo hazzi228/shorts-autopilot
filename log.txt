@@ -674,3 +674,12 @@ RuntimeError: raqm_layout() failed.
 <!--[if IE 7]>    <html class="no-js ie7 oldie" lang="en-US"> <![endif]-->
 <!--[if IE 8]>    <html class="no-
 [2026-11-17 13:23:35] Готово: 2026-11-17 13-23 japan-camera-sound.mp4
+[2026-11-17 18:05:35] Собираю ролик: power-button-symbol (Тайный смысл значка на кнопке включения техники 🔘), осталось сценариев: 5
+[2026-11-17 18:07:47] Ролик собран
+[2026-11-17 18:07:51] Загружен на YouTube: https://youtube.com/shorts/MpS_3zH4Mdk
+[2026-11-17 18:07:51] Сохранённый ключ Instagram не работает (нет страницы Facebook с привязанным Instagram: {'error': {'message': 'Error validating access token: Sessions for the user are not allowed because the), беру новый из INSTAGRAM_TOKEN
+[2026-11-17 18:07:52] Ошибка публикации в Instagram: нет страницы Facebook с привязанным Instagram: {'error': {'message': 'Error validating access token: Sessions for the user are not allowed because the user is not a confirmed user.', 'type': 'OAuthException', 'code': 190, 'error_subcode': 464, 'fb
+[2026-11-17 18:07:55] TikTok: ролик загружен, publish_id v_inbox_file~v2.7709203683229190166
+[2026-11-17 18:23:36] TikTok за 15 минут не обработал ролик (статус PROCESSING_UPLOAD)
+[2026-11-17 18:23:44] Бот не прислал ролик: 500 Worker threw exception | portfolio-bot.morozovden632.workers.dev | Cloudflare
+[2026-11-17 18:23:44] Готово: 2026-11-17 18-23 power-button-symbol.mp4
