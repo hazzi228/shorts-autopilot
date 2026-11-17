@@ -663,3 +663,14 @@ RuntimeError: raqm_layout() failed.
 <!--[if IE 8]>    <html class="no-
 [2026-11-17 09:18:54] Отправлен в черновики TikTok: Хватит ждать покупателя с телефоном в руках 📱
 [2026-11-17 09:18:54] Готово: 2026-11-17 09-18 ad-phone.mp4
+[2026-11-17 13:05:54] Собираю ролик: japan-camera-sound (В этой стране запрещено выключать звук камеры 📸), осталось сценариев: 6
+[2026-11-17 13:07:54] Ролик собран
+[2026-11-17 13:07:56] Загружен на YouTube: https://youtube.com/shorts/t4OI466Jm30
+[2026-11-17 13:07:56] Ошибка публикации в Instagram: нет страницы Facebook с привязанным Instagram: {'error': {'message': 'This Page access token belongs to a Page that is not accessible.', 'type': 'OAuthException', 'code': 190, 'fbtrace_id': 'A48jPzEFlQ5DZHr_pJhlOyy'}}
+[2026-11-17 13:07:59] TikTok: ролик загружен, publish_id v_inbox_file~v2.7709126326489237526
+[2026-11-17 13:23:29] TikTok за 15 минут не обработал ролик (статус PROCESSING_UPLOAD)
+[2026-11-17 13:23:35] Бот не прислал ролик: <!DOCTYPE html>
+<!--[if lt IE 7]> <html class="no-js ie6 oldie" lang="en-US"> <![endif]-->
+<!--[if IE 7]>    <html class="no-js ie7 oldie" lang="en-US"> <![endif]-->
+<!--[if IE 8]>    <html class="no-
+[2026-11-17 13:23:35] Готово: 2026-11-17 13-23 japan-camera-sound.mp4
