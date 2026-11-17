@@ -71,10 +71,27 @@ def caption(sc):
 
 def upload(path, sc, log):
     """Возвращает ссылку на опубликованный Reels."""
-    import requests
     token = load_token()
     if not token:
         return None
+    try:
+        return _upload(path, sc, log, token)
+    except _BadToken as e:
+        # Сохранённый ключ страницы перестал работать (Meta иногда сбрасывает его после проверки аккаунта):
+        # берём новый из ключа пользователя INSTAGRAM_TOKEN.
+        fresh = os.environ.get("INSTAGRAM_TOKEN", "").strip()
+        if not fresh or fresh == token:
+            raise
+        log("Сохранённый ключ Instagram не работает (%s), беру новый из INSTAGRAM_TOKEN" % str(e)[:150])
+        return _upload(path, sc, log, fresh)
+
+
+class _BadToken(RuntimeError):
+    pass
+
+
+def _upload(path, sc, log, token):
+    import requests
     token = maybe_refresh(token, log)
     if token.startswith("IG"):
         api, me = API, "me"
@@ -87,7 +104,7 @@ def upload(path, sc, log):
                 "fields": "access_token,instagram_business_account", "access_token": token}, timeout=60).json()
             page = next((p for p in pages.get("data", []) if p.get("instagram_business_account")), None)
             if not page:
-                raise RuntimeError("нет страницы Facebook с привязанным Instagram: %s" % str(pages)[:200])
+                raise _BadToken("нет страницы Facebook с привязанным Instagram: %s" % str(pages)[:200])
             token, info = page["access_token"], page
             if os.environ.get("IG_KEY"):
                 save_token(token)

@@ -18,21 +18,36 @@ jobs:
           IG_KEY: ${{ secrets.IG_KEY }}
         run: |
           python -u - <<'PY'
-          import requests, instagram
-          t = instagram.load_token()
-          assert t, "нет секрета INSTAGRAM_TOKEN"
-          me = requests.get(instagram.FB_API + "/me", params={"fields": "name,instagram_business_account", "access_token": t}, timeout=60).json()
-          if "instagram_business_account" not in me:
-              pages = requests.get(instagram.FB_API + "/me/accounts", params={"fields": "name,access_token,instagram_business_account", "access_token": t}, timeout=60).json()
-              page = next((p for p in pages.get("data", []) if p.get("instagram_business_account")), None)
-              assert page, "нет страницы с привязанным Instagram: %s" % str(pages)[:300]
-              t, me = page["access_token"], page
-              instagram.save_token(t)
-              print("Ключ страницы сохранён")
-          ig = requests.get(instagram.FB_API + "/" + me["instagram_business_account"]["id"], params={"fields": "username", "access_token": t}, timeout=60).json()
-          print("Страница:", me.get("name"), "| Instagram:", ig.get("username"))
-          dbg = requests.get(instagram.FB_API + "/debug_token", params={"input_token": t, "access_token": t}, timeout=60).json().get("data", {})
-          print("Ключ истекает:", dbg.get("expires_at"), "(0 = никогда)")
+          import os, requests, instagram
+          G = instagram.FB_API
+          def show(name, t):
+              d = requests.get(G + "/debug_token", params={"input_token": t, "access_token": t}, timeout=60).json()
+              print(name, "->", str(d.get("data") or d)[:600])
+          saved = instagram.load_token()
+          user = os.environ.get("INSTAGRAM_TOKEN", "").strip()
+          assert saved or user, "нет секрета INSTAGRAM_TOKEN"
+          if saved and saved != user:
+              show("Сохранённый ключ страницы", saved)
+          if user:
+              show("Ключ пользователя INSTAGRAM_TOKEN", user)
+              print("Пользователь:", requests.get(G + "/me", params={"fields": "id,name", "access_token": user}, timeout=60).text[:300])
+          for t in [x for x in (saved, user) if x]:
+              me = requests.get(G + "/me", params={"fields": "name,instagram_business_account", "access_token": t}, timeout=60).json()
+              if "instagram_business_account" not in me:
+                  pages = requests.get(G + "/me/accounts", params={"fields": "name,access_token,instagram_business_account", "access_token": t}, timeout=60).json()
+                  print("Страницы:", str([{k: v for k, v in p.items() if k != "access_token"} for p in pages.get("data", [])] or pages)[:400])
+                  page = next((p for p in pages.get("data", []) if p.get("instagram_business_account")), None)
+                  if not page:
+                      continue
+                  t, me = page["access_token"], page
+              ig = requests.get(G + "/" + me["instagram_business_account"]["id"], params={"fields": "username", "access_token": t}, timeout=60).json()
+              print("Страница:", me.get("name"), "| Instagram:", ig.get("username") or ig)
+              if "username" in ig and t != saved:
+                  instagram.save_token(t)
+                  print("Новый ключ страницы сохранён")
+              break
+          else:
+              raise SystemExit("Ни один ключ не дал страницу с Instagram")
           PY
       - name: Сохранить ключ
         run: |
