@@ -66,7 +66,7 @@ h1{font-size:28px}h2{font-size:20px;margin-top:28px}a{color:#5b3df5}nav a{margin
 ${body}</body></html>`, { status, headers: { "content-type": "text/html; charset=utf-8" } });
 }
 
-const CONTACT = 'Telegram: <a href="https://t.me/HazzerPortfolio_bot">@HazzerPortfolio_bot</a>';
+const CONTACT = 'Telegram: <a href="https://t.me/PortfolioHazzer_reserv_bot">@PortfolioHazzer_reserv_bot</a>';
 
 const PAGES = {
   "/neznal": ["Не знал? | IT-факты", `

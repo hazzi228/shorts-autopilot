@@ -24,7 +24,7 @@ GEMINI_API = "https://generativelanguage.googleapis.com/v1beta/openai/chat/compl
 GEMINI = [(GEMINI_API, "gemini-3.8-flash"), (GEMINI_API, "gemini-flash-latest")]
 
 ACCENTS = [(124, 92, 255), (0, 200, 255), (255, 120, 60), (40, 210, 140), (255, 70, 120), (255, 190, 40)]
-HANDLE = "@HazzerPortfolio_bot"
+HANDLE = "@PortfolioHazzer_reserv_bot"
 # реклама — одна короткая фраза в самом конце: в середине ролика она обрывала удержание
 # (по статистике канала зрители массово листали ровно там, где начиналась реклама)
 AD_END = [
