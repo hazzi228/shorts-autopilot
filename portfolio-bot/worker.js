@@ -38,10 +38,8 @@ export default {
       if (!text) return new Response("not found", { status: 404 });
       await env.STATE.delete(note[1]);
       const bot = new Bot(env, origin);
-      for (const owner of await bot.ownerIds()) {
-        await bot.send(owner, `🎬 В TikTok пришёл новый черновик. Описание к нему (нажми на текст, чтобы скопировать):\n\n<pre>${esc(text)}</pre>`);
-      }
-      return new Response("ok");
+      return deliver(bot, (owner) =>
+        bot.send(owner, `🎬 В TikTok пришёл новый черновик. Описание к нему (нажми на текст, чтобы скопировать):\n\n<pre>${esc(text)}</pre>`));
     }
     // Ролик не дошёл до TikTok: автопилот кладёт ролик и описание в KV, бот присылает их владельцу для ручной загрузки.
     const fail = pathname.match(/^\/tiktok\/fail\/([0-9a-f]{32})$/);
@@ -53,7 +51,7 @@ export default {
       await env.STATE.delete(`tt_vid-${fail[1]}`);
       const { why, caption } = JSON.parse(meta);
       const bot = new Bot(env, origin);
-      for (const owner of await bot.ownerIds()) {
+      return deliver(bot, async (owner) => {
         const form = new FormData();
         form.append("chat_id", String(owner));
         form.append("caption", `⚠️ ${why}. Загрузи ролик в TikTok вручную, описание ниже.`);
@@ -61,8 +59,7 @@ export default {
         form.append("video", new Blob([video], { type: "video/mp4" }), "tiktok.mp4");
         await bot.call("sendVideo", null, form);
         await bot.send(owner, `Описание (нажми на текст, чтобы скопировать):\n\n<pre>${esc(caption)}</pre>`);
-      }
-      return new Response("ok");
+      });
     }
     if (request.method === "GET") return tiktok.sitePage(pathname) || new Response("Бот работает");
     if (request.method !== "POST") return new Response("Бот работает");
@@ -180,6 +177,20 @@ class Bot {
     }
     return ids;
   }
+}
+
+// Отправляет владельцам по очереди: ошибка у одного (например, старый замороженный аккаунт) не мешает остальным,
+// а автопилот получает понятную причину вместо страницы ошибки Cloudflare.
+async function deliver(bot, sendTo) {
+  const owners = await bot.ownerIds();
+  const errors = [];
+  let sent = 0;
+  for (const owner of owners) {
+    try { await sendTo(owner); sent++; } catch (e) { errors.push(`${owner}: ${e.message}`); }
+  }
+  if (!owners.length) return new Response("владелец ещё не написал боту /start", { status: 502 });
+  if (!sent) return new Response(errors.join("; "), { status: 502 });
+  return new Response(errors.length ? `ok, но не всем: ${errors.join("; ")}` : "ok");
 }
 
 const esc = (s) => String(s ?? "").replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
