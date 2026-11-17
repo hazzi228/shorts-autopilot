@@ -10,7 +10,7 @@ S = os.path.dirname(os.path.abspath(__file__))
 os.chdir(S)
 CONFIG = os.path.join(S, "config.json")
 SCEN = os.path.join(S, "scenarios.json")
-ADS = os.path.join(S, "ads.json")  # рекламные ролики для слота 12:00, идут по кругу
+ADS = os.path.join(S, "ads.json")  # рекламные ролики для слота 14:00, идут по кругу
 STATE = os.path.join(S, "state.json")
 TOKEN = os.path.join(S, "token.json")
 LOG = os.path.join(S, "log.txt")
@@ -137,8 +137,8 @@ def pid_alive(pid):
         return False
 
 
-SLOTS_MSK = [8, 12, 16, 22]  # во сколько по Москве выходят ролики
-AD_SLOT_MSK = 12             # в этот слот выходит реклама бота для продавцов Playerok (ads.json), в остальные факты
+SLOTS_MSK = [11, 14, 17, 20]  # во сколько по Москве выходят ролики (выбрано по статистике YouTube 2026-11-17: зрители активнее всего 12–21)
+AD_SLOT_MSK = 14             # в этот слот выходит реклама бота для продавцов Playerok (ads.json), в остальные факты
 SLOT_WINDOW_H = 3            # если GitHub опоздал, ролик всё равно выходит в течение 3 часов после слота
 
 

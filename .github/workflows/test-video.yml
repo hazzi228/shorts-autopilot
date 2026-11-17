@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
     inputs:
       ad:
-        description: "Рекламный ролик (слот 12:00) вместо факта"
+        description: "Рекламный ролик (слот 14:00) вместо факта"
         type: boolean
         default: false
       id:
