@@ -20,7 +20,7 @@ SERIF_B = os.path.join(FONT_DIR, "DejaVuSerif-Bold.ttf")
 EMOJI = os.path.join(FONT_DIR, "NotoColorEmoji.ttf")
 VOICE = os.path.join(S, "voice", "ru_RU-dmitri-medium.onnx")
 HANDLE = "@PortfolioHazzer_reserv_bot"
-# Что показывает финальная карточка рекламы. Рекламные ролики (слот 12:00) подменяют это полем "cta" в сценарии.
+# Что показывает финальная карточка рекламы. Рекламные ролики (слот 14:00) подменяют это полем "cta" в сценарии.
 CTA_DEFAULT = dict(handle=HANDLE, name="Hazzer", subtitle="Telegram-боты и сайты под ключ", chip="Портфолио: " + HANDLE,
                    items=["Оплата: СБП, карта, крипта", "Личный кабинет и админ-панель", "От идеи до запуска", "Приятная цена"],
                    stars="отзывы клиентов")

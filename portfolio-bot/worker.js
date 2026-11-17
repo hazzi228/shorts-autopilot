@@ -112,8 +112,8 @@ export default {
 const REPO = "hazzi228/shorts-autopilot";
 // Время по UTC (Москва = UTC+3), строки должны совпадать с [triggers] в wrangler.toml.
 const CRON_JOBS = {
-  // Ролики в 8:00, 12:00 (реклама), 16:00 и 22:00 по Москве; check: true пропускает запуск, если ролик в этом слоте уже вышел.
-  "5 5-7,9-11,13-15,19-21 * * *": { workflow: "autopilot.yml", inputs: { check: "true" } },
+  // Ролики в 11:00, 14:00 (реклама), 17:00 и 20:00 по Москве; check: true пропускает запуск, если ролик в этом слоте уже вышел.
+  "5 8-19 * * *": { workflow: "autopilot.yml", inputs: { check: "true" } },
   // Поиск заказов каждый час с 8:17 до 23:17 по Москве.
   "17 5-20 * * *": { workflow: "leads.yml" },
 };
