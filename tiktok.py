@@ -51,7 +51,7 @@ def notify(kv, sc, log):
         return
     r = requests.post(url + "/tiktok/note/" + key, timeout=60)
     if not r.ok:
-        log("Не удалось прислать описание для TikTok в Telegram: %s" % r.text[:200])
+        log("Не удалось прислать описание для TikTok в Telegram: %s" % _err(r))
 
 
 def _upload(path, sc, log, kv):
@@ -143,6 +143,13 @@ def send_fallback(kv, path, sc, why, log):
             log("Не удалось подготовить ролик для отправки в бот")
             return
         r = requests.post(url + "/tiktok/fail/" + key, timeout=180)
-        log("Ролик и описание для TikTok отправлены в бот" if r.ok else "Бот не прислал ролик: %s" % r.text[:200])
+        log("Ролик и описание для TikTok отправлены в бот" if r.ok else "Бот не прислал ролик: %s" % _err(r))
     except Exception as e:
         log("Не удалось прислать ролик в бот: %s" % str(e)[:200])
+
+
+def _err(r):
+    """Короткая причина ошибки бота: вместо целой HTML-страницы Cloudflare берём её заголовок."""
+    import re
+    m = re.search(r"<title>(.*?)</title>", r.text or "", re.S | re.I)
+    return "%s %s" % (r.status_code, (m.group(1).strip() if m else (r.text or "")[:200]))

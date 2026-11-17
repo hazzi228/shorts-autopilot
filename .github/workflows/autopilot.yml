@@ -28,7 +28,11 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 40
     steps:
+      # Берём свежий main, а не коммит на момент постановки в очередь: иначе запуск, ждавший в очереди,
+      # пока предыдущий выкладывал ролик, видел старый log.txt и выкладывал тот же слот второй раз.
       - uses: actions/checkout@v5
+        with:
+          ref: main
 
       - name: Пора ли выпускать ролик
         id: slot
