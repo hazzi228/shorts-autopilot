@@ -1,13 +1,5 @@
 {
  "ids": [
-  "tg:FreelanceBay/16723",
-  "tg:zakazy_freelance/77117",
-  "tg:onlinevakansii/10761",
-  "tg:zakazy_freelance/77118",
-  "tg:zakazy_freelance/77119",
-  "tg:zakazy_freelance/77120",
-  "tg:theyseeku/40196",
-  "tg:freelancce/16637",
   "tg:makingmoney/229",
   "tg:zakazy_freelance/77121",
   "tg:frilancekomfort/14370",
@@ -4999,7 +4991,15 @@
   "tg:zakazy_freelance/80666",
   "tg:zakazy_freelance/80667",
   "tg:zakazy_freelance/80668",
-  "tg:zakazy_freelance/80669"
+  "tg:zakazy_freelance/80669",
+  "tg:zakazy_freelance/80670",
+  "tg:workk_on/19150",
+  "tg:zakazy_freelance/80671",
+  "tg:frilancekomfort/14427",
+  "tg:zakazy_freelance/80672",
+  "tg:theyseeku/40557",
+  "tg:zakazy_freelance/80673",
+  "tg:zakazy_freelance/80674"
  ],
  "prints": [
   "26a9ac8a749827aab4ad7fd9b96c0cd5",
@@ -5324,8 +5324,7 @@
   "676aa34004d2d3b70c50fc2197b1a7df"
  ],
  "chat_ids": [
-  "5884708943",
-  "8301728829"
+  "5884708943"
  ],
- "bot_id": "8909141481"
+ "bot_id": "9139057663"
 }
