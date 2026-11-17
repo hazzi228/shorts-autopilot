@@ -641,3 +641,14 @@ RuntimeError: raqm_layout() failed.
 <!--[if IE 8]>    <html class="no-
 [2026-11-16 19:21:12] Отправлен в черновики TikTok: Почему будильник на iPhone звонит через 9 минут? ⏰
 [2026-11-16 19:21:12] Готово: 2026-11-16 19-21 iphone-snooze.mp4
+[2026-11-17 05:05:56] Собираю ролик: gta-police-bug (Культовой игры не было бы без одной глупой ошибки 🎮), осталось сценариев: 7
+[2026-11-17 05:07:42] Ролик собран
+[2026-11-17 05:07:44] Загружен на YouTube: https://youtube.com/shorts/eN-Gd7f_Cao
+[2026-11-17 05:07:44] Ошибка публикации в Instagram: нет страницы Facebook с привязанным Instagram: {'error': {'message': 'This Page access token belongs to a Page that is not accessible.', 'type': 'OAuthException', 'code': 190, 'fbtrace_id': 'AkK-Kn_8akJt7HguZM7gXY7'}}
+[2026-11-17 05:07:48] TikTok: ролик загружен, publish_id v_inbox_file~v2.7709002094501562390
+[2026-11-17 05:16:14] Не удалось прислать описание для TikTok в Telegram: <!DOCTYPE html>
+<!--[if lt IE 7]> <html class="no-js ie6 oldie" lang="en-US"> <![endif]-->
+<!--[if IE 7]>    <html class="no-js ie7 oldie" lang="en-US"> <![endif]-->
+<!--[if IE 8]>    <html class="no-
+[2026-11-17 05:16:14] Отправлен в черновики TikTok: Культовой игры не было бы без одной глупой ошибки 🎮
+[2026-11-17 05:16:14] Готово: 2026-11-17 05-16 gta-police-bug.mp4
