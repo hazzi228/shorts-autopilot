@@ -235,17 +235,17 @@
 2026-11-15 13:18 просмотрено 477, подходящих новых 0; не открылись: FL.ru: HTTPError 403 Client Error: Forbidden for url: https://www.fl.ru/rss/all.xml; FL.ru программирование: HTTPError 403 Client Error: Forbidden for url: https://www.fl.ru/rss/all.xml?category=5
 2026-11-15 14:18 просмотрено 597, подходящих новых 0
 2026-11-15 15:19 просмотрено 478, подходящих новых 2; не открылись: FL.ru: HTTPError 403 Client Error: Forbidden for url: https://www.fl.ru/rss/all.xml; FL.ru программирование: HTTPError 403 Client Error: Forbidden for url: https://www.fl.ru/rss/all.xml?category=5
-2026-11-15 15:19 не отправилось в чат 5884708943: 403 Client Error: Forbidden for url: https://api.telegram.org/bot8909141481:AAEic5lOnWfpuIwxiXD1PAY2VvmM30Hl2k0/sendMessage
-2026-11-15 15:19 не отправилось в чат 8301728829: 403 Client Error: Forbidden for url: https://api.telegram.org/bot8909141481:AAEic5lOnWfpuIwxiXD1PAY2VvmM30Hl2k0/sendMessage
-2026-11-15 15:19 не отправилось в чат 5884708943: 403 Client Error: Forbidden for url: https://api.telegram.org/bot8909141481:AAEic5lOnWfpuIwxiXD1PAY2VvmM30Hl2k0/sendMessage
-2026-11-15 15:19 не отправилось в чат 8301728829: 403 Client Error: Forbidden for url: https://api.telegram.org/bot8909141481:AAEic5lOnWfpuIwxiXD1PAY2VvmM30Hl2k0/sendMessage
+2026-11-15 15:19 не отправилось в чат 5884708943: 403 Client Error: Forbidden for url: https://api.telegram.org/bot***/sendMessage
+2026-11-15 15:19 не отправилось в чат 8301728829: 403 Client Error: Forbidden for url: https://api.telegram.org/bot***/sendMessage
+2026-11-15 15:19 не отправилось в чат 5884708943: 403 Client Error: Forbidden for url: https://api.telegram.org/bot***/sendMessage
+2026-11-15 15:19 не отправилось в чат 8301728829: 403 Client Error: Forbidden for url: https://api.telegram.org/bot***/sendMessage
 2026-11-15 16:18 просмотрено 597, подходящих новых 0
 2026-11-15 17:18 просмотрено 598, подходящих новых 1
-2026-11-15 17:19 не отправилось в чат 5884708943: 403 Client Error: Forbidden for url: https://api.telegram.org/bot8909141481:AAEic5lOnWfpuIwxiXD1PAY2VvmM30Hl2k0/sendMessage
-2026-11-15 17:19 не отправилось в чат 8301728829: 403 Client Error: Forbidden for url: https://api.telegram.org/bot8909141481:AAEic5lOnWfpuIwxiXD1PAY2VvmM30Hl2k0/sendMessage
+2026-11-15 17:19 не отправилось в чат 5884708943: 403 Client Error: Forbidden for url: https://api.telegram.org/bot***/sendMessage
+2026-11-15 17:19 не отправилось в чат 8301728829: 403 Client Error: Forbidden for url: https://api.telegram.org/bot***/sendMessage
 2026-11-15 18:18 просмотрено 598, подходящих новых 1
-2026-11-15 18:18 не отправилось в чат 5884708943: 403 Client Error: Forbidden for url: https://api.telegram.org/bot8909141481:AAEic5lOnWfpuIwxiXD1PAY2VvmM30Hl2k0/sendMessage
-2026-11-15 18:18 не отправилось в чат 8301728829: 403 Client Error: Forbidden for url: https://api.telegram.org/bot8909141481:AAEic5lOnWfpuIwxiXD1PAY2VvmM30Hl2k0/sendMessage
+2026-11-15 18:18 не отправилось в чат 5884708943: 403 Client Error: Forbidden for url: https://api.telegram.org/bot***/sendMessage
+2026-11-15 18:18 не отправилось в чат 8301728829: 403 Client Error: Forbidden for url: https://api.telegram.org/bot***/sendMessage
 2026-11-15 19:18 просмотрено 598, подходящих новых 0
 2026-11-15 19:23 просмотрено 598, подходящих новых 0
 2026-11-15 20:19 просмотрено 478, подходящих новых 0; не открылись: FL.ru: HTTPError 403 Client Error: Forbidden for url: https://www.fl.ru/rss/all.xml; FL.ru программирование: HTTPError 403 Client Error: Forbidden for url: https://www.fl.ru/rss/all.xml?category=5
@@ -256,14 +256,14 @@
 2026-11-16 08:18 просмотрено 479, подходящих новых 0; не открылись: FL.ru: HTTPError 403 Client Error: Forbidden for url: https://www.fl.ru/rss/all.xml; FL.ru программирование: HTTPError 403 Client Error: Forbidden for url: https://www.fl.ru/rss/all.xml?category=5
 2026-11-16 09:18 просмотрено 480, подходящих новых 0; не открылись: FL.ru: HTTPError 403 Client Error: Forbidden for url: https://www.fl.ru/rss/all.xml; FL.ru программирование: HTTPError 403 Client Error: Forbidden for url: https://www.fl.ru/rss/all.xml?category=5
 2026-11-16 10:37 просмотрено 601, подходящих новых 2
-2026-11-16 10:37 не отправилось в чат 5884708943: 403 Client Error: Forbidden for url: https://api.telegram.org/bot8909141481:AAEic5lOnWfpuIwxiXD1PAY2VvmM30Hl2k0/sendMessage
-2026-11-16 10:37 не отправилось в чат 8301728829: 403 Client Error: Forbidden for url: https://api.telegram.org/bot8909141481:AAEic5lOnWfpuIwxiXD1PAY2VvmM30Hl2k0/sendMessage
-2026-11-16 10:37 не отправилось в чат 5884708943: 403 Client Error: Forbidden for url: https://api.telegram.org/bot8909141481:AAEic5lOnWfpuIwxiXD1PAY2VvmM30Hl2k0/sendMessage
-2026-11-16 10:37 не отправилось в чат 8301728829: 403 Client Error: Forbidden for url: https://api.telegram.org/bot8909141481:AAEic5lOnWfpuIwxiXD1PAY2VvmM30Hl2k0/sendMessage
+2026-11-16 10:37 не отправилось в чат 5884708943: 403 Client Error: Forbidden for url: https://api.telegram.org/bot***/sendMessage
+2026-11-16 10:37 не отправилось в чат 8301728829: 403 Client Error: Forbidden for url: https://api.telegram.org/bot***/sendMessage
+2026-11-16 10:37 не отправилось в чат 5884708943: 403 Client Error: Forbidden for url: https://api.telegram.org/bot***/sendMessage
+2026-11-16 10:37 не отправилось в чат 8301728829: 403 Client Error: Forbidden for url: https://api.telegram.org/bot***/sendMessage
 2026-11-16 11:18 просмотрено 601, подходящих новых 0
 2026-11-16 12:18 просмотрено 601, подходящих новых 1
-2026-11-16 12:18 не отправилось в чат 5884708943: 403 Client Error: Forbidden for url: https://api.telegram.org/bot8909141481:AAEic5lOnWfpuIwxiXD1PAY2VvmM30Hl2k0/sendMessage
-2026-11-16 12:18 не отправилось в чат 8301728829: 403 Client Error: Forbidden for url: https://api.telegram.org/bot8909141481:AAEic5lOnWfpuIwxiXD1PAY2VvmM30Hl2k0/sendMessage
+2026-11-16 12:18 не отправилось в чат 5884708943: 403 Client Error: Forbidden for url: https://api.telegram.org/bot***/sendMessage
+2026-11-16 12:18 не отправилось в чат 8301728829: 403 Client Error: Forbidden for url: https://api.telegram.org/bot***/sendMessage
 2026-11-16 13:19 просмотрено 600, подходящих новых 0
 2026-11-16 13:39 просмотрено 599, подходящих новых 0
 2026-11-16 14:18 просмотрено 598, подходящих новых 0
@@ -276,25 +276,25 @@
 2026-11-16 23:24 просмотрено 598, подходящих новых 0
 2026-11-17 05:19 просмотрено 479, подходящих новых 0; не открылись: FL.ru: HTTPError 403 Client Error: Forbidden for url: https://www.fl.ru/rss/all.xml; FL.ru программирование: HTTPError 403 Client Error: Forbidden for url: https://www.fl.ru/rss/all.xml?category=5
 2026-11-17 06:18 просмотрено 599, подходящих новых 4
-2026-11-17 06:18 не отправилось в чат 5884708943: 403 Client Error: Forbidden for url: https://api.telegram.org/bot8909141481:AAEic5lOnWfpuIwxiXD1PAY2VvmM30Hl2k0/sendMessage
-2026-11-17 06:19 не отправилось в чат 8301728829: 403 Client Error: Forbidden for url: https://api.telegram.org/bot8909141481:AAEic5lOnWfpuIwxiXD1PAY2VvmM30Hl2k0/sendMessage
-2026-11-17 06:19 не отправилось в чат 5884708943: 403 Client Error: Forbidden for url: https://api.telegram.org/bot8909141481:AAEic5lOnWfpuIwxiXD1PAY2VvmM30Hl2k0/sendMessage
-2026-11-17 06:19 не отправилось в чат 8301728829: 403 Client Error: Forbidden for url: https://api.telegram.org/bot8909141481:AAEic5lOnWfpuIwxiXD1PAY2VvmM30Hl2k0/sendMessage
-2026-11-17 06:19 не отправилось в чат 5884708943: 403 Client Error: Forbidden for url: https://api.telegram.org/bot8909141481:AAEic5lOnWfpuIwxiXD1PAY2VvmM30Hl2k0/sendMessage
-2026-11-17 06:19 не отправилось в чат 8301728829: 403 Client Error: Forbidden for url: https://api.telegram.org/bot8909141481:AAEic5lOnWfpuIwxiXD1PAY2VvmM30Hl2k0/sendMessage
-2026-11-17 06:19 не отправилось в чат 5884708943: 403 Client Error: Forbidden for url: https://api.telegram.org/bot8909141481:AAEic5lOnWfpuIwxiXD1PAY2VvmM30Hl2k0/sendMessage
-2026-11-17 06:19 не отправилось в чат 8301728829: 403 Client Error: Forbidden for url: https://api.telegram.org/bot8909141481:AAEic5lOnWfpuIwxiXD1PAY2VvmM30Hl2k0/sendMessage
+2026-11-17 06:18 не отправилось в чат 5884708943: 403 Client Error: Forbidden for url: https://api.telegram.org/bot***/sendMessage
+2026-11-17 06:19 не отправилось в чат 8301728829: 403 Client Error: Forbidden for url: https://api.telegram.org/bot***/sendMessage
+2026-11-17 06:19 не отправилось в чат 5884708943: 403 Client Error: Forbidden for url: https://api.telegram.org/bot***/sendMessage
+2026-11-17 06:19 не отправилось в чат 8301728829: 403 Client Error: Forbidden for url: https://api.telegram.org/bot***/sendMessage
+2026-11-17 06:19 не отправилось в чат 5884708943: 403 Client Error: Forbidden for url: https://api.telegram.org/bot***/sendMessage
+2026-11-17 06:19 не отправилось в чат 8301728829: 403 Client Error: Forbidden for url: https://api.telegram.org/bot***/sendMessage
+2026-11-17 06:19 не отправилось в чат 5884708943: 403 Client Error: Forbidden for url: https://api.telegram.org/bot***/sendMessage
+2026-11-17 06:19 не отправилось в чат 8301728829: 403 Client Error: Forbidden for url: https://api.telegram.org/bot***/sendMessage
 2026-11-17 07:19 просмотрено 598, подходящих новых 0
 2026-11-17 08:18 просмотрено 475, подходящих новых 0; не открылись: FL.ru: HTTPError 403 Client Error: Forbidden for url: https://www.fl.ru/rss/all.xml; FL.ru программирование: HTTPError 403 Client Error: Forbidden for url: https://www.fl.ru/rss/all.xml?category=5
 2026-11-17 09:19 просмотрено 597, подходящих новых 0
 2026-11-17 10:19 просмотрено 532, подходящих новых 1; не открылись: FL.ru программирование: ReadTimeout HTTPSConnectionPool(host='www.fl.ru', port=443): Read timed out. (read timeout=2
-2026-11-17 10:19 не отправилось в чат 5884708943: 403 Client Error: Forbidden for url: https://api.telegram.org/bot8909141481:AAEic5lOnWfpuIwxiXD1PAY2VvmM30Hl2k0/sendMessage
-2026-11-17 10:19 не отправилось в чат 8301728829: 403 Client Error: Forbidden for url: https://api.telegram.org/bot8909141481:AAEic5lOnWfpuIwxiXD1PAY2VvmM30Hl2k0/sendMessage
+2026-11-17 10:19 не отправилось в чат 5884708943: 403 Client Error: Forbidden for url: https://api.telegram.org/bot***/sendMessage
+2026-11-17 10:19 не отправилось в чат 8301728829: 403 Client Error: Forbidden for url: https://api.telegram.org/bot***/sendMessage
 2026-11-17 11:18 просмотрено 473, подходящих новых 0; не открылись: FL.ru: HTTPError 403 Client Error: Forbidden for url: https://www.fl.ru/rss/all.xml; FL.ru программирование: HTTPError 403 Client Error: Forbidden for url: https://www.fl.ru/rss/all.xml?category=5
 2026-11-17 12:18 просмотрено 472, подходящих новых 0; не открылись: FL.ru: HTTPError 403 Client Error: Forbidden for url: https://www.fl.ru/rss/all.xml; FL.ru программирование: HTTPError 403 Client Error: Forbidden for url: https://www.fl.ru/rss/all.xml?category=5
 2026-11-17 13:18 просмотрено 472, подходящих новых 1; не открылись: FL.ru: HTTPError 403 Client Error: Forbidden for url: https://www.fl.ru/rss/all.xml; FL.ru программирование: HTTPError 403 Client Error: Forbidden for url: https://www.fl.ru/rss/all.xml?category=5
-2026-11-17 13:19 не отправилось в чат 5884708943: 403 Client Error: Forbidden for url: https://api.telegram.org/bot8909141481:AAEic5lOnWfpuIwxiXD1PAY2VvmM30Hl2k0/sendMessage
-2026-11-17 13:19 не отправилось в чат 8301728829: 403 Client Error: Forbidden for url: https://api.telegram.org/bot8909141481:AAEic5lOnWfpuIwxiXD1PAY2VvmM30Hl2k0/sendMessage
+2026-11-17 13:19 не отправилось в чат 5884708943: 403 Client Error: Forbidden for url: https://api.telegram.org/bot***/sendMessage
+2026-11-17 13:19 не отправилось в чат 8301728829: 403 Client Error: Forbidden for url: https://api.telegram.org/bot***/sendMessage
 2026-11-17 14:18 просмотрено 472, подходящих новых 0; не открылись: FL.ru: HTTPError 403 Client Error: Forbidden for url: https://www.fl.ru/rss/all.xml; FL.ru программирование: HTTPError 403 Client Error: Forbidden for url: https://www.fl.ru/rss/all.xml?category=5
 2026-11-17 14:24 просмотрено 472, подходящих новых 0; не открылись: FL.ru: HTTPError 403 Client Error: Forbidden for url: https://www.fl.ru/rss/all.xml; FL.ru программирование: HTTPError 403 Client Error: Forbidden for url: https://www.fl.ru/rss/all.xml?category=5
 2026-11-17 15:19 просмотрено 472, подходящих новых 0; не открылись: FL.ru: HTTPError 403 Client Error: Forbidden for url: https://www.fl.ru/rss/all.xml; FL.ru программирование: HTTPError 403 Client Error: Forbidden for url: https://www.fl.ru/rss/all.xml?category=5
