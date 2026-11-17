@@ -79,6 +79,8 @@ OTHER_JOB = re.compile(
 
 
 def log(msg):
+    # Токен бота попадает в текст ошибок requests (он в адресе запроса), в журнал его не пишем.
+    msg = re.sub(r"bot\d+:[\w-]+", "bot***", str(msg))
     line = f"{datetime.now(timezone.utc):%Y-%m-%d %H:%M} {msg}"
     print(line, flush=True)
     lines = LOG_FILE.read_text(encoding="utf-8").splitlines() if LOG_FILE.exists() else []
@@ -360,6 +362,13 @@ def find_chat_ids(token, state):
     if os.environ.get("LEADS_CHAT_ID"):
         return [c.strip() for c in os.environ["LEADS_CHAT_ID"].split(",") if c.strip()], []
     ids = state.setdefault("chat_ids", [state.pop("chat_id")] if state.get("chat_id") else [])
+    # Сменился бот (новый токен): старые чаты новому боту недоступны, получателей ищем заново.
+    bot_id = token.split(":")[0]
+    if state.get("bot_id") != bot_id:
+        if state.get("bot_id"):
+            ids.clear()
+            log(f"новый бот для заявок ({bot_id}), жду /start от владельцев")
+        state["bot_id"] = bot_id
     owners = {n.lstrip("@").lower() for n in SOURCES.get("owners", [])}
     if ids and not owners:
         return ids, []

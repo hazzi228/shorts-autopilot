@@ -148,7 +148,9 @@ class Bot {
     const base = { chat_id, caption, parse_mode: "HTML", reply_markup };
     if (/^https?:\/\//.test(image)) return this.call("sendPhoto", { ...base, photo: image });
     // Файл загружается в Telegram один раз, дальше отправляем его по file_id.
-    const cached = await this.kv.get(`img:${image}`);
+    // file_id у каждого бота свой, поэтому в ключе id бота: после смены токена картинки загрузятся заново.
+    const key = `img:${String(this.env.BOT_TOKEN).split(":")[0]}:${image}`;
+    const cached = await this.kv.get(key);
     if (cached) return this.call("sendPhoto", { ...base, photo: cached });
     const form = new FormData();
     for (const [k, v] of Object.entries(base)) if (v !== undefined) form.append(k, typeof v === "object" ? JSON.stringify(v) : String(v));
@@ -156,7 +158,7 @@ class Bot {
     if (!file.ok) throw new Error(`Нет картинки images/${image}`);
     form.append("photo", await file.blob(), image);
     const msg = await this.call("sendPhoto", null, form);
-    await this.kv.put(`img:${image}`, msg.photo.at(-1).file_id);
+    await this.kv.put(key, msg.photo.at(-1).file_id);
     return msg;
   }
 
