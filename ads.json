@@ -1,14 +1,14 @@
 [
  {
   "id": "ad-sleep",
-  "title": "Бот: t.me/SellerPlayerok_bot",
+  "title": "Бот: t.me/SellerPlayerok_reserv_bot",
   "accent": [
    255,
    140,
    0
   ],
   "yt_title": "Пока я сплю, бот продаёт на Playerok 😴",
-  "description": "Бот для продавцов Playerok: автовыдача товара, автоответы, поднятие лотов, сводки продаж.\n3 дня бесплатно, дальше от 299 ₽ в месяц.\n\n👉 Попробовать: https://t.me/SellerPlayerok_bot?start=shorts\n\nБот работает через неофициальный доступ к Playerok.\n\n#playerok #продавцам #игры #телеграмбот #shorts",
+  "description": "Бот для продавцов Playerok: автовыдача товара, автоответы, поднятие лотов, сводки продаж.\n3 дня бесплатно, дальше от 299 ₽ в месяц.\n\n👉 Попробовать: https://t.me/SellerPlayerok_reserv_bot?start=shorts\n\nБот работает через неофициальный доступ к Playerok.\n\n#playerok #продавцам #игры #телеграмбот #shorts",
   "tags": [
    "playerok",
    "продавцам",
@@ -18,10 +18,10 @@
    "автовыдача"
   ],
   "cta": {
-   "handle": "t.me/SellerPlayerok_bot",
+   "handle": "t.me/SellerPlayerok_reserv_bot",
    "name": "Seller Bot",
    "subtitle": "Бот для продавцов Playerok",
-   "chip": "Бот: t.me/SellerPlayerok_bot",
+   "chip": "Бот: t.me/SellerPlayerok_reserv_bot",
    "items": [
     "Автовыдача сразу после оплаты",
     "Автоответы покупателям",
@@ -67,20 +67,20 @@
      "cta"
     ],
     "say": "Селлер Плеерок бот. Три дня бесплатно, ссылка на экране и в описании.",
-    "show": "3 дня бесплатно 👉 t.me/SellerPlayerok_bot"
+    "show": "3 дня бесплатно 👉 t.me/SellerPlayerok_reserv_bot"
    }
   ]
  },
  {
   "id": "ad-safety",
-  "title": "Бот: t.me/SellerPlayerok_bot",
+  "title": "Бот: t.me/SellerPlayerok_reserv_bot",
   "accent": [
    40,
    210,
    140
   ],
   "yt_title": "Бот украдёт деньги с Playerok? Разбираем 🔒",
-  "description": "Частый вопрос: не украдёт ли бот деньги с баланса Playerok.\n— В боте нет функции вывода или перевода денег: только выдача товара, ответы покупателям и лоты.\n— Ключ входа (токен) хранится в зашифрованном виде и нужен только для работы с вашим аккаунтом.\n— Платное продвижение лота — только после вашего подтверждения кнопкой.\n3 дня бесплатно, дальше от 299 ₽ в месяц.\n\n👉 Попробовать: https://t.me/SellerPlayerok_bot?start=shorts\n\nБот работает через неофициальный доступ к Playerok.\n\n#playerok #продавцам #игры #телеграмбот #shorts",
+  "description": "Частый вопрос: не украдёт ли бот деньги с баланса Playerok.\n— В боте нет функции вывода или перевода денег: только выдача товара, ответы покупателям и лоты.\n— Ключ входа (токен) хранится в зашифрованном виде и нужен только для работы с вашим аккаунтом.\n— Платное продвижение лота — только после вашего подтверждения кнопкой.\n3 дня бесплатно, дальше от 299 ₽ в месяц.\n\n👉 Попробовать: https://t.me/SellerPlayerok_reserv_bot?start=shorts\n\nБот работает через неофициальный доступ к Playerok.\n\n#playerok #продавцам #игры #телеграмбот #shorts",
   "tags": [
    "playerok",
    "продавцам",
@@ -90,10 +90,10 @@
    "автовыдача"
   ],
   "cta": {
-   "handle": "t.me/SellerPlayerok_bot",
+   "handle": "t.me/SellerPlayerok_reserv_bot",
    "name": "Seller Bot",
    "subtitle": "Бот для продавцов Playerok",
-   "chip": "Бот: t.me/SellerPlayerok_bot",
+   "chip": "Бот: t.me/SellerPlayerok_reserv_bot",
    "items": [
     "Автовыдача сразу после оплаты",
     "Автоответы покупателям",
@@ -148,20 +148,20 @@
      "cta"
     ],
     "say": "Селлер Плеерок бот. Три дня бесплатно, ссылка на экране и в описании.",
-    "show": "3 дня бесплатно 👉 t.me/SellerPlayerok_bot"
+    "show": "3 дня бесплатно 👉 t.me/SellerPlayerok_reserv_bot"
    }
   ]
  },
  {
   "id": "ad-phone",
-  "title": "Бот: t.me/SellerPlayerok_bot",
+  "title": "Бот: t.me/SellerPlayerok_reserv_bot",
   "accent": [
    0,
    190,
    255
   ],
   "yt_title": "Хватит ждать покупателя с телефоном в руках 📱",
-  "description": "Бот для продавцов Playerok: автовыдача товара, автоответы, поднятие лотов, сводки продаж.\n3 дня бесплатно, дальше от 299 ₽ в месяц.\n\n👉 Попробовать: https://t.me/SellerPlayerok_bot?start=shorts\n\nБот работает через неофициальный доступ к Playerok.\n\n#playerok #продавцам #игры #телеграмбот #shorts",
+  "description": "Бот для продавцов Playerok: автовыдача товара, автоответы, поднятие лотов, сводки продаж.\n3 дня бесплатно, дальше от 299 ₽ в месяц.\n\n👉 Попробовать: https://t.me/SellerPlayerok_reserv_bot?start=shorts\n\nБот работает через неофициальный доступ к Playerok.\n\n#playerok #продавцам #игры #телеграмбот #shorts",
   "tags": [
    "playerok",
    "продавцам",
@@ -171,10 +171,10 @@
    "автовыдача"
   ],
   "cta": {
-   "handle": "t.me/SellerPlayerok_bot",
+   "handle": "t.me/SellerPlayerok_reserv_bot",
    "name": "Seller Bot",
    "subtitle": "Бот для продавцов Playerok",
-   "chip": "Бот: t.me/SellerPlayerok_bot",
+   "chip": "Бот: t.me/SellerPlayerok_reserv_bot",
    "items": [
     "Автовыдача сразу после оплаты",
     "Автоответы покупателям",
@@ -220,20 +220,20 @@
      "cta"
     ],
     "say": "Селлер Плеерок бот. Три дня бесплатно, ссылка на экране и в описании.",
-    "show": "3 дня бесплатно 👉 t.me/SellerPlayerok_bot"
+    "show": "3 дня бесплатно 👉 t.me/SellerPlayerok_reserv_bot"
    }
   ]
  },
  {
   "id": "ad-lots",
-  "title": "Бот: t.me/SellerPlayerok_bot",
+  "title": "Бот: t.me/SellerPlayerok_reserv_bot",
   "accent": [
    170,
    90,
    255
   ],
   "yt_title": "Почему твой лот на Playerok никто не видит 👀",
-  "description": "Бот для продавцов Playerok: автовыдача товара, автоответы, поднятие лотов, сводки продаж.\n3 дня бесплатно, дальше от 299 ₽ в месяц.\n\n👉 Попробовать: https://t.me/SellerPlayerok_bot?start=shorts\n\nБот работает через неофициальный доступ к Playerok.\n\n#playerok #продавцам #игры #телеграмбот #shorts",
+  "description": "Бот для продавцов Playerok: автовыдача товара, автоответы, поднятие лотов, сводки продаж.\n3 дня бесплатно, дальше от 299 ₽ в месяц.\n\n👉 Попробовать: https://t.me/SellerPlayerok_reserv_bot?start=shorts\n\nБот работает через неофициальный доступ к Playerok.\n\n#playerok #продавцам #игры #телеграмбот #shorts",
   "tags": [
    "playerok",
    "продавцам",
@@ -243,10 +243,10 @@
    "автовыдача"
   ],
   "cta": {
-   "handle": "t.me/SellerPlayerok_bot",
+   "handle": "t.me/SellerPlayerok_reserv_bot",
    "name": "Seller Bot",
    "subtitle": "Бот для продавцов Playerok",
-   "chip": "Бот: t.me/SellerPlayerok_bot",
+   "chip": "Бот: t.me/SellerPlayerok_reserv_bot",
    "items": [
     "Автовыдача сразу после оплаты",
     "Автоответы покупателям",
@@ -292,20 +292,20 @@
      "cta"
     ],
     "say": "Селлер Плеерок бот. Три дня бесплатно, ссылка на экране и в описании.",
-    "show": "3 дня бесплатно 👉 t.me/SellerPlayerok_bot"
+    "show": "3 дня бесплатно 👉 t.me/SellerPlayerok_reserv_bot"
    }
   ]
  },
  {
   "id": "ad-guides",
-  "title": "Бот: t.me/SellerPlayerok_bot",
+  "title": "Бот: t.me/SellerPlayerok_reserv_bot",
   "accent": [
    40,
    210,
    140
   ],
   "yt_title": "Бот сам выкладывает лоты на Playerok 🧠",
-  "description": "Бот для продавцов Playerok: автовыдача товара, автоответы, поднятие лотов, сводки продаж.\n3 дня бесплатно, дальше от 299 ₽ в месяц.\n\n👉 Попробовать: https://t.me/SellerPlayerok_bot?start=shorts\n\nБот работает через неофициальный доступ к Playerok.\n\n#playerok #продавцам #игры #телеграмбот #shorts",
+  "description": "Бот для продавцов Playerok: автовыдача товара, автоответы, поднятие лотов, сводки продаж.\n3 дня бесплатно, дальше от 299 ₽ в месяц.\n\n👉 Попробовать: https://t.me/SellerPlayerok_reserv_bot?start=shorts\n\nБот работает через неофициальный доступ к Playerok.\n\n#playerok #продавцам #игры #телеграмбот #shorts",
   "tags": [
    "playerok",
    "продавцам",
@@ -315,10 +315,10 @@
    "автовыдача"
   ],
   "cta": {
-   "handle": "t.me/SellerPlayerok_bot",
+   "handle": "t.me/SellerPlayerok_reserv_bot",
    "name": "Seller Bot",
    "subtitle": "Бот для продавцов Playerok",
-   "chip": "Бот: t.me/SellerPlayerok_bot",
+   "chip": "Бот: t.me/SellerPlayerok_reserv_bot",
    "items": [
     "Автовыдача сразу после оплаты",
     "Автоответы покупателям",
@@ -364,20 +364,20 @@
      "cta"
     ],
     "say": "Селлер Плеерок бот. Три дня бесплатно, ссылка на экране и в описании.",
-    "show": "3 дня бесплатно 👉 t.me/SellerPlayerok_bot"
+    "show": "3 дня бесплатно 👉 t.me/SellerPlayerok_reserv_bot"
    }
   ]
  },
  {
   "id": "ad-setup",
-  "title": "Бот: t.me/SellerPlayerok_bot",
+  "title": "Бот: t.me/SellerPlayerok_reserv_bot",
   "accent": [
    255,
    70,
    110
   ],
   "yt_title": "Автовыдача на Playerok за 5 минут ⏱️",
-  "description": "Бот для продавцов Playerok: автовыдача товара, автоответы, поднятие лотов, сводки продаж.\n3 дня бесплатно, дальше от 299 ₽ в месяц.\n\n👉 Попробовать: https://t.me/SellerPlayerok_bot?start=shorts\n\nБот работает через неофициальный доступ к Playerok.\n\n#playerok #продавцам #игры #телеграмбот #shorts",
+  "description": "Бот для продавцов Playerok: автовыдача товара, автоответы, поднятие лотов, сводки продаж.\n3 дня бесплатно, дальше от 299 ₽ в месяц.\n\n👉 Попробовать: https://t.me/SellerPlayerok_reserv_bot?start=shorts\n\nБот работает через неофициальный доступ к Playerok.\n\n#playerok #продавцам #игры #телеграмбот #shorts",
   "tags": [
    "playerok",
    "продавцам",
@@ -387,10 +387,10 @@
    "автовыдача"
   ],
   "cta": {
-   "handle": "t.me/SellerPlayerok_bot",
+   "handle": "t.me/SellerPlayerok_reserv_bot",
    "name": "Seller Bot",
    "subtitle": "Бот для продавцов Playerok",
-   "chip": "Бот: t.me/SellerPlayerok_bot",
+   "chip": "Бот: t.me/SellerPlayerok_reserv_bot",
    "items": [
     "Автовыдача сразу после оплаты",
     "Автоответы покупателям",
@@ -436,20 +436,20 @@
      "cta"
     ],
     "say": "Селлер Плеерок бот. Три дня бесплатно, ссылка на экране и в описании.",
-    "show": "3 дня бесплатно 👉 t.me/SellerPlayerok_bot"
+    "show": "3 дня бесплатно 👉 t.me/SellerPlayerok_reserv_bot"
    }
   ]
  },
  {
   "id": "ad-night",
-  "title": "Бот: t.me/SellerPlayerok_bot",
+  "title": "Бот: t.me/SellerPlayerok_reserv_bot",
   "accent": [
    255,
    200,
    0
   ],
   "yt_title": "Покупатель пишет в 3 ночи. Кто ответит? 🌙",
-  "description": "Бот для продавцов Playerok: автовыдача товара, автоответы, поднятие лотов, сводки продаж.\n3 дня бесплатно, дальше от 299 ₽ в месяц.\n\n👉 Попробовать: https://t.me/SellerPlayerok_bot?start=shorts\n\nБот работает через неофициальный доступ к Playerok.\n\n#playerok #продавцам #игры #телеграмбот #shorts",
+  "description": "Бот для продавцов Playerok: автовыдача товара, автоответы, поднятие лотов, сводки продаж.\n3 дня бесплатно, дальше от 299 ₽ в месяц.\n\n👉 Попробовать: https://t.me/SellerPlayerok_reserv_bot?start=shorts\n\nБот работает через неофициальный доступ к Playerok.\n\n#playerok #продавцам #игры #телеграмбот #shorts",
   "tags": [
    "playerok",
    "продавцам",
@@ -459,10 +459,10 @@
    "автовыдача"
   ],
   "cta": {
-   "handle": "t.me/SellerPlayerok_bot",
+   "handle": "t.me/SellerPlayerok_reserv_bot",
    "name": "Seller Bot",
    "subtitle": "Бот для продавцов Playerok",
-   "chip": "Бот: t.me/SellerPlayerok_bot",
+   "chip": "Бот: t.me/SellerPlayerok_reserv_bot",
    "items": [
     "Автовыдача сразу после оплаты",
     "Автоответы покупателям",
@@ -508,7 +508,7 @@
      "cta"
     ],
     "say": "Селлер Плеерок бот. Три дня бесплатно, ссылка на экране и в описании.",
-    "show": "3 дня бесплатно 👉 t.me/SellerPlayerok_bot"
+    "show": "3 дня бесплатно 👉 t.me/SellerPlayerok_reserv_bot"
    }
   ]
  }
