@@ -55,13 +55,14 @@ in TikTok settings.</p>
 <h2>Contact</h2><p>${CONTACT}</p>`],
 };
 
-// Файлы подтверждения адреса для TikTok (URL properties): "/имя-файла.txt": "содержимое".
-const VERIFY = {};
+// Файл подтверждения адреса для TikTok (URL properties): /tiktok<код>.txt -> "tiktok-developers-site-verification=<код>".
+const VERIFY = /^\/tiktok([A-Za-z0-9]{16,64})\.txt$/;
 
 export default {
   async fetch(request, env) {
     const path = new URL(request.url).pathname.replace(/\/$/, "");
-    if (VERIFY[path]) return new Response(VERIFY[path], { headers: { "content-type": "text/plain" } });
+    const v = path.match(VERIFY);
+    if (v) return new Response(`tiktok-developers-site-verification=${v[1]}`, { headers: { "content-type": "text/plain" } });
     const p = PAGES[path];
     if (p) return page(...p);
     return env.ASSETS.fetch(request);
