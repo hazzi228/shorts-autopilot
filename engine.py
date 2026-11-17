@@ -19,7 +19,7 @@ SERIF = os.path.join(FONT_DIR, "DejaVuSerif.ttf")
 SERIF_B = os.path.join(FONT_DIR, "DejaVuSerif-Bold.ttf")
 EMOJI = os.path.join(FONT_DIR, "NotoColorEmoji.ttf")
 VOICE = os.path.join(S, "voice", "ru_RU-dmitri-medium.onnx")
-HANDLE = "@PortfolioHazzer_bot"
+HANDLE = "@HazzerPortfolio_bot"
 # Что показывает финальная карточка рекламы. Рекламные ролики (слот 12:00) подменяют это полем "cta" в сценарии.
 CTA_DEFAULT = dict(handle=HANDLE, name="Hazzer", subtitle="Telegram-боты и сайты под ключ", chip="Портфолио: " + HANDLE,
                    items=["Оплата: СБП, карта, крипта", "Личный кабинет и админ-панель", "От идеи до запуска", "Приятная цена"],
@@ -596,7 +596,7 @@ def hit_sfx(sr):
 # Настоящие картинки по теме держат зрителя лучше эмодзи. Берём только свободные лицензии,
 # для CC BY / BY-SA подписываем автора прямо на фото.
 COMMONS = "https://commons.wikimedia.org/w/api.php"
-UA = {"User-Agent": "shorts-autopilot/1.0 (https://t.me/PortfolioHazzer_bot)"}
+UA = {"User-Agent": "shorts-autopilot/1.0 (https://t.me/HazzerPortfolio_bot)"}
 FREE_LIC = ("public domain", "pd", "cc0", "cc by", "cc-by")
 _photo_cache = {}
 
@@ -978,6 +978,12 @@ def build(v, out_path, work):
             f = font(BLACK, max(20, int(base_size * s)))
             fa = font(BLACK, max(20, int(base_size * s * 1.12)))
             words = [(a_, b_, x if (x.startswith("@") or "." in x[:-1]) else x.upper()) for a_, b_, x in cap[2]]
+            # Длинная ссылка одним словом (t.me/..._bot) не должна вылезать за край кадра.
+            widest = max(text_width(wd[2], fa) for wd in words)
+            if widest > 960:
+                k = 960 / widest
+                f = font(BLACK, max(20, int(base_size * s * k)))
+                fa = font(BLACK, max(20, int(base_size * s * 1.12 * k)))
             sp = f.getlength(" ") * 0.7
             lines, cur, cw = [], [], 0
             for wd in words:
