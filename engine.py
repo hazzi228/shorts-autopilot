@@ -19,7 +19,7 @@ SERIF = os.path.join(FONT_DIR, "DejaVuSerif.ttf")
 SERIF_B = os.path.join(FONT_DIR, "DejaVuSerif-Bold.ttf")
 EMOJI = os.path.join(FONT_DIR, "NotoColorEmoji.ttf")
 VOICE = os.path.join(S, "voice", "ru_RU-dmitri-medium.onnx")
-HANDLE = "@PortfolioHazzer_reserv_bot"
+HANDLE = "@PortfolioHazzer_bot"
 # Что показывает финальная карточка рекламы. Рекламные ролики (слот 14:00) подменяют это полем "cta" в сценарии.
 CTA_DEFAULT = dict(handle=HANDLE, name="Hazzer", subtitle="Telegram-боты и сайты под ключ", chip="Портфолио: " + HANDLE,
                    items=["Оплата: СБП, карта, крипта", "Личный кабинет и админ-панель", "От идеи до запуска", "Приятная цена"],
@@ -596,7 +596,7 @@ def hit_sfx(sr):
 # Настоящие картинки по теме держат зрителя лучше эмодзи. Берём только свободные лицензии,
 # для CC BY / BY-SA подписываем автора прямо на фото.
 COMMONS = "https://commons.wikimedia.org/w/api.php"
-UA = {"User-Agent": "shorts-autopilot/1.0 (https://t.me/PortfolioHazzer_reserv_bot)"}
+UA = {"User-Agent": "shorts-autopilot/1.0 (https://t.me/PortfolioHazzer_bot)"}
 FREE_LIC = ("public domain", "pd", "cc0", "cc by", "cc-by")
 _photo_cache = {}
 
