@@ -50,7 +50,7 @@ jobs:
               # ключ системного пользователя («единый вход»): страницы нет, проверяем аккаунт напрямую
               uid = instagram.IG_USER_ID
               for t in [x for x in (saved, user) if x]:
-                  ig = requests.get(G + "/" + uid, params={"fields": "username,account_type", "access_token": t}, timeout=60).json()
+                  ig = requests.get(G + "/" + uid, params={"fields": "username,media_count", "access_token": t}, timeout=60).json()
                   print("Instagram", uid, "->", ig)
                   if "username" in ig:
                       lim = requests.get(G + "/" + uid + "/content_publishing_limit",
