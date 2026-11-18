@@ -1,7 +1,8 @@
 """Публикация ролика в Instagram Reels (бесплатно, через официальный API Meta).
 
-Подходят два вида ключа: со входом через Instagram (начинается с IG, живёт 60 дней)
-и ключ страницы Facebook, к которой привязан Instagram (бессрочный).
+Подходят три вида ключа: со входом через Instagram (начинается с IG, живёт 60 дней),
+ключ страницы Facebook, к которой привязан Instagram (бессрочный), и ключ системного пользователя
+из приложения с «единым входом» (EAA…, бессрочный, страница не нужна: берём аккаунт по INSTAGRAM_USER_ID).
 
 Ключ живёт 60 дней, поэтому раз в неделю продлеваем его и храним новый в репозитории
 в зашифрованном виде (ig_token.enc, пароль в секрете IG_KEY). Первый ключ берётся из секрета INSTAGRAM_TOKEN.
@@ -14,6 +15,8 @@ S = os.path.dirname(os.path.abspath(__file__))
 ENC = os.path.join(S, "ig_token.enc")
 META = os.path.join(S, "ig_token.json")  # когда ключ продлевали (без самого ключа)
 REFRESH_DAYS = 7
+# @neznal.fact; нужен для ключа системного пользователя, у которого нет страницы Facebook
+IG_USER_ID = os.environ.get("INSTAGRAM_USER_ID", "").strip() or "17841443254640267"
 
 
 def _openssl(args, data):
@@ -103,12 +106,18 @@ def _upload(path, sc, log, token):
             pages = requests.get(FB_API + "/me/accounts", params={
                 "fields": "access_token,instagram_business_account", "access_token": token}, timeout=60).json()
             page = next((p for p in pages.get("data", []) if p.get("instagram_business_account")), None)
-            if not page:
-                raise _BadToken("нет страницы Facebook с привязанным Instagram: %s" % str(pages)[:200])
-            token, info = page["access_token"], page
-            if os.environ.get("IG_KEY"):
-                save_token(token)
-                log("Ключ страницы Facebook сохранён (бессрочный)")
+            if page:
+                token, info = page["access_token"], page
+                if os.environ.get("IG_KEY"):
+                    save_token(token)
+                    log("Ключ страницы Facebook сохранён (бессрочный)")
+            else:
+                # ключ системного пользователя («единый вход»): страницы нет, аккаунт Instagram задан явно
+                chk = requests.get("%s/%s" % (FB_API, IG_USER_ID), params={"fields": "username", "access_token": token}, timeout=60)
+                if chk.status_code != 200:
+                    raise _BadToken("ключ не открывает Instagram %s: %s; страницы: %s"
+                                    % (IG_USER_ID, chk.text[:200], str(pages)[:150]))
+                info = {"instagram_business_account": {"id": IG_USER_ID}}
         me = info["instagram_business_account"]["id"]
     hosted = _host(path, log)
     try:
