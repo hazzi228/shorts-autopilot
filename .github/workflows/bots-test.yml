@@ -1,0 +1,38 @@
+name: Тест ботов (сообщение владельцу)
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v5
+      - name: Отправить тест от бота-портфолио и бота заявок
+        env:
+          PORTFOLIO_BOT_TOKEN: ${{ secrets.PORTFOLIO_BOT_TOKEN }}
+          LEADS_BOT_TOKEN: ${{ secrets.LEADS_BOT_TOKEN }}
+        run: |
+          owner=$(sed -n 's/^OWNER_ID *= *"\([0-9,]*\)".*/\1/p' portfolio-bot/wrangler.toml)
+          when=$(TZ=Europe/Moscow date '+%d.%m %H:%M')
+          fail=0
+          for pair in "PORTFOLIO_BOT_TOKEN:бот-портфолио" "LEADS_BOT_TOKEN:бот заявок"; do
+            var=${pair%%:*}; name=${pair#*:}
+            token=$(printf '%s' "${!var}" | tr -d '[:space:]')
+            for id in ${owner//,/ }; do
+              res=$(curl -s "https://api.telegram.org/bot$token/sendMessage" \
+                --data-urlencode "chat_id=$id" \
+                --data-urlencode "text=✅ Тест: $name пишет владельцу ($id), $when МСК")
+              if echo "$res" | grep -q '"ok":true'; then
+                echo "$name -> $id: доставлено"
+              else
+                echo "$name -> $id: ОШИБКА $(echo "$res" | sed 's/.*"description":"\([^"]*\)".*/\1/')"
+                fail=1
+              fi
+            done
+          done
+          exit $fail
