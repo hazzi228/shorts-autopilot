@@ -47,7 +47,18 @@ jobs:
                   print("Новый ключ страницы сохранён")
               break
           else:
-              raise SystemExit("Ни один ключ не дал страницу с Instagram")
+              # ключ системного пользователя («единый вход»): страницы нет, проверяем аккаунт напрямую
+              uid = instagram.IG_USER_ID
+              for t in [x for x in (saved, user) if x]:
+                  ig = requests.get(G + "/" + uid, params={"fields": "username,account_type", "access_token": t}, timeout=60).json()
+                  print("Instagram", uid, "->", ig)
+                  if "username" in ig:
+                      lim = requests.get(G + "/" + uid + "/content_publishing_limit",
+                                         params={"fields": "config,quota_usage", "access_token": t}, timeout=60).text
+                      print("Лимит публикаций:", lim[:300])
+                      break
+              else:
+                  raise SystemExit("Ни один ключ не открывает Instagram")
           PY
       - name: Сохранить ключ
         run: |
