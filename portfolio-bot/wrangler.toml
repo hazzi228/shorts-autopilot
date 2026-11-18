@@ -8,6 +8,10 @@ compatibility_date = "2026-10-01"
 directory = "./images"
 binding = "ASSETS"
 
+# Владелец бота по Telegram ID (через запятую, если несколько). Ники в data.json тогда не используются.
+[vars]
+OWNER_ID = "8301728829"
+
 # Память бота: кто владелец, кому отвечать, загруженные картинки.
 # id подставляет workflow при выкладке.
 [[kv_namespaces]]
