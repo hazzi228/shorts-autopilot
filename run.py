@@ -4,7 +4,7 @@
         python run.py --no-upload — собрать ролик без загрузки (проверка)
         python run.py --check     — только сказать, пора ли выпускать ролик (для облака)
 """
-import os, sys, json, glob, shutil, datetime, traceback, time
+import os, re, sys, json, glob, shutil, datetime, traceback, time
 
 S = os.path.dirname(os.path.abspath(__file__))
 os.chdir(S)
@@ -18,7 +18,25 @@ LOCK = os.path.join(S, "run.lock")
 SCOPES = ["https://www.googleapis.com/auth/youtube.upload"]
 
 
+# Репозиторий публичный: ключи не должны попасть в log.txt и в журнал Actions.
+# Они бывают в тексте ошибок requests (адрес запроса с ?access_token=..., ?key=..., /bot<токен>/).
+_SECRET_ENV = ("YOUTUBE_TOKEN", "INSTAGRAM_TOKEN", "IG_KEY", "GEMINI_API_KEY", "GEMINI_KEY", "TIKTOK_CLIENT_KEY",
+               "TIKTOK_CLIENT_SECRET", "CLOUDFLARE_API_TOKEN", "PORTFOLIO_BOT_TOKEN", "LEADS_BOT_TOKEN")
+
+
+def redact(text):
+    text = str(text)
+    for name in _SECRET_ENV:
+        v = os.environ.get(name, "").strip()
+        if len(v) >= 8:
+            text = text.replace(v, "***")
+    text = re.sub(r"(?i)((?:access_token|refresh_token|client_secret|key|token)[=:]\s*['\"]?)[\w.~%|-]{12,}", r"\1***", text)
+    text = re.sub(r"bot\d+:[\w-]+", "bot***", text)
+    return re.sub(r"\b(EAA|IG[A-Z])[A-Za-z0-9]{30,}", "***", text)
+
+
 def log(msg):
+    msg = redact(msg)
     line = "[%s] %s" % (datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"), msg)
     with open(LOG, "a", encoding="utf-8") as f:
         f.write(line + "\n")
