@@ -1,11 +1,5 @@
 {
  "ids": [
-  "tg:zakazy_freelance/77429",
-  "tg:zakazy_freelance/77430",
-  "tg:zakazy_freelance/77431",
-  "tg:theyseeku/40226",
-  "tg:freelancce/16650",
-  "tg:makingmoney/231",
   "tg:zakazy_freelance/77432",
   "tg:getwork25/5094",
   "tg:zakazy_freelance/77433",
@@ -4999,7 +4993,13 @@
   "tg:sova_freelance/16809",
   "tg:sova_freelance/16810",
   "tg:zakazy_freelance/80954",
-  "tg:zakazy_freelance/80955"
+  "tg:zakazy_freelance/80955",
+  "tg:theyseeku/40582",
+  "tg:freelancce/16786",
+  "tg:zakazy_freelance/80956",
+  "tg:zakazy_freelance/80957",
+  "tg:zakazy_freelance/80958",
+  "tg:zakazy_freelance/80959"
  ],
  "prints": [
   "26a9ac8a749827aab4ad7fd9b96c0cd5",
