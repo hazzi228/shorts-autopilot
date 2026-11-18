@@ -13,7 +13,7 @@ h1{font-size:28px}h2{font-size:20px;margin-top:28px}a{color:#5b3df5}nav a{margin
 ${body}</body></html>`, { headers: { "content-type": "text/html; charset=utf-8" } });
 }
 
-const CONTACT = 'Telegram: <a href="https://t.me/PortfolioHazzer_reserv_bot">@PortfolioHazzer_reserv_bot</a>';
+const CONTACT = 'Telegram: <a href="https://t.me/PortfolioHazzer_bot">@PortfolioHazzer_bot</a>';
 
 const PAGES = {
   "": ["Neznal", `

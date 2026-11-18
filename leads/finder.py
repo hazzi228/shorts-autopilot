@@ -244,11 +244,11 @@ def draft(kind, lead):
     hello = pick(["Здравствуйте! Увидел ваш заказ.", "Добрый день! Прочитал ваш заказ, могу взяться.",
                   "Здравствуйте! Готов сделать то, что вы описали."])
     if lead["id"].startswith(("rss:", "kwork:")):
-        end = "Примеры работ и отзывы: @PortfolioHazzer_reserv_bot. Назову цену и срок, как только уточню пару деталей."
+        end = "Примеры работ и отзывы: @PortfolioHazzer_bot. Назову цену и срок, как только уточню пару деталей."
     else:
-        end = pick(["Примеры работ и отзывы: @PortfolioHazzer_reserv_bot. Напишите пару деталей, и назову цену и срок.",
-                    "Работы и отзывы можно посмотреть в @PortfolioHazzer_reserv_bot. Расскажите подробнее, отвечу сегодня.",
-                    "Мои работы и отзывы: @PortfolioHazzer_reserv_bot. Если интересно, опишите задачу, назову цену и срок."])
+        end = pick(["Примеры работ и отзывы: @PortfolioHazzer_bot. Напишите пару деталей, и назову цену и срок.",
+                    "Работы и отзывы можно посмотреть в @PortfolioHazzer_bot. Расскажите подробнее, отвечу сегодня.",
+                    "Мои работы и отзывы: @PortfolioHazzer_bot. Если интересно, опишите задачу, назову цену и срок."])
     return f"{hello} {offer} {end}"
 
 
@@ -270,7 +270,7 @@ def ai_draft(lead):
         "до 550 знаков, по-русски, на «вы», начни со «Здравствуйте!», живо и по делу, без канцелярита. Покажи, что понял задачу "
         "(назови её суть своими словами), задай 1-2 уточняющих вопроса именно по этой задаче. "
         "О себе пиши только то, что есть в образце, ничего не выдумывай: никаких цен, сроков, лет опыта и "
-        "других проектов. Обязательно упомяни @PortfolioHazzer_reserv_bot, других ссылок и @ не добавляй. "
+        "других проектов. Обязательно упомяни @PortfolioHazzer_bot, других ссылок и @ не добавляй. "
         "Верни только текст отклика.\n\n"
         f"Образец (факты обо мне): {facts}\n\nЗаказ:\n{lead['text'][:2000]}")
     for model in GEMINI_MODELS:
@@ -298,7 +298,7 @@ def ai_draft(lead):
         if text is None:
             continue
         mentions = set(re.findall(r"@\w+", text))
-        if 80 <= len(text) <= 900 and mentions == {"@PortfolioHazzer_reserv_bot"} and "http" not in text:
+        if 80 <= len(text) <= 900 and mentions == {"@PortfolioHazzer_bot"} and "http" not in text:
             return text
         print(f"  отклик от {model} отбракован: {text[:100]!r}")
     return None
