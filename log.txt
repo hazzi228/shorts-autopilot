@@ -700,3 +700,12 @@ RuntimeError: raqm_layout() failed.
 [2026-11-18 11:22:20] TikTok за 15 минут не обработал ролик (статус PROCESSING_UPLOAD)
 [2026-11-18 11:22:29] Ролик и описание для TikTok отправлены в бот
 [2026-11-18 11:22:29] Готово: 2026-11-18 11-22 ad-second-life.mp4
+[2026-11-18 14:05:36] Собираю ролик: nes-zapper (Как на самом деле работал световой пистолет 🔫), осталось сценариев: 13
+[2026-11-18 14:07:14] Ролик собран
+[2026-11-18 14:07:16] Загружен на YouTube: https://youtube.com/shorts/c5kybTvIHW0
+[2026-11-18 14:07:17] Сохранённый ключ Instagram не работает (нет страницы Facebook с привязанным Instagram: {'error': {'message': 'Error validating access token: Sessions for the user are not allowed because the), беру новый из INSTAGRAM_TOKEN
+[2026-11-18 14:07:17] Ошибка публикации в Instagram: нет страницы Facebook с привязанным Instagram: {'error': {'message': 'Error validating access token: Sessions for the user are not allowed because the user is not a confirmed user.', 'type': 'OAuthException', 'code': 190, 'error_subcode': 464, 'fb
+[2026-11-18 14:07:20] TikTok: ролик загружен, publish_id v_inbox_file~v2.7709512786136696854
+[2026-11-18 14:22:57] TikTok за 15 минут не обработал ролик (статус PROCESSING_UPLOAD)
+[2026-11-18 14:23:05] Ролик и описание для TikTok отправлены в бот
+[2026-11-18 14:23:05] Готово: 2026-11-18 14-23 nes-zapper.mp4
