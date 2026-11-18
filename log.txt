@@ -691,3 +691,12 @@ RuntimeError: raqm_layout() failed.
 [2026-11-18 08:06:58] TikTok: ролик загружен, publish_id v_inbox_file~v2.7709419837039183894
 [2026-11-18 08:22:09] Отправлен в черновики TikTok: Почему клавиатура банкомата сделана из металла 🏧
 [2026-11-18 08:22:09] Готово: 2026-11-18 08-22 atm-metal-keypad.mp4
+[2026-11-18 11:05:29] Собираю рекламный ролик: ad-second-life (Первый миллионер, который заработал внутри игры 🏰)
+[2026-11-18 11:06:43] Ролик собран
+[2026-11-18 11:06:45] Загружен на YouTube: https://youtube.com/shorts/Me8t7ckfnYc
+[2026-11-18 11:06:45] Сохранённый ключ Instagram не работает (нет страницы Facebook с привязанным Instagram: {'error': {'message': 'Error validating access token: Sessions for the user are not allowed because the), беру новый из INSTAGRAM_TOKEN
+[2026-11-18 11:06:45] Ошибка публикации в Instagram: нет страницы Facebook с привязанным Instagram: {'error': {'message': 'Error validating access token: Sessions for the user are not allowed because the user is not a confirmed user.', 'type': 'OAuthException', 'code': 190, 'error_subcode': 464, 'fb
+[2026-11-18 11:06:49] TikTok: ролик загружен, publish_id v_inbox_file~v2.7709466248149338134
+[2026-11-18 11:22:20] TikTok за 15 минут не обработал ролик (статус PROCESSING_UPLOAD)
+[2026-11-18 11:22:29] Ролик и описание для TikTok отправлены в бот
+[2026-11-18 11:22:29] Готово: 2026-11-18 11-22 ad-second-life.mp4
