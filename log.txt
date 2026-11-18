@@ -683,3 +683,11 @@ RuntimeError: raqm_layout() failed.
 [2026-11-17 18:23:36] TikTok за 15 минут не обработал ролик (статус PROCESSING_UPLOAD)
 [2026-11-17 18:23:44] Бот не прислал ролик: 500 Worker threw exception | portfolio-bot.morozovden632.workers.dev | Cloudflare
 [2026-11-17 18:23:44] Готово: 2026-11-17 18-23 power-button-symbol.mp4
+[2026-11-18 08:05:29] Собираю ролик: atm-metal-keypad (Почему клавиатура банкомата сделана из металла 🏧), осталось сценариев: 4
+[2026-11-18 08:06:52] Ролик собран
+[2026-11-18 08:06:54] Загружен на YouTube: https://youtube.com/shorts/TfBfl8DfLnA
+[2026-11-18 08:06:54] Сохранённый ключ Instagram не работает (нет страницы Facebook с привязанным Instagram: {'error': {'message': 'Error validating access token: Sessions for the user are not allowed because the), беру новый из INSTAGRAM_TOKEN
+[2026-11-18 08:06:55] Ошибка публикации в Instagram: нет страницы Facebook с привязанным Instagram: {'error': {'message': 'Error validating access token: Sessions for the user are not allowed because the user is not a confirmed user.', 'type': 'OAuthException', 'code': 190, 'error_subcode': 464, 'fb
+[2026-11-18 08:06:58] TikTok: ролик загружен, publish_id v_inbox_file~v2.7709419837039183894
+[2026-11-18 08:22:09] Отправлен в черновики TikTok: Почему клавиатура банкомата сделана из металла 🏧
+[2026-11-18 08:22:09] Готово: 2026-11-18 08-22 atm-metal-keypad.mp4
