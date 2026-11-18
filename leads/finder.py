@@ -361,6 +361,12 @@ def find_chat_ids(token, state):
     """Кому слать заявки. Новых получателей ищем среди тех, кто написал боту /start."""
     if os.environ.get("LEADS_CHAT_ID"):
         return [c.strip() for c in os.environ["LEADS_CHAT_ID"].split(",") if c.strip()], []
+    # Владельцы по Telegram ID: личный чат с ботом имеет тот же id, /start искать не нужно.
+    fixed = [str(i) for i in SOURCES.get("owner_ids", []) if str(i).strip()]
+    if fixed:
+        state["chat_ids"] = fixed
+        state["bot_id"] = token.split(":")[0]
+        return fixed, []
     ids = state.setdefault("chat_ids", [state.pop("chat_id")] if state.get("chat_id") else [])
     # Сменился бот (новый токен): старые чаты новому боту недоступны, получателей ищем заново.
     bot_id = token.split(":")[0]
