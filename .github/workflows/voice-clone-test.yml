@@ -23,7 +23,7 @@ jobs:
           sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg >/dev/null
           pip install -q torch==2.4.0 torchaudio==2.4.0 --index-url https://download.pytorch.org/whl/cpu
           pip install -q -r requirements.txt
-          git clone -q --depth 1 https://github.com/Plachta/seed-vc.git /tmp/seedvc
+          git clone -q --depth 1 https://github.com/Plachtaa/seed-vc.git /tmp/seedvc
           grep -viE "^(torch|torchaudio|torchvision|--extra-index-url)" /tmp/seedvc/requirements.txt > /tmp/req.txt
           pip install -q -r /tmp/req.txt
       - name: Записи голоса (расшифровка, в репозиторий не попадают)
