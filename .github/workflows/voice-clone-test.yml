@@ -2,6 +2,9 @@ name: Voice clone test
 
 on:
   workflow_dispatch:
+  push:
+    branches: [claude/project-thread-p7dtlz]
+    paths: [voiceclone/**, tools/voice_clone_test.py, .github/workflows/voice-clone-test.yml]
 
 permissions:
   contents: write
