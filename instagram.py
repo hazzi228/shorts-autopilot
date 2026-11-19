@@ -133,12 +133,13 @@ def _upload(path, sc, log, token):
         if not hosted:
             _rupload(r.json()["uri"], path, token, api, cid)
         _wait(api, cid, token)
+        # ролик в памяти бота держим до конца публикации: Instagram может перечитать файл на этом шаге
+        r = requests.post("%s/%s/media_publish" % (api, me), data={"creation_id": cid, "access_token": token}, timeout=120)
+        if r.status_code != 200:
+            raise RuntimeError("Instagram не опубликовал ролик (%s): %s" % (r.status_code, r.text[:300]))
     finally:
         if hosted:
             hosted[1]()
-    r = requests.post("%s/%s/media_publish" % (api, me), data={"creation_id": cid, "access_token": token}, timeout=60)
-    if r.status_code != 200:
-        raise RuntimeError("Instagram не опубликовал ролик (%s): %s" % (r.status_code, r.text[:300]))
     mid = r.json()["id"]
     link = requests.get(api + "/" + mid, params={"fields": "permalink", "access_token": token}, timeout=60).json().get("permalink")
     return link or ("id " + mid)
@@ -184,13 +185,15 @@ def _host(path, log):
     if not bot:
         log("Cloudflare: не нашёл память или адрес бота, пробую прямую загрузку")
         return None
-    if os.path.getsize(path) > KV_LIMIT:
-        small = path + ".ig.mp4"
-        from engine import FFMPEG
-        subprocess.run([FFMPEG, "-y", "-loglevel", "error", "-i", path, "-c:v", "libx264", "-preset", "medium",
-                        "-crf", "26", "-maxrate", "3M", "-bufsize", "6M", "-pix_fmt", "yuv420p",
-                        "-c:a", "aac", "-b:a", "128k", "-movflags", "+faststart", small], check=True)
-        path = small
+    # Всегда пережимаем под требования Reels: H.264 High, 30 к/с, ровный битрейт до 6 Мбит/с, AAC 48 кГц стерео.
+    # Ошибка Instagram 2207085 означает «не смог обработать видео», а пиковый битрейт после crf 20 бывает высоким.
+    small = path + ".ig.mp4"
+    from engine import FFMPEG
+    subprocess.run([FFMPEG, "-y", "-loglevel", "error", "-i", path, "-c:v", "libx264", "-profile:v", "high",
+                    "-level", "4.1", "-preset", "medium", "-crf", "23", "-maxrate", "6M", "-bufsize", "12M",
+                    "-r", "30", "-g", "60", "-pix_fmt", "yuv420p", "-c:a", "aac", "-b:a", "128k", "-ar", "48000",
+                    "-ac", "2", "-movflags", "+faststart", small], check=True)
+    path = small
     key = "reel-%s.mp4" % secrets.token_hex(16)
     with open(path, "rb") as f:
         if not kv.put(key, f.read(), ttl=3600):
