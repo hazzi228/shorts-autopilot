@@ -1,0 +1,49 @@
+name: Voice clone test
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  clone:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.10"
+      - name: Зависимости
+        run: |
+          pip install -q torch torchaudio --index-url https://download.pytorch.org/whl/cpu
+          pip install -q -r requirements.txt
+          pip install -q --no-deps git+https://github.com/myshell-ai/OpenVoice.git
+          pip install -q librosa soundfile inflect unidecode eng_to_ipa pypinyin cn2an jieba
+      - name: Модель OpenVoice v2
+        run: |
+          mkdir -p ckpt/converter
+          curl -sSfL -o ckpt/converter/config.json https://huggingface.co/myshell-ai/OpenVoiceV2/resolve/main/converter/config.json
+          curl -sSfL -o ckpt/converter/checkpoint.pth https://huggingface.co/myshell-ai/OpenVoiceV2/resolve/main/converter/checkpoint.pth
+      - name: Записи голоса (расшифровка, в репозиторий не попадают)
+        env:
+          VOICE_KEY: ${{ secrets.VOICE_KEY }}
+        run: |
+          mkdir -p work/ref
+          openssl enc -d -aes-256-cbc -pbkdf2 -iter 200000 -in voiceclone/ref.tar.enc -pass env:VOICE_KEY | tar -x -C work
+          for f in work/refc/*.flac; do ffmpeg -loglevel error -y -i "$f" work/ref/$(basename "$f" .flac).wav; done
+      - name: Проба
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+        run: python -u tools/voice_clone_test.py
+      - name: Сохранить в ветку samples
+        run: |
+          mkdir -p /tmp/s && cp samples/voice/*.mp3 /tmp/s/
+          git config user.name "shorts-autopilot"
+          git config user.email "actions@users.noreply.github.com"
+          git checkout --orphan samples
+          git rm -rqf --cached .
+          mkdir -p samples/voice && cp /tmp/s/*.mp3 samples/voice/
+          git add samples/voice
+          git commit -qm "Проба голоса"
+          git push -f origin samples
