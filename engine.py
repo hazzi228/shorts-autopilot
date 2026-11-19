@@ -702,10 +702,23 @@ def chunk_caption(text):
     return chunks
 
 # ---------- main ----------
+STYLE = os.environ.get("VIDEO_STYLE", "drawn")  # "drawn" = рисованный стиль (drawn.py), "classic" = старый с фото
+
+
 def build(v, out_path, work):
+    if (v.get("style") or STYLE) == "drawn":
+        import drawn
+        return drawn.build(v, out_path, work)
     os.makedirs(work, exist_ok=True)
     CTA.clear(); CTA.update(CTA_DEFAULT, **(v.get("cta") or {}))
     accent = tuple(v["accent"])
+    timeline, total, wav_path = make_audio(v, work)
+    return render_classic(v, out_path, work, timeline, total, wav_path, accent)
+
+
+def make_audio(v, work):
+    """Голос + музыка + звуки монтажа. Возвращает таймлайн сцен, длительность и путь к mix.wav."""
+    os.makedirs(work, exist_ok=True)
     GAP = 0.14  # паузы короче: монтаж без провисаний
     audio_parts, timeline, t = [], [], 0.12
     sr = SR
@@ -746,7 +759,19 @@ def build(v, out_path, work):
     with wave.open(wav_path, "wb") as wf:
         wf.setnchannels(1); wf.setsampwidth(2); wf.setframerate(sr)
         wf.writeframes((mix * 32767).astype(np.int16).tobytes())
+    return timeline, total, wav_path
 
+
+def finish(out_path):
+    final = out_path[:-4] + "_n.mp4"
+    subprocess.run([FFMPEG, "-loglevel", "error", "-y", "-i", out_path, "-c:v", "copy", "-af",
+                    "loudnorm=I=-14:TP=-1.5:LRA=11", "-ar", "44100", "-c:a", "aac", "-b:a", "192k",
+                    "-movflags", "+faststart", final], check=True)
+    os.replace(final, out_path)
+
+
+def render_classic(v, out_path, work, timeline, total, wav_path, accent):
+    sr = SR
     # подготовка визуала
     shots = {}
     phones = {}
@@ -1011,10 +1036,6 @@ def build(v, out_path, work):
     ff.wait()
     if ff.returncode != 0:
         raise RuntimeError("ffmpeg не смог собрать видео")
-    final = out_path[:-4] + "_n.mp4"
-    subprocess.run([FFMPEG, "-loglevel", "error", "-y", "-i", out_path, "-c:v", "copy", "-af",
-                    "loudnorm=I=-14:TP=-1.5:LRA=11", "-ar", "44100", "-c:a", "aac", "-b:a", "192k",
-                    "-movflags", "+faststart", final], check=True)
-    os.replace(final, out_path)
+    finish(out_path)
     return out_path, total
 

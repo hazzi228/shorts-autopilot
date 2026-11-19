@@ -11,6 +11,10 @@ on:
         description: "Собрать конкретный сценарий (id), например для ручной загрузки"
         required: false
         default: ""
+      files:
+        description: "Собрать сценарии из файлов (через пробел), например samples-drawn/a.json samples-drawn/b.json"
+        required: false
+        default: ""
 
 permissions:
   contents: write
@@ -41,7 +45,15 @@ jobs:
           cp vits-piper-ru_RU-dmitri-medium/ru_RU-dmitri-medium.onnx vits-piper-ru_RU-dmitri-medium/ru_RU-dmitri-medium.onnx.json voice/
           rm -rf v.tar.bz2 vits-piper-ru_RU-dmitri-medium
       - run: |
-          if [ -n "${{ inputs.id }}" ]; then
+          if [ -n "${{ inputs.files }}" ]; then
+            python -u - ${{ inputs.files }} <<'PY'
+          import json, os, sys, engine
+          os.makedirs("out", exist_ok=True)
+          for fn in sys.argv[1:]:
+              sc = json.load(open(fn, encoding="utf-8"))
+              engine.build(sc, "out/%s.mp4" % sc["id"], "work-" + sc["id"])
+          PY
+          elif [ -n "${{ inputs.id }}" ]; then
             python -u - <<'PY'
           import json, os, engine
           sid = "${{ inputs.id }}"
@@ -56,12 +68,12 @@ jobs:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
       - name: Сохранить ролик в ветку samples
         run: |
-          mkdir -p /tmp/s && cp out/*.mp4 /tmp/s/test.mp4
+          mkdir -p /tmp/s && if [ -n "${{ inputs.files }}" ]; then cp out/*.mp4 /tmp/s/; else cp out/*.mp4 /tmp/s/test.mp4; fi
           git config user.name "shorts-autopilot"
           git config user.email "actions@users.noreply.github.com"
           git checkout --orphan samples
           git rm -rqf --cached .
-          mkdir -p samples && cp /tmp/s/test.mp4 samples/
-          git add samples/test.mp4
+          mkdir -p samples && cp /tmp/s/*.mp4 samples/
+          git add samples/*.mp4
           git commit -qm "Тестовый ролик"
           git push -f origin samples
