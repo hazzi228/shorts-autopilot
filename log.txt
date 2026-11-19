@@ -739,3 +739,10 @@ RuntimeError: raqm_layout() failed.
 [2026-11-19 14:07:19] TikTok: ролик загружен, publish_id v_inbox_file~v2.7709883859948914710
 [2026-11-19 14:18:07] Отправлен в черновики TikTok: Песня, которая помогла создать весь формат MP3 🎵
 [2026-11-19 14:18:07] Готово: 2026-11-19 14-18 mother-of-mp3.mp4
+[2026-11-19 17:05:32] Собираю ролик: first-internet-message (Первое послание в интернете сломало сеть 🌐), осталось сценариев: 9
+[2026-11-19 17:07:15] Ролик собран
+[2026-11-19 17:07:17] Загружен на YouTube: https://youtube.com/shorts/jqYwF5VtxJk
+[2026-11-19 17:07:19] Ошибка публикации в Instagram: ключ не открывает Instagram 17841443254640267: {"error":{"message":"Unsupported get request. Object with ID '17841443254640267' does not exist, cannot be loaded due to missing permissions, or does not support this operation. Please read the Graph ; страницы: {'data': []}
+[2026-11-19 17:07:24] TikTok: ролик загружен, publish_id v_inbox_file~v2.7709930312196737046
+[2026-11-19 17:20:36] Отправлен в черновики TikTok: Первое послание в интернете сломало сеть 🌐
+[2026-11-19 17:20:36] Готово: 2026-11-19 17-20 first-internet-message.mp4
