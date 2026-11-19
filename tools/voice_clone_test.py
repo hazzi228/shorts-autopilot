@@ -34,9 +34,14 @@ save(np.concatenate(parts), sr, src)
 src22 = "work/src22.wav"
 subprocess.run(["ffmpeg", "-loglevel", "error", "-y", "-i", src, "-ar", "22050", "-ac", "1", src22], check=True)
 
-import torch
+import torch, types
+# водяной знак OpenVoice не нужен: подменяем модуль wavmark заглушкой, модель знака = None
+_wm = types.ModuleType("wavmark")
+_wm.load_model = lambda: types.SimpleNamespace(to=lambda dev: None)
+sys.modules["wavmark"] = _wm
 from openvoice.api import ToneColorConverter
-conv = ToneColorConverter("ckpt/converter/config.json", device="cpu", enable_watermark=False)
+conv = ToneColorConverter("ckpt/converter/config.json", device="cpu")
+conv.watermark_model = None
 conv.load_ckpt("ckpt/converter/checkpoint.pth")
 refs = sorted(glob.glob("work/ref/*.wav"))
 tgt = conv.extract_se(refs)
