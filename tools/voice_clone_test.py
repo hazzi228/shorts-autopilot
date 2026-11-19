@@ -1,13 +1,13 @@
 """Проба: голос Enceladus (Gemini) перекрашивается в голос владельца канала (OpenVoice v2, без обучения).
 Записи владельца лежат в voiceclone/ref.tar.enc (зашифрованы ключом VOICE_KEY, репозиторий публичный).
-Результат: samples/voice/*.mp3 — исходник и перекрашенный вариант."""
+Результат: samples/clone/*.mp3 — исходник и перекрашенный вариант."""
 import os, sys, glob, subprocess, wave
 import numpy as np
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 import engine
 
-OUT = "samples/voice"
+OUT = "samples/clone"
 os.makedirs(OUT, exist_ok=True)
 TEXTS = [
     "Как пятнадцатилетний школьник заставил НАСА выключить компьютеры на три недели?",

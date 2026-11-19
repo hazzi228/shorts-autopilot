@@ -42,12 +42,12 @@ jobs:
         run: python -u tools/voice_clone_test.py
       - name: Сохранить в ветку samples
         run: |
-          mkdir -p /tmp/s && cp samples/voice/*.mp3 /tmp/s/
+          mkdir -p /tmp/s && cp samples/clone/*.mp3 /tmp/s/
           git config user.name "shorts-autopilot"
           git config user.email "actions@users.noreply.github.com"
           git checkout --orphan samples
           git rm -rqf --cached .
-          mkdir -p samples/voice && cp /tmp/s/*.mp3 samples/voice/
-          git add samples/voice
+          mkdir -p samples/clone && cp /tmp/s/*.mp3 samples/clone/
+          git add -f samples/clone
           git commit -qm "Проба голоса"
           git push -f origin samples
