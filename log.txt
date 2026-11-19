@@ -732,3 +732,10 @@ RuntimeError: raqm_layout() failed.
 [2026-11-19 11:22:28] TikTok за 15 минут не обработал ролик (статус PROCESSING_UPLOAD)
 [2026-11-19 11:22:34] Ролик и описание для TikTok отправлены в бот
 [2026-11-19 11:22:34] Готово: 2026-11-19 11-22 ad-entropia-asteroid.mp4
+[2026-11-19 14:05:30] Собираю ролик: mother-of-mp3 (Песня, которая помогла создать весь формат MP3 🎵), осталось сценариев: 10
+[2026-11-19 14:07:13] Ролик собран
+[2026-11-19 14:07:15] Загружен на YouTube: https://youtube.com/shorts/l-aRPd7l8cI
+[2026-11-19 14:07:16] Ошибка публикации в Instagram: ключ не открывает Instagram 17841443254640267: {"error":{"message":"Unsupported get request. Object with ID '17841443254640267' does not exist, cannot be loaded due to missing permissions, or does not support this operation. Please read the Graph ; страницы: {'data': []}
+[2026-11-19 14:07:19] TikTok: ролик загружен, publish_id v_inbox_file~v2.7709883859948914710
+[2026-11-19 14:18:07] Отправлен в черновики TikTok: Песня, которая помогла создать весь формат MP3 🎵
+[2026-11-19 14:18:07] Готово: 2026-11-19 14-18 mother-of-mp3.mp4
