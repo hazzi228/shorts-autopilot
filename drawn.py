@@ -263,6 +263,8 @@ def prep(kind, accent):
     elif k == "chat":
         P["b"] = [bubble(kind[1][0], False), bubble(kind[1][1], True)]
         P["label"] = label_pill(kind[2]) if len(kind) > 2 and kind[2] else None
+    elif k == "banner":
+        pass
     elif k == "cta":
         P["img"] = cta_card()
         P["m"] = mascot_sticker(False, "", 22)
@@ -480,6 +482,8 @@ def draw_scene(fr, P, lt, dur, t, sc, accent, first):
         for i, c in enumerate(((255, 95, 87), (255, 189, 46), (40, 200, 64))):
             wd.ellipse((30 + i * 36, 28, 52 + i * 36, 50), fill=c)
         mf = font(MONO if os.path.exists(MONO) else BOLD, 50)
+        while max(mf.getlength(x) for x in P["lines"]) > tw_ - 90 and mf.size > 26:
+            mf = font(MONO if os.path.exists(MONO) else BOLD, mf.size - 2)
         chars = int(max(0, lt - 0.2) * 22) if not first else 999
         y = 100
         for ln in P["lines"]:
@@ -520,6 +524,179 @@ def draw_scene(fr, P, lt, dur, t, sc, accent, first):
         if lt > 0.4:
             btn = cta_button(1 + 0.04 * math.sin((lt - 0.4) * 6))
             paste_c(fr, btn, W / 2, cy - 60 + card.height / 2 + 60)
+
+
+
+# ---------- рекламный баннер в середине ролика ----------
+# Ролик «встаёт на паузу», по центру раскрывается тёмная полоса-баннер,
+# голос читает рекламную фразу, потом баннер схлопывается и ролик идёт дальше.
+AD_MID = [
+    ("Кстати, нужен телеграм-бот или сайт? Сделаю под ключ, быстро и недорого. Ищи в Телеграме Портфолио Хаззер бот.",
+     "Нужен Telegram-бот или сайт? 👉 @PortfolioHazzer_bot"),
+    ("Пауза на рекламу. Делаю телеграм-ботов и сайты под ключ, по приятной цене. Ищи в Телеграме Портфолио Хаззер бот.",
+     "Telegram-боты и сайты под ключ 👉 @PortfolioHazzer_bot"),
+    ("Кстати, бот, который продаёт за тебя, можно заказать у меня. Ищи в Телеграме Портфолио Хаззер бот.",
+     "Бот, который продаёт за тебя 👉 @PortfolioHazzer_bot"),
+]
+GREEN = (70, 225, 100)
+BAN_H = 470
+
+
+def place_banner(v):
+    """Рекламную сцену из конца ставим в середину и превращаем в баннер."""
+    sc = [dict(x) for x in v["scenes"]]
+    ads = [i for i, x in enumerate(sc) if x.get("ad")]
+    if len(ads) != 1 or ads[0] != len(sc) - 1 or len(sc) < 4:
+        return v
+    ad = sc.pop()
+    ad["banner"] = True
+    if not v.get("cta"):  # свои факты: фраза подлиннее, чтобы баннер успели рассмотреть
+        say, show = AD_MID[sum(map(ord, v["id"])) % len(AD_MID)]
+        ad["say"], ad["show"] = say, show
+    pos = (len(sc) + 1) // 2
+    sc.insert(pos, ad)
+    return dict(v, scenes=sc)
+
+
+def glossy_panel(w, h, r=34):
+    im = Image.new("RGBA", (w, h), (0, 0, 0, 0))
+    g = Image.new("RGBA", (w, h))
+    gd = ImageDraw.Draw(g)
+    for y in range(h):
+        k = y / h
+        c = int(70 - 50 * k)
+        gd.line([(0, y), (w, y)], fill=(c, c, c + 4, 255))
+    m = Image.new("L", (w, h), 0)
+    ImageDraw.Draw(m).rounded_rectangle((0, 0, w - 1, h - 1), r, fill=255)
+    im.paste(g, (0, 0), m)
+    d = ImageDraw.Draw(im)
+    d.rounded_rectangle((0, 0, w - 1, h - 1), r, outline=(120, 120, 128, 255), width=3)
+    d.rounded_rectangle((10, 6, w - 11, h // 2), r - 8, fill=(255, 255, 255, 18))  # блик
+    return im
+
+
+def red_button(text, w=None):
+    f = font(BLACK, 64)
+    while text_width(text, f) > 700:
+        f = font(BLACK, f.size - 2)
+    tw = text_width(text, f)
+    bw, bh = int(w or tw + 110), 112
+    b = Image.new("RGBA", (bw, bh), (0, 0, 0, 0))
+    g = Image.new("RGBA", (bw, bh))
+    gd = ImageDraw.Draw(g)
+    for y in range(bh):
+        k = y / bh
+        gd.line([(0, y), (bw, y)], fill=(int(250 - 40 * k), int(80 - 30 * k), int(60 - 25 * k), 255))
+    m = Image.new("L", (bw, bh), 0)
+    ImageDraw.Draw(m).rounded_rectangle((0, 0, bw - 1, bh - 1), 26, fill=255)
+    b.paste(g, (0, 0), m)
+    ImageDraw.Draw(b).rounded_rectangle((8, 6, bw - 9, bh // 2), 20, fill=(255, 255, 255, 40))
+    draw_mixed(b, (int((bw - tw) / 2), int((bh - sum(f.getmetrics())) / 2)), text, f, (255, 255, 255))
+    return b
+
+
+def banner_panels():
+    """Три «кадра» баннера: что делаю, что умеет, куда идти."""
+    out = []
+    sub = CTA["subtitle"]
+    words = sub.split()
+    top, acc = (" ".join(words[:-2]), " ".join(words[-2:])) if len(words) > 3 else (sub, "")
+    f1, f2 = font(BOLD, 62), font(BLACK, 66)
+    w = 820
+    p = glossy_panel(w, 250)
+    draw_mixed(p, (int((w - text_width(top, f1)) / 2), 50), top, f1, (255, 255, 255))
+    if acc:
+        draw_mixed(p, (int((w - text_width(acc, f2)) / 2), 130), acc, f2, GREEN)
+    out.append(p)
+    items = list(CTA.get("items") or [])[:2]
+    p = glossy_panel(w, 250)
+    fi = font(BOLD, 50)
+    while items and max(text_width(x, fi) for x in items) > w - 170 and fi.size > 30:
+        fi = font(BOLD, fi.size - 2)
+    y = 52
+    for it in items:
+        d = ImageDraw.Draw(p)
+        d.ellipse((60, y + 8, 106, y + 54), fill=GREEN)
+        d.line((72, y + 31, 81, y + 41), fill=(20, 20, 20), width=6)
+        d.line((81, y + 41, 96, y + 20), fill=(20, 20, 20), width=6)
+        txt = it
+        while text_width(txt, fi) > w - 170 and len(txt) > 4:
+            txt = txt[:-2]
+        draw_mixed(p, (130, y), txt, fi, (255, 255, 255))
+        y += 86
+    out.append(p)
+    p = glossy_panel(w, 330)
+    lab = "Ищи в Telegram"
+    draw_mixed(p, (int((w - text_width(lab, f1)) / 2), 40), lab, f1, (255, 255, 255))
+    btn = red_button(CTA["handle"].replace("t.me/", "@"), w - 100)
+    p.alpha_composite(btn, (50, 170))
+    out.append(p)
+    return out
+
+
+def banner_strip():
+    st = Image.new("RGBA", (W, BAN_H), (8, 8, 10, 255))
+    d = ImageDraw.Draw(st)
+    for y in range(18, BAN_H, 36):
+        for x in range(18, W, 36):
+            d.ellipse((x - 2, y - 2, x + 2, y + 2), fill=(32, 32, 38))
+    return st
+
+
+_ban = {}
+
+
+def draw_banner(fr, frozen, lt, dur, t):
+    if "panels" not in _ban or _ban.get("for") != CTA["handle"]:
+        _ban.update(panels=banner_panels(), strip=banner_strip(), **{"for": CTA["handle"]})
+        _ban["icons"] = [sticker(emoji_img(e, 110), border=0, shadow=False) for e in ("🤖", "✈️", "💬", "⭐", "🚀", "💸")]
+    fr.alpha_composite(frozen)
+    # значок паузы над баннером
+    pa = min(1, lt / 0.2)
+    ov = Image.new("RGBA", (140, 140), (0, 0, 0, 0))
+    d = ImageDraw.Draw(ov)
+    d.ellipse((0, 0, 139, 139), fill=(255, 255, 255, int(50 * pa)))
+    d.rectangle((44, 40, 62, 100), fill=(255, 255, 255, int(235 * pa)))
+    d.rectangle((78, 40, 96, 100), fill=(255, 255, 255, int(235 * pa)))
+    fr.alpha_composite(ov, (W // 2 - 70, H // 2 - BAN_H // 2 - 190))
+    # раскрытие и схлопывание полосы
+    open_ = ease_out(min(1, lt / 0.3))
+    close = ease_out(min(1, max(0, dur - lt) / 0.3))
+    k = min(open_, close)
+    hh = max(4, int(BAN_H * k))
+    strip = _ban["strip"].crop((0, (BAN_H - hh) // 2, W, (BAN_H - hh) // 2 + hh)).copy()
+    sd = ImageDraw.Draw(strip)
+    if k > 0.9:
+        # летающие иконки за панелью
+        rnd = random.Random(7)
+        for i in range(10):
+            ic = _ban["icons"][i % len(_ban["icons"])]
+            ang = rnd.uniform(0, 6.28)
+            spd = rnd.uniform(160, 300)
+            ph = (lt * 0.6 + rnd.random()) % 1
+            x = W / 2 + math.cos(ang) * (220 + spd * ph * 2.2)
+            y = hh / 2 + math.sin(ang) * (60 + spd * ph * 0.6)
+            sz = 0.55 + 0.45 * math.sin(ph * 3.14)
+            im = faded(scaled(ic, sz).rotate(lt * 90 * (1 if i % 2 else -1) + i * 40, expand=True), math.sin(ph * 3.14))
+            strip.alpha_composite(im, (int(x - im.width / 2), int(y - im.height / 2)))
+        # панели по очереди, каждая выезжает с «подскоком»
+        body = max(0.5, dur - 0.6)
+        n = len(_ban["panels"])
+        pi = min(n - 1, int(max(0, lt - 0.3) / (body / n)))
+        plt = max(0, lt - 0.3) - pi * body / n
+        p = _ban["panels"][pi]
+        s = 0.7 + 0.3 * ease_out_back(min(1, plt / 0.3))
+        img = scaled(p, s)
+        if pi == n - 1:  # кнопка «дышит»
+            img = scaled(p, s * (1 + 0.03 * math.sin(plt * 7)))
+        strip.alpha_composite(img, (int((W - img.width) / 2), int((hh - img.height) / 2)))
+        # плашка «реклама»
+        lf = font(BOLD, 30)
+        sd.rounded_rectangle((24, 20, 24 + text_width("РЕКЛАМА", lf) + 32, 66), 14, fill=(255, 255, 255, 40))
+        sd.text((40, 26), "РЕКЛАМА", font=lf, fill=(220, 220, 225))
+    sd.line((0, 0, W, 0), fill=(90, 90, 100), width=3)
+    sd.line((0, hh - 2, W, hh - 2), fill=(90, 90, 100), width=3)
+    fr.alpha_composite(strip, (0, (H - hh) // 2))
 
 
 # ---------- субтитры ----------
@@ -598,8 +775,9 @@ def build(v, out_path, work):
     os.makedirs(work, exist_ok=True)
     CTA.clear(); CTA.update(CTA_DEFAULT, **(v.get("cta") or {}))
     accent = tuple(v["accent"])
+    v = place_banner(v)
     timeline, total, wav_path = engine.make_audio(v, work)
-    preps = [prep(kind_of(sc), accent) for sc in timeline]
+    preps = [prep(["banner"] if sc.get("banner") else kind_of(sc), accent) for sc in timeline]
     for sc in timeline:
         sc["caps"] = captions(sc)
 
@@ -626,14 +804,28 @@ def build(v, out_path, work):
         "-c:a", "aac", "-b:a", "192k", "-ar", "44100", "-ac", "2", "-shortest", "-movflags", "+faststart", out_path],
         stdin=subprocess.PIPE)
 
+    frozen, last_fr = None, bg.copy()
     for fi in range(int(total * FPS)):
         t = fi / FPS
         si = next((i for i, sc in enumerate(timeline) if sc["start"] - (0.2 if i == 0 else 0) <= t < sc["end"]),
                   len(timeline) - 1)
         sc = timeline[si]
         lt = t - sc["start"]
-        fr = bg.copy()
         first = si == 0
+        if sc.get("banner"):
+            if frozen is None:
+                fz = last_fr.filter(ImageFilter.GaussianBlur(6))
+                fz.alpha_composite(Image.new("RGBA", (W, H), (0, 0, 0, 185)))
+                frozen = fz
+            fr = Image.new("RGBA", (W, H))
+            draw_banner(fr, frozen, lt, sc["end"] - sc["start"], t)
+            d = ImageDraw.Draw(fr)
+            d.rounded_rectangle((60, 1880, W - 60, 1890), 5, fill=(80, 80, 86))
+            d.rounded_rectangle((60, 1880, 60 + int((W - 120) * t / total), 1890), 5, fill=(255, 255, 255))
+            ff.stdin.write(fr.convert("RGB").tobytes())
+            continue
+        frozen = None
+        fr = bg.copy()
         draw_scene(fr, preps[si], lt, sc["end"] - sc["start"], t, sc, accent, first)
 
         # смена сцены: короткая «шторка» цвета бумаги, чтобы склейка ощущалась
@@ -664,6 +856,7 @@ def build(v, out_path, work):
             cap = sc["caps"][0]
         if cap:
             draw_caption(fr, cap, t, first, bool(sc.get("ad")))
+        last_fr = fr.copy()
         ff.stdin.write(fr.convert("RGB").tobytes())
     ff.stdin.close()
     ff.wait()
