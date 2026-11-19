@@ -120,23 +120,33 @@ def _upload(path, sc, log, token):
                 info = {"instagram_business_account": {"id": IG_USER_ID}}
         me = info["instagram_business_account"]["id"]
     hosted = _host(path, log)
+    # Если Instagram отвечает на публикации «Fatal» (2207085), пробуем ещё раз с коротким описанием без ссылок
+    # и без дублирования в ленту: так видно, мешает ли ему текст.
+    variants = [{"caption": caption(sc), "share_to_feed": "true"},
+                {"caption": sc["yt_title"][:200]}]
     try:
-        params = {"media_type": "REELS", "caption": caption(sc), "share_to_feed": "true", "access_token": token}
-        if hosted:
-            params["video_url"] = hosted[0]
-        else:
-            params["upload_type"] = "resumable"
-        r = requests.post("%s/%s/media" % (api, me), data=params, timeout=60)
-        if r.status_code != 200:
-            raise RuntimeError("Instagram не принял ролик (%s): %s" % (r.status_code, r.text[:300]))
-        cid = r.json()["id"]
-        if not hosted:
-            _rupload(r.json()["uri"], path, token, api, cid)
-        _wait(api, cid, token)
-        # ролик в памяти бота держим до конца публикации: Instagram может перечитать файл на этом шаге
-        r = requests.post("%s/%s/media_publish" % (api, me), data={"creation_id": cid, "access_token": token}, timeout=120)
-        if r.status_code != 200:
-            raise RuntimeError("Instagram не опубликовал ролик (%s): %s" % (r.status_code, r.text[:300]))
+        for n, extra in enumerate(variants):
+            params = dict(extra, media_type="REELS", access_token=token)
+            if hosted:
+                params["video_url"] = hosted[0]
+            else:
+                params["upload_type"] = "resumable"
+            r = requests.post("%s/%s/media" % (api, me), data=params, timeout=60)
+            if r.status_code != 200:
+                raise RuntimeError("Instagram не принял ролик (%s): %s" % (r.status_code, r.text[:300]))
+            cid = r.json()["id"]
+            if not hosted:
+                _rupload(r.json()["uri"], path, token, api, cid)
+            _wait(api, cid, token)
+            # ролик в памяти бота держим до конца публикации: Instagram может перечитать файл на этом шаге
+            r = requests.post("%s/%s/media_publish" % (api, me), data={"creation_id": cid, "access_token": token}, timeout=120)
+            if r.status_code == 200:
+                if n:
+                    log("Instagram принял ролик только с коротким описанием")
+                break
+            if "2207085" not in r.text or n == len(variants) - 1:
+                raise RuntimeError("Instagram не опубликовал ролик (%s): %s" % (r.status_code, r.text[:300]))
+            log("Instagram: ошибка 2207085, пробую с коротким описанием")
     finally:
         if hosted:
             hosted[1]()
