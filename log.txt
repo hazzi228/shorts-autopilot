@@ -724,3 +724,11 @@ RuntimeError: raqm_layout() failed.
 [2026-11-19 08:07:39] TikTok: ролик загружен, publish_id v_inbox_file~v2.7709791086537263126
 [2026-11-19 08:22:03] Отправлен в черновики TikTok: Почему USB никогда не вставляется с первого раза 🔌
 [2026-11-19 08:22:03] Готово: 2026-11-19 08-22 usb-secret.mp4
+[2026-11-19 11:05:30] Собираю рекламный ролик: ad-entropia-asteroid (Виртуальный астероид продали за 635 тысяч долларов ☄️)
+[2026-11-19 11:06:50] Ролик собран
+[2026-11-19 11:06:53] Загружен на YouTube: https://youtube.com/shorts/goQaL3uTYrw
+[2026-11-19 11:06:54] Ошибка публикации в Instagram: ключ не открывает Instagram 17841443254640267: {"error":{"message":"Unsupported get request. Object with ID '17841443254640267' does not exist, cannot be loaded due to missing permissions, or does not support this operation. Please read the Graph ; страницы: {'data': []}
+[2026-11-19 11:06:57] TikTok: ролик загружен, publish_id v_inbox_file~v2.7709837379674310678
+[2026-11-19 11:22:28] TikTok за 15 минут не обработал ролик (статус PROCESSING_UPLOAD)
+[2026-11-19 11:22:34] Ролик и описание для TikTok отправлены в бот
+[2026-11-19 11:22:34] Готово: 2026-11-19 11-22 ad-entropia-asteroid.mp4
