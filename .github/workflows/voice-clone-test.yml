@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
   push:
     branches: [claude/project-thread-p7dtlz]
-    paths: [voiceclone/**, tools/voice_clone_test.py, .github/workflows/voice-clone-test.yml]
+    paths: [voiceclone/**, tools/voice_src.py, .github/workflows/voice-clone-test.yml]
 
 permissions:
   contents: write
@@ -12,6 +12,7 @@ permissions:
 jobs:
   clone:
     runs-on: ubuntu-latest
+    timeout-minutes: 90
     steps:
       - uses: actions/checkout@v5
       - uses: actions/setup-python@v6
@@ -20,34 +21,44 @@ jobs:
       - name: Зависимости
         run: |
           sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg >/dev/null
-          pip install -q torch torchaudio --index-url https://download.pytorch.org/whl/cpu
+          pip install -q torch==2.4.0 torchaudio==2.4.0 --index-url https://download.pytorch.org/whl/cpu
           pip install -q -r requirements.txt
-          pip install -q --no-deps git+https://github.com/myshell-ai/OpenVoice.git
-          pip install -q librosa soundfile inflect unidecode eng_to_ipa pypinyin cn2an jieba
-      - name: Модель OpenVoice v2
-        run: |
-          mkdir -p ckpt/converter
-          curl -sSfL -o ckpt/converter/config.json https://huggingface.co/myshell-ai/OpenVoiceV2/resolve/main/converter/config.json
-          curl -sSfL -o ckpt/converter/checkpoint.pth https://huggingface.co/myshell-ai/OpenVoiceV2/resolve/main/converter/checkpoint.pth
+          git clone -q --depth 1 https://github.com/Plachta/seed-vc.git /tmp/seedvc
+          grep -viE "^(torch|torchaudio|torchvision|--extra-index-url)" /tmp/seedvc/requirements.txt > /tmp/req.txt
+          pip install -q -r /tmp/req.txt
       - name: Записи голоса (расшифровка, в репозиторий не попадают)
         env:
           VOICE_KEY: ${{ secrets.VOICE_KEY }}
         run: |
           mkdir -p work/ref
           openssl enc -d -aes-256-cbc -pbkdf2 -iter 200000 -in voiceclone/ref.tar.enc -pass env:VOICE_KEY | tar -x -C work
-          for f in work/refc/*.flac; do ffmpeg -loglevel error -y -i "$f" work/ref/$(basename "$f" .flac).wav; done
-      - name: Проба
+          for f in work/refc/*.flac; do ffmpeg -loglevel error -y -i "$f" -ar 22050 work/ref/$(basename "$f" .flac).wav; done
+          # эталон: два самых длинных куска, Seed-VC берёт первые ~25 с
+          ffmpeg -loglevel error -y -i work/ref/r2.wav -i work/ref/r1.wav -filter_complex concat=n=2:v=0:a=1 -t 28 work/target.wav
+      - name: Исходник Enceladus
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
-        run: python -u tools/voice_clone_test.py
+        run: python -u tools/voice_src.py
+      - name: Seed-VC
+        run: |
+          mkdir -p work/out30 work/out50
+          cd /tmp/seedvc
+          for n in 30 50; do
+            python inference.py --source $GITHUB_WORKSPACE/work/src.wav --target $GITHUB_WORKSPACE/work/target.wav \
+              --output $GITHUB_WORKSPACE/work/out$n --diffusion-steps $n --length-adjust 1.0 --inference-cfg-rate 0.7 \
+              --f0-condition False --auto-f0-adjust False --semi-tone-shift 0 --fp16 False
+          done
+          ls -la $GITHUB_WORKSPACE/work/out30 $GITHUB_WORKSPACE/work/out50
       - name: Сохранить в ветку samples
         run: |
-          mkdir -p /tmp/s && cp samples/clone/*.mp3 /tmp/s/
+          mkdir -p /tmp/s
+          for n in 30 50; do f=$(ls work/out$n/*.wav | head -1); ffmpeg -loglevel error -y -i "$f" -af loudnorm=I=-16:TP=-1.5 -b:a 128k "/tmp/s/seedvc-$n.mp3"; done
+          ffmpeg -loglevel error -y -i work/src.wav -af loudnorm=I=-16:TP=-1.5 -b:a 128k "/tmp/s/enceladus.mp3"
           git config user.name "shorts-autopilot"
           git config user.email "actions@users.noreply.github.com"
           git checkout --orphan samples
           git rm -rqf --cached .
           mkdir -p samples/clone && cp /tmp/s/*.mp3 samples/clone/
           git add -f samples/clone
-          git commit -qm "Проба голоса"
+          git commit -qm "Проба голоса Seed-VC"
           git push -f origin samples
