@@ -200,13 +200,44 @@ async def run(cfg, finder):
 
 
 async def login(cfg):
-    async with client(cfg) as tg:
-        await tg.start()  # спросит номер телефона и код из Telegram прямо в этом окне
+    """Вход по QR-коду: код из Telegram не нужен, сканируешь QR телефоном (Устройства → Подключить)."""
+    from telethon.errors import SessionPasswordNeededError
+    tg = client(cfg)
+    await tg.connect()
+    try:
+        if not await tg.is_user_authorized():
+            qr = await tg.qr_login()
+            while True:
+                show_qr(qr.url)
+                print("\nОткрой Telegram на телефоне (аккаунт @hazzer_h): Настройки → Устройства → "
+                      "Подключить устройство, и наведи камеру на QR-код в открывшейся картинке.")
+                try:
+                    await qr.wait(timeout=110)
+                    break
+                except asyncio.TimeoutError:
+                    await qr.recreate()  # QR живёт около 30 секунд-2 минут, показываем новый
+                except SessionPasswordNeededError:
+                    import getpass
+                    await tg.sign_in(password=getpass.getpass("Облачный пароль аккаунта (символы не видны): "))
+                    break
         me = await tg.get_me()
         print(f"\nВход выполнен: {me.first_name} (@{me.username}). Это окно можно закрыть.")
         peers = await folder_peers(tg)
         print(f"Папка «{FOLDER}»: " + (f"чатов в ней {len(peers)}" if peers is not None
                                      else "не найдена, создай её в Telegram и добавь чаты с заказами"))
+    finally:
+        await tg.disconnect()
+
+
+def show_qr(url):
+    import os
+    import qrcode
+    path = HERE / "qr.png"
+    qrcode.make(url).save(path)
+    try:
+        os.startfile(path)  # откроется в просмотрщике картинок Windows
+    except AttributeError:
+        print(f"QR-код сохранён: {path}")
 
 
 def main():
