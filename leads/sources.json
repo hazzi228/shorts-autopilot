@@ -4,34 +4,19 @@
   "owner_ids": [8301728829],
   "owners": ["Hazzi71", "hazzer_h"],
   "telegram": [
-    "freegolup",
-    "workk_on",
-    "ipomogator",
-    "FreeWorkFeed",
-    "FrWork3",
-    "kadrof_work",
     "digitaltender",
-    "rabotka_zdes",
-    "onlinevakansii",
-    "frilancekomfort",
-    "webfrl",
-    "freelancetaverna",
-    "frilans_zakazy",
     "FreelanceBay",
-    "zakazy_it",
-    "it_zakazy",
-    "theyseeku",
-    "workathome",
+    "program_job",
+    "job_for_bots",
+    "rabotka_zdes",
+    "webfrl",
     "freelancce",
     "sova_freelance",
-    "getwork25",
-    "workfreelan",
-    "WebWorkerr",
-    "freelance_zakazy",
-    "zakazy_freelance",
-    "program_job"
+    "frilancekomfort",
+    "FrWork3"
   ],
-  "rss": [
+  "rss": [],
+  "rss_paused": [
     {
       "name": "FL.ru",
       "url": "https://www.fl.ru/rss/all.xml"

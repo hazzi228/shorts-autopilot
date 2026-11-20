@@ -117,6 +117,12 @@ def classify(text):
     return "bot" if m.group("bot") else "site"
 
 
+# Каналы-агрегаторы перепечатывают заказы с бирж или из чужих чатов роботом.
+# Такие посты пропускаем, даже если они попали в канал с живыми заказчиками.
+AGGREGATOR = re.compile(r"kwork\.ru|\bkwork\b|кворк|fl\.ru|freelance\.ru|freelance\.habr|habr\.com/freelance|weblancer|"
+                        r"youdo|workzilla|work-zilla|freelancehunt|leadradar|контакт заказчика\s*[—-]\s*в|\bзабрать$")
+
+
 def get(url):
     r = requests.get(url, headers=UA, timeout=25)
     r.raise_for_status()
@@ -133,6 +139,8 @@ def from_telegram(channel):
             continue
         text = clean(body.get_text(" "))
         links = [a["href"] for a in body.select("a[href]")]
+        if AGGREGATOR.search((text + " " + " ".join(links)).lower()):
+            continue
         yield {
             "id": "tg:" + msg["data-post"],
             "source": f"@{channel}",
@@ -224,33 +232,39 @@ def contacts(text, links):
 
 
 def draft(kind, lead):
-    """Короткий вежливый отклик, который можно скопировать и поправить."""
+    """Короткий спокойный первый отклик, который не похож на рассылку.
+
+    Telegram даёт спам-блок за сообщения незнакомым людям, если они похожи на рекламу:
+    ссылки, @упоминания, одинаковый текст, длинные «продающие» простыни. Поэтому первое
+    сообщение без ссылок и без бота-портфолио, 2-3 предложения и вопрос по задаче.
+    Портфолио отправляется уже после ответа заказчика (это делает помощник в боте заявок).
+    """
+    pick = lambda options, salt="": options[int(hashlib.md5((salt + lead["id"]).encode()).hexdigest(), 16) % len(options)]
     if kind == "bot" and lead.get("niche") == "vpn":
-        offer = ("Как раз специализируюсь на этом: сделал два бота для продажи VPN-подписок с автовыдачей доступа, "
-                 "оплатой через СБП, карту и крипту, промокодами, рефералами и админкой прямо в Telegram. "
-                 "Заказчики оставили 5 звёзд.")
+        offer = pick(["Недавно делал два похожих бота для продажи VPN-подписок, с оплатой и автовыдачей доступа.",
+                      "Как раз делал ботов для продажи VPN: оплата, выдача ключей, админка в Telegram."], "o")
     elif kind == "bot" and lead.get("niche") == "school":
-        offer = ("Делаю ботов для экспертов и онлайн-школ: оплата (СБП, карта, крипта), автоматическая выдача "
-                 "доступа в закрытый канал и его продление, рассылки по ученикам, статистика продаж в админке.")
+        offer = pick(["Делал ботов для онлайн-школ: оплата и выдача доступа в закрытый канал.",
+                      "Есть опыт с ботами для экспертов: оплата, доступ в закрытый канал, рассылки."], "o")
     elif kind == "bot":
-        offer = ("Делаю Telegram-ботов под ключ: оплата (СБП, карта, крипта), личный кабинет клиента, "
-                 "админ-панель прямо в боте, рассылки и статистика. Недавно сдал два бота для продажи VPN, "
-                 "заказчики оставили 5 звёзд.")
+        offer = pick(["Занимаюсь Telegram-ботами, такие задачи делал.",
+                      "Делаю Telegram-ботов, похожее уже собирал.",
+                      "Пишу Telegram-ботов, задача понятная."], "o")
     else:
-        offer = ("Делаю сайты и лендинги под ключ: адаптив под телефон, формы заявок, оплата, "
-                 "связка с Telegram, чтобы заявки сразу приходили вам в чат.")
-    # Варианты фраз, чтобы одинаковые сообщения не выглядели как рассылка.
-    pick = lambda options: options[int(hashlib.md5(lead["id"].encode()).hexdigest(), 16) % len(options)]
-    hello = pick(["Здравствуйте! Увидел ваш заказ.", "Добрый день! Прочитал ваш заказ, могу взяться.",
-                  "Здравствуйте! Готов сделать то, что вы описали."])
-    if lead["id"].startswith(("rss:", "kwork:")):
-        end = "Примеры работ и отзывы: @PortfolioHazzer_bot. Назову цену и срок, как только уточню пару деталей."
-    else:
-        end = pick(["Примеры работ и отзывы: @PortfolioHazzer_bot. Напишите пару деталей, и назову цену и срок.",
-                    "Работы и отзывы можно посмотреть в @PortfolioHazzer_bot. Расскажите подробнее, отвечу сегодня.",
-                    "Мои работы и отзывы: @PortfolioHazzer_bot. Если интересно, опишите задачу, назову цену и срок."])
+        offer = pick(["Делаю сайты и лендинги, такое уже собирал.",
+                      "Занимаюсь сайтами и лендингами, задача понятная.",
+                      "Делаю сайты, похожее уже было."], "o")
+    hello = pick(["Здравствуйте! Увидел ваш заказ.", "Добрый день! Увидел ваше объявление.",
+                  "Здравствуйте! Прочитал ваш заказ."], "h")
+    end = pick(["Могу взяться. Подскажите, какие сроки и бюджет?",
+                "Готов помочь. Если удобно, пришлю примеры похожих работ.",
+                "Могу сделать. Есть ли уже ТЗ или пример, как должно выглядеть?",
+                "Интересно, могу взяться. Расскажите чуть подробнее о задаче?"], "e")
     return f"{hello} {offer} {end}"
 
+
+# Признаки рекламы в первом сообщении: из-за них Telegram чаще даёт спам-блок.
+SPAMMY = re.compile(r"@|https?:|t\.me|www\.|под ключ|скидк|акци|гаранти|лучш|!.*!|[\U0001F300-\U0001FAFF]")
 
 GEMINI_API = "https://generativelanguage.googleapis.com/v1beta/openai/chat/completions"
 # lite отвечает почти всегда, большие модели днём часто перегружены
@@ -266,12 +280,13 @@ def ai_draft(lead):
         return None
     facts = draft(lead["kind"], lead)
     prompt = (
-        "Ты фрилансер Hazzer, делаешь Telegram-ботов и сайты. Напиши отклик на заказ ниже: 3-5 предложений, "
-        "до 550 знаков, по-русски, на «вы», начни со «Здравствуйте!», живо и по делу, без канцелярита. Покажи, что понял задачу "
-        "(назови её суть своими словами), задай 1-2 уточняющих вопроса именно по этой задаче. "
-        "О себе пиши только то, что есть в образце, ничего не выдумывай: никаких цен, сроков, лет опыта и "
-        "других проектов. Обязательно упомяни @PortfolioHazzer_bot, других ссылок и @ не добавляй. "
-        "Верни только текст отклика.\n\n"
+        "Ты фрилансер, делаешь Telegram-ботов и сайты. Напиши ПЕРВОЕ сообщение незнакомому заказчику в личку "
+        "Telegram в ответ на его заказ ниже. Оно не должно выглядеть как реклама или рассылка, иначе Telegram "
+        "заблокирует аккаунт за спам. Правила: 2-3 коротких предложения, до 300 знаков, по-русски, на «вы», "
+        "как пишет живой человек; без ссылок, без @, без эмодзи, без восклицательных знаков кроме приветствия, "
+        "без слов «под ключ», «скидка», «акция», «гарантия», «лучший». Назови суть задачи своими словами и задай "
+        "один уточняющий вопрос по ней. О себе только то, что есть в образце, ничего не выдумывай: никаких цен, "
+        "сроков, лет опыта. Верни только текст сообщения.\n\n"
         f"Образец (факты обо мне): {facts}\n\nЗаказ:\n{lead['text'][:2000]}")
     for model in GEMINI_MODELS:
         text = None
@@ -297,8 +312,7 @@ def ai_draft(lead):
                 _ai["spent"] += time.time() - start
         if text is None:
             continue
-        mentions = set(re.findall(r"@\w+", text))
-        if 80 <= len(text) <= 900 and mentions == {"@PortfolioHazzer_bot"} and "http" not in text:
+        if 60 <= len(text) <= 420 and not SPAMMY.search(text.lower()):
             return text
         print(f"  отклик от {model} отбракован: {text[:100]!r}")
     return None
@@ -352,9 +366,10 @@ def telegram(token, method, **params):
     return r
 
 
-def send(token, chat_id, text):
+def send(token, chat_id, text, markup=None):
+    extra = {"reply_markup": markup} if markup else {}
     telegram(token, "sendMessage", chat_id=chat_id, text=text, parse_mode="HTML",
-             disable_web_page_preview=True).raise_for_status()
+             disable_web_page_preview=True, **extra).raise_for_status()
 
 
 def find_chat_ids(token, state):
@@ -389,7 +404,8 @@ def find_chat_ids(token, state):
     if not r.get("ok"):
         desc = r.get("description", "")
         if "webhook" in desc.lower():
-            sys.exit("В LEADS_BOT_TOKEN токен бота-портфолио. Нужен отдельный новый бот от @BotFather (см. leads/README.md)")
+            sys.exit("У бота заявок включён webhook (помощник ответов, leads-bot/), поэтому получателя по /start "
+                     "не найти. Впиши свой Telegram ID в owner_ids в leads/sources.json")
         sys.exit(f"Telegram не принял LEADS_BOT_TOKEN: {desc}. Проверь, что токен скопирован целиком")
     new = []
     for upd in reversed(r.get("result", [])):
@@ -431,7 +447,8 @@ def card(lead):
         lines.append("✍️ Отклик оставляется прямо на сайте биржи, Telegram для этого не нужен")
     if lead["contacts"]:
         lines.append("✉️ Контакт: " + ", ".join(html.escape(c) for c in lead["contacts"]))
-    lines += ["", "👇 Готовый отклик следующим сообщением"]
+    lines += ["", "👇 Отклик следующим сообщением. Пиши не больше 10-15 новым людям в день, "
+              "а когда ответят, нажми «💬 Мне ответили»"]
     return "\n".join(lines)
 
 
@@ -439,6 +456,10 @@ def reply_message(lead):
     """Отдельное сообщение с откликом: нажал, и текст скопирован."""
     text = ai_draft(lead) or draft(lead["kind"], lead)
     return f"<code>{html.escape(text)}</code>"
+
+
+# Кнопка под откликом: заказчик ответил, нажимаешь её, и бот заявок помогает с ответом (leads-bot/worker.js).
+ANSWERED_BUTTON = {"inline_keyboard": [[{"text": "💬 Мне ответили", "callback_data": "answered"}]]}
 
 
 def main():
@@ -505,7 +526,7 @@ def main():
         for chat_id in chat_ids:
             try:
                 send(token, chat_id, card(lead))
-                send(token, chat_id, reply)
+                send(token, chat_id, reply, ANSWERED_BUTTON)
             except requests.RequestException as e:
                 log(f"не отправилось в чат {chat_id}: {e}")
         time.sleep(1.2)

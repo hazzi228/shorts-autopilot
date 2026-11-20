@@ -1,0 +1,14 @@
+# Бот заявок (@hazzer_leads_bot), часть, которая отвечает на сообщения: помощник по переписке с заказчиком.
+# Сами заявки присылает leads/finder.py из GitHub Actions. Выкладка: .github/workflows/leads-bot.yml.
+name = "leads-bot"
+main = "worker.js"
+compatibility_date = "2026-10-01"
+
+# Кто может пользоваться ботом: Telegram ID через запятую.
+[vars]
+OWNER_ID = "8301728829"
+
+# Память диалогов (id подставляет workflow при выкладке).
+[[kv_namespaces]]
+binding = "STATE"
+id = "KV_ID"
