@@ -1,12 +1,11 @@
-name: leads-probe
+name: leads-dryrun
 on:
   push:
     branches: [claude/project-thread-totfaf]
-    paths: [leads/probe/**]
 jobs:
-  probe:
+  dry:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v5
       - run: pip install -q requests beautifulsoup4
-      - run: python -u leads/probe/probe.py $(cat leads/probe/list.txt)
+      - run: echo '{}' > leads/seen.json && python -u leads/finder.py --dry-run --days 7

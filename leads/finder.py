@@ -117,6 +117,12 @@ def classify(text):
     return "bot" if m.group("bot") else "site"
 
 
+# Каналы-агрегаторы перепечатывают заказы с бирж или из чужих чатов роботом.
+# Такие посты пропускаем, даже если они попали в канал с живыми заказчиками.
+AGGREGATOR = re.compile(r"kwork\.ru|\bkwork\b|кворк|fl\.ru|freelance\.ru|freelance\.habr|habr\.com/freelance|weblancer|"
+                        r"youdo|workzilla|work-zilla|freelancehunt|leadradar|контакт заказчика\s*[—-]\s*в|\bзабрать$")
+
+
 def get(url):
     r = requests.get(url, headers=UA, timeout=25)
     r.raise_for_status()
@@ -133,6 +139,8 @@ def from_telegram(channel):
             continue
         text = clean(body.get_text(" "))
         links = [a["href"] for a in body.select("a[href]")]
+        if AGGREGATOR.search((text + " " + " ".join(links)).lower()):
+            continue
         yield {
             "id": "tg:" + msg["data-post"],
             "source": f"@{channel}",
