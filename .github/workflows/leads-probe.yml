@@ -2,12 +2,18 @@ name: leads-probe
 on:
   push:
     branches: [claude/project-thread-totfaf]
-    paths: [leads/probe/**]
 jobs:
   probe:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v5
       - run: pip install -q requests beautifulsoup4
-      - run: python -u leads/probe/who.py svetik_moonlike eiieoc11 PortfolioHazzer_bot durov
-      - run: python -u leads/probe/contacts.py
+      - run: |
+          cd leads && python -c "
+          import finder
+          for n in ['@svetik_moonlike','@eiieoc11','@lushertdbot','@dmitryy_hr','@hr_dina_sh','@art_zhukov','@julliia_v','@ksynveres','@kosipova98','@nonexistent_zz_qq_1']:
+              print(n, '->', finder.contact_problem(n))
+          lead={'contacts':['@svetik_moonlike','https://t.me/svetik_moonlike'],'url':'https://t.me/program_job/6872'}
+          print('keep svetik lead:', finder.check_contacts(lead))
+          "
+      - run: echo '{}' > leads/seen.json && python -u leads/finder.py --dry-run --days 7 | grep -E 'просмотрено|пропущена|^🤖|^🌐' ; tail -3 leads/log.txt

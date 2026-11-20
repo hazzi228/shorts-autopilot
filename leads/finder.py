@@ -231,6 +231,54 @@ def contacts(text, links):
     return out[:3]
 
 
+LATIN_FULL_NAME = re.compile(r"^[A-Z][a-z]+ [A-Z][a-z]+$")
+
+
+def contact_problem(username):
+    """Почему контакт из заявки похож на бота или фейк. None, если всё в порядке.
+
+    Публичная страница t.me/<ник> показывает имя профиля и кнопку: у ботов «Start Bot».
+    Аккаунты-автоответчики с фейковыми заказами обычно выглядят так: ник русский
+    (svetik_moonlike), а имя в профиле чужое латиницей (Jonathan Bennett).
+    """
+    name = username.lstrip("@")
+    if name.lower().endswith("bot"):
+        return "контакт заказчика — бот"
+    try:
+        page = BeautifulSoup(get(f"https://t.me/{name}"), "html.parser")
+    except requests.RequestException:
+        return None  # не смогли проверить: не наказываем заявку
+    title = page.select_one(".tgme_page_title")
+    button = page.select_one(".tgme_action_button_new")
+    if not title:
+        return "такого аккаунта нет"
+    if button and "bot" in button.get_text().lower():
+        return "контакт заказчика — бот"
+    shown = clean(title.get_text(" "))
+    if LATIN_FULL_NAME.match(shown):
+        handle = re.sub(r"[^a-z]", "", name.lower())
+        parts = [p.lower() for p in shown.split()]
+        # Общий кусок хотя бы из 3 букв между именем и ником: dmitryy_hr и Dmitry Ivanov совпадают.
+        if not any(p[i:i + 3] in handle for p in parts for i in range(len(p) - 2)):
+            return f"имя в профиле «{shown}» не связано с ником @{name}: похоже на фейк-автоответчик"
+    return None
+
+
+def check_contacts(lead):
+    """Отсеивает заявки, где все контакты — боты или фейки. Подозрительные пишет в журнал."""
+    names = [c for c in lead["contacts"] if c.startswith("@")]
+    names += ["@" + c.rstrip("/").rsplit("/", 1)[-1] for c in lead["contacts"]
+              if c.startswith(("https://t.me/", "http://t.me/")) and "/+" not in c and "joinchat" not in c]
+    names = list(dict.fromkeys(n for n in names if re.fullmatch(r"@[A-Za-z][A-Za-z0-9_]{4,31}", n)))
+    if not names:
+        return True
+    problems = {n: contact_problem(n) for n in names}
+    if all(problems.values()):
+        log(f"пропущена заявка {lead['url']}: " + "; ".join(f"{n}: {p}" for n, p in problems.items()))
+        return False
+    return True
+
+
 def draft(kind, lead):
     """Короткий спокойный первый отклик, который не похож на рассылку.
 
@@ -490,6 +538,8 @@ def main():
         if not lead["kind"] or fp in prints:
             continue
         prints[fp] = None
+        if lead["id"].startswith("tg:") and not check_contacts(lead):
+            continue
         fresh.append(lead)
 
     log(f"просмотрено {len(raw)}, подходящих новых {len(fresh)}"
