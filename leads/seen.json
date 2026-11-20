@@ -1,6 +1,5 @@
 {
  "ids": [
-  "tg:onlinevakansii/10780",
   "tg:zakazy_freelance/78149",
   "tg:zakazy_freelance/78150",
   "tg:program_job/6664",
@@ -4999,7 +4998,8 @@
   "tg:job_for_bots/80",
   "tg:job_for_bots/81",
   "tg:job_for_bots/84",
-  "tg:freelancce/16816"
+  "tg:freelancce/16816",
+  "tg:program_job/6878"
  ],
  "prints": [
   "26a9ac8a749827aab4ad7fd9b96c0cd5",
@@ -5352,7 +5352,8 @@
   "7ab05fbd2424bbd5d94b62c5026e601d",
   "fd266f185abd12aa0e53385f52c5571a",
   "51fc72403616be3cc2484c7ac20a20bf",
-  "ea80b80ec6f15474cb062a899ea383a4"
+  "ea80b80ec6f15474cb062a899ea383a4",
+  "1feb6a9dc40a6b92e407ce1776e9d475"
  ],
  "chat_ids": [
   "8301728829"
