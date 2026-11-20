@@ -1,0 +1,78 @@
+name: Бот заявок (помощник ответов)
+
+# Выкладывает на Cloudflare Workers ту часть бота заявок, которая отвечает на сообщения
+# (leads-bot/worker.js), и подключает её к Telegram. Сами заявки присылает leads.yml.
+on:
+  push:
+    branches: [main]
+    paths: ["leads-bot/**", ".github/workflows/leads-bot.yml"]
+  workflow_dispatch:
+
+concurrency:
+  group: leads-bot
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    defaults:
+      run:
+        working-directory: leads-bot
+    env:
+      CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+      CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+      RAW_BOT_TOKEN: ${{ secrets.LEADS_BOT_TOKEN }}
+      GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Почистить токен бота
+        run: |
+          token=$(printf '%s' "$RAW_BOT_TOKEN" | tr -d '[:space:]"')
+          echo "::add-mask::$token"
+          echo "BOT_TOKEN=$token" >> "$GITHUB_ENV"
+          for s in CLOUDFLARE_API_TOKEN CLOUDFLARE_ACCOUNT_ID RAW_BOT_TOKEN GEMINI_API_KEY; do
+            if [ -z "${!s}" ]; then echo "Нет секрета $s"; exit 1; fi
+          done
+
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 22
+
+      - name: Память бота (Cloudflare KV)
+        run: |
+          api="https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/storage/kv/namespaces"
+          auth="Authorization: Bearer $CLOUDFLARE_API_TOKEN"
+          id=$(curl -sS -H "$auth" "$api?per_page=100" | python3 -c \
+            "import json,sys; print(next((n['id'] for n in json.load(sys.stdin)['result'] if n['title']=='leads-bot-state'), ''))")
+          if [ -z "$id" ]; then
+            id=$(curl -sS -H "$auth" -H "Content-Type: application/json" -d '{"title":"leads-bot-state"}' "$api" \
+              | python3 -c "import json,sys; print(json.load(sys.stdin)['result']['id'])")
+          fi
+          sed -i "s/KV_ID/$id/" wrangler.toml
+
+      - name: Выложить
+        run: |
+          npx --yes wrangler@4.148.0 deploy || { sleep 5; npx --yes wrangler@4.148.0 deploy; }
+          printf '%s' "$BOT_TOKEN" | npx --yes wrangler@4.148.0 secret put BOT_TOKEN
+          printf '%s' "$GEMINI_API_KEY" | tr -d '[:space:]' | npx --yes wrangler@4.148.0 secret put GEMINI_API_KEY
+
+      - name: Подключить к Telegram
+        run: |
+          api="https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/workers"
+          auth="Authorization: Bearer $CLOUDFLARE_API_TOKEN"
+          sub=$(curl -sS -H "$auth" "$api/subdomain" | python3 -c "import json,sys; print(json.load(sys.stdin)['result']['subdomain'])")
+          curl -sS -X POST -H "$auth" -H "Content-Type: application/json" -d '{"enabled":true}' \
+            "$api/scripts/leads-bot/subdomain"
+          echo
+          url="https://leads-bot.$sub.workers.dev"
+          secret=$(printf '%s' "$BOT_TOKEN" | sha256sum | cut -c1-32)
+          curl -sS "https://api.telegram.org/bot$BOT_TOKEN/setWebhook" \
+            -d "url=$url" -d "secret_token=$secret" -d 'allowed_updates=["message","callback_query"]' | tee hook.json
+          echo
+          grep -q '"ok":true' hook.json
+          curl -sS "https://api.telegram.org/bot$BOT_TOKEN/setMyCommands" -H "Content-Type: application/json" \
+            -d '{"commands":[{"command":"help","description":"Как пользоваться"},{"command":"new","description":"Новый диалог с заказчиком"}]}'
+          echo
+          echo "Бот заявок отвечает: $url" | tee -a "$GITHUB_STEP_SUMMARY"
