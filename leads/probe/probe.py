@@ -55,7 +55,7 @@ for ch in sys.argv[1:]:
     last = (datetime.now(timezone.utc) - max(dates)).total_seconds() / 3600 if dates else -1
     print(f"   span={span:.1f}h last={last:.1f}h ago exchange_links={exch}/{len(msgs)} via={dict(via)} authors={dict(authors.most_common(4))} buttons={btns}")
     print(f"   HITS={len(hits)}/{len(msgs)}")
-    for t in hits[-4:]:
+    for t in hits[-8:]:
         print("   +", t)
-    for t in texts[-4:]:
+    for t in texts[-2:]:
         print("   -", t[:200])
