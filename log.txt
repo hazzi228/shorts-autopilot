@@ -768,3 +768,11 @@ RuntimeError: raqm_layout() failed.
 [2026-11-20 14:06:41] TikTok: ролик загружен, publish_id v_inbox_file~v2.7710254726272698390
 [2026-11-20 14:20:05] Отправлен в черновики TikTok: Пришёл код, который ты не запрашивал? 3 правила 🔐
 [2026-11-20 14:20:05] Готово: 2026-11-20 14-20 sms-code-rules.mp4
+[2026-11-20 17:05:35] Собираю ролик: mitnick-whistle (Почему хакера не подпускали к телефону ☎️), осталось сценариев: 18
+[2026-11-20 17:06:47] Ролик собран
+[2026-11-20 17:06:49] Загружен на YouTube: https://youtube.com/shorts/bXEbqa2Ac_o
+[2026-11-20 17:06:51] Ошибка публикации в Instagram: ключ не открывает Instagram 17841443254640267: {"error":{"message":"API access blocked.","code":200,"type":"OAuthException","error_subcode":5258005,"fbtrace_id":"AQ-N9MiJ6JICcxZb5ijrg2g"}}; страницы: {'error': {'message': 'API access blocked.', 'type': 'OAuthException', 'code': 200, 'error_subcode':
+[2026-11-20 17:06:54] TikTok: ролик загружен, publish_id v_inbox_file~v2.7710301024380160022
+[2026-11-20 17:22:30] TikTok за 15 минут не обработал ролик (статус PROCESSING_UPLOAD)
+[2026-11-20 17:22:38] Ролик и описание для TikTok отправлены в бот
+[2026-11-20 17:22:38] Готово: 2026-11-20 17-22 mitnick-whistle.mp4
