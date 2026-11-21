@@ -776,3 +776,32 @@ RuntimeError: raqm_layout() failed.
 [2026-11-20 17:22:30] TikTok за 15 минут не обработал ролик (статус PROCESSING_UPLOAD)
 [2026-11-20 17:22:38] Ролик и описание для TikTok отправлены в бот
 [2026-11-20 17:22:38] Готово: 2026-11-20 17-22 mitnick-whistle.mp4
+[2026-11-21 08:05:33] Собираю ролик: imei-code (Набери 5 символов на любом телефоне 📱), осталось сценариев: 17
+[2026-11-21 08:06:22] Ролик собран
+[2026-11-21 08:06:24] Загружен на YouTube: https://youtube.com/shorts/glG_fIstoco
+[2026-11-21 08:06:25] Ошибка публикации в Instagram: ключ не открывает Instagram 17841443254640267: {"error":{"message":"API access blocked.","code":200,"type":"OAuthException","error_subcode":5258005,"fbtrace_id":"AA76hvMtNWmR9Gsjq1g0AmZ"}}; страницы: {'error': {'message': 'API access blocked.', 'type': 'OAuthException', 'code': 200, 'error_subcode':
+[2026-11-21 08:06:27] TikTok: ролик загружен, publish_id v_inbox_file~v2.7710532112763832342
+[2026-11-21 08:20:00] Отправлен в черновики TikTok: Набери 5 символов на любом телефоне 📱
+[2026-11-21 08:20:00] Готово: 2026-11-21 08-20 imei-code.mp4
+[2026-11-21 11:05:28] Собираю рекламный ролик: ad-diablo-auction (Blizzard разрешила продавать вещи за реальные деньги. Зря 💸)
+[2026-11-21 11:06:18] Ролик собран
+[2026-11-21 11:06:20] Загружен на YouTube: https://youtube.com/shorts/VBXJkVgodb8
+[2026-11-21 11:06:21] Ошибка публикации в Instagram: ключ не открывает Instagram 17841443254640267: {"error":{"message":"API access blocked.","code":200,"type":"OAuthException","error_subcode":5258005,"fbtrace_id":"A1V_DuuhJdxuYlrTKprrEe1"}}; страницы: {'error': {'message': 'API access blocked.', 'type': 'OAuthException', 'code': 200, 'error_subcode':
+[2026-11-21 11:06:24] TikTok: ролик загружен, publish_id v_inbox_file~v2.7710579401024391190
+[2026-11-21 11:21:59] TikTok за 15 минут не обработал ролик (статус PROCESSING_UPLOAD)
+[2026-11-21 11:22:04] Ролик и описание для TikTok отправлены в бот
+[2026-11-21 11:22:04] Готово: 2026-11-21 11-22 ad-diablo-auction.mp4
+[2026-11-21 14:05:27] Собираю ролик: airplane-mode (Зачем на самом деле просят включить режим полёта ✈️), осталось сценариев: 16
+[2026-11-21 14:06:21] Ролик собран
+[2026-11-21 14:06:23] Загружен на YouTube: https://youtube.com/shorts/qLWnn43Ikuw
+[2026-11-21 14:06:24] Ошибка публикации в Instagram: ключ не открывает Instagram 17841443254640267: {"error":{"message":"API access blocked.","code":200,"type":"OAuthException","error_subcode":5258005,"fbtrace_id":"Az5yjALm5TZqCZ6QO46nir1"}}; страницы: {'error': {'message': 'API access blocked.', 'type': 'OAuthException', 'code': 200, 'error_subcode':
+[2026-11-21 14:06:27] TikTok: ролик загружен, publish_id v_inbox_file~v2.7710625706572761110
+[2026-11-21 14:19:39] Отправлен в черновики TikTok: Зачем на самом деле просят включить режим полёта ✈️
+[2026-11-21 14:19:39] Готово: 2026-11-21 14-19 airplane-mode.mp4
+[2026-11-21 17:05:26] Собираю ролик: shark-cables (Почему Google одевал интернет в броню от акул 🦈), осталось сценариев: 15
+[2026-11-21 17:06:33] Ролик собран
+[2026-11-21 17:06:35] Загружен на YouTube: https://youtube.com/shorts/l_oLFr_xU8A
+[2026-11-21 17:06:36] Ошибка публикации в Instagram: ключ не открывает Instagram 17841443254640267: {"error":{"message":"API access blocked.","code":200,"type":"OAuthException","error_subcode":5258005,"fbtrace_id":"AAPfvmhRy6Wy2svd3oW2nRP"}}; страницы: {'error': {'message': 'API access blocked.', 'type': 'OAuthException', 'code': 200, 'error_subcode':
+[2026-11-21 17:06:39] TikTok: ролик загружен, publish_id v_inbox_file~v2.7710672288517031958
+[2026-11-21 17:14:07] Отправлен в черновики TikTok: Почему Google одевал интернет в броню от акул 🦈
+[2026-11-21 17:14:07] Готово: 2026-11-21 17-14 shark-cables.mp4
