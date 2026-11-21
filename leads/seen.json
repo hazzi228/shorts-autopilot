@@ -1,9 +1,5 @@
 {
  "ids": [
-  "tg:zakazy_freelance/78166",
-  "tg:zakazy_freelance/78167",
-  "rss:https://www.fl.ru/projects/5528635/sdelat-klassnoe-foto-dlya-razmescheniya-na-sayt.html",
-  "tg:zakazy_freelance/78168",
   "tg:program_job/6667",
   "tg:theyseeku/40312",
   "tg:zakazy_freelance/78169",
@@ -4999,7 +4995,11 @@
   "tg:freelancce/16826",
   "tg:program_job/6884",
   "tg:program_job/6885",
-  "tg:program_job/6886"
+  "tg:program_job/6886",
+  "tg:program_job/6887",
+  "tg:freelancce/16827",
+  "tg:FreelanceBay/16826",
+  "tg:program_job/6888"
  ],
  "prints": [
   "26a9ac8a749827aab4ad7fd9b96c0cd5",
