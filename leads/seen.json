@@ -1,12 +1,5 @@
 {
  "ids": [
-  "tg:program_job/6665",
-  "tg:frilancekomfort/14386",
-  "tg:zakazy_freelance/78159",
-  "tg:program_job/6666",
-  "tg:zakazy_freelance/78160",
-  "rss:https://www.fl.ru/projects/5528629/testirovanie-veb-prilojeniya-dlya-praktiki-ispanskogo-yazyika.html",
-  "rss:https://www.fl.ru/projects/5528630/regulyarnyiy-parsing-marketpleysa-233-sku--obnovlenie-kajdyiy-ponedelnik.html",
   "tg:zakazy_freelance/78161",
   "tg:theyseeku/40311",
   "tg:freelancce/16679",
@@ -4999,7 +4992,14 @@
   "tg:program_job/6879",
   "tg:FrWork3/16392",
   "tg:freelancce/16821",
-  "tg:frilancekomfort/14449"
+  "tg:frilancekomfort/14449",
+  "tg:program_job/6880",
+  "tg:program_job/6881",
+  "tg:program_job/6882",
+  "tg:sova_freelance/16832",
+  "tg:FreelanceBay/16824",
+  "tg:freelancce/16822",
+  "tg:frilancekomfort/14450"
  ],
  "prints": [
   "26a9ac8a749827aab4ad7fd9b96c0cd5",
@@ -5353,7 +5353,8 @@
   "fd266f185abd12aa0e53385f52c5571a",
   "51fc72403616be3cc2484c7ac20a20bf",
   "ea80b80ec6f15474cb062a899ea383a4",
-  "1feb6a9dc40a6b92e407ce1776e9d475"
+  "1feb6a9dc40a6b92e407ce1776e9d475",
+  "8eb67baadcdbb97815a94fd828d2d732"
  ],
  "chat_ids": [
   "8301728829"
