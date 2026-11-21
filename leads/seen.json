@@ -1,8 +1,5 @@
 {
  "ids": [
-  "tg:theyseeku/40310",
-  "tg:zakazy_freelance/78156",
-  "tg:zakazy_freelance/78157",
   "tg:FrWork3/16311",
   "tg:zakazy_freelance/78158",
   "tg:sova_freelance/16724",
@@ -4999,7 +4996,10 @@
   "tg:freelancce/16818",
   "tg:FreelanceBay/16822",
   "tg:freelancce/16819",
-  "tg:sova_freelance/16831"
+  "tg:sova_freelance/16831",
+  "tg:freelancce/16820",
+  "tg:FreelanceBay/16823",
+  "tg:program_job/6879"
  ],
  "prints": [
   "26a9ac8a749827aab4ad7fd9b96c0cd5",
