@@ -798,3 +798,10 @@ RuntimeError: raqm_layout() failed.
 [2026-11-21 14:06:27] TikTok: ролик загружен, publish_id v_inbox_file~v2.7710625706572761110
 [2026-11-21 14:19:39] Отправлен в черновики TikTok: Зачем на самом деле просят включить режим полёта ✈️
 [2026-11-21 14:19:39] Готово: 2026-11-21 14-19 airplane-mode.mp4
+[2026-11-21 17:05:26] Собираю ролик: shark-cables (Почему Google одевал интернет в броню от акул 🦈), осталось сценариев: 15
+[2026-11-21 17:06:33] Ролик собран
+[2026-11-21 17:06:35] Загружен на YouTube: https://youtube.com/shorts/l_oLFr_xU8A
+[2026-11-21 17:06:36] Ошибка публикации в Instagram: ключ не открывает Instagram 17841443254640267: {"error":{"message":"API access blocked.","code":200,"type":"OAuthException","error_subcode":5258005,"fbtrace_id":"AAPfvmhRy6Wy2svd3oW2nRP"}}; страницы: {'error': {'message': 'API access blocked.', 'type': 'OAuthException', 'code': 200, 'error_subcode':
+[2026-11-21 17:06:39] TikTok: ролик загружен, publish_id v_inbox_file~v2.7710672288517031958
+[2026-11-21 17:14:07] Отправлен в черновики TikTok: Почему Google одевал интернет в броню от акул 🦈
+[2026-11-21 17:14:07] Готово: 2026-11-21 17-14 shark-cables.mp4
