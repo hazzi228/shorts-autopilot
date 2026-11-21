@@ -776,3 +776,10 @@ RuntimeError: raqm_layout() failed.
 [2026-11-20 17:22:30] TikTok за 15 минут не обработал ролик (статус PROCESSING_UPLOAD)
 [2026-11-20 17:22:38] Ролик и описание для TikTok отправлены в бот
 [2026-11-20 17:22:38] Готово: 2026-11-20 17-22 mitnick-whistle.mp4
+[2026-11-21 08:05:33] Собираю ролик: imei-code (Набери 5 символов на любом телефоне 📱), осталось сценариев: 17
+[2026-11-21 08:06:22] Ролик собран
+[2026-11-21 08:06:24] Загружен на YouTube: https://youtube.com/shorts/glG_fIstoco
+[2026-11-21 08:06:25] Ошибка публикации в Instagram: ключ не открывает Instagram 17841443254640267: {"error":{"message":"API access blocked.","code":200,"type":"OAuthException","error_subcode":5258005,"fbtrace_id":"AA76hvMtNWmR9Gsjq1g0AmZ"}}; страницы: {'error': {'message': 'API access blocked.', 'type': 'OAuthException', 'code': 200, 'error_subcode':
+[2026-11-21 08:06:27] TikTok: ролик загружен, publish_id v_inbox_file~v2.7710532112763832342
+[2026-11-21 08:20:00] Отправлен в черновики TikTok: Набери 5 символов на любом телефоне 📱
+[2026-11-21 08:20:00] Готово: 2026-11-21 08-20 imei-code.mp4
