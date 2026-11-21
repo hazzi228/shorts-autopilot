@@ -1,9 +1,5 @@
 {
  "ids": [
-  "tg:zakazy_freelance/78151",
-  "tg:FreeWorkFeed/4254",
-  "tg:zakazy_freelance/78152",
-  "rss:https://www.fl.ru/projects/5528627/razrabotka-3d-modeli-arhitekturyi-zdaniya-sklada-s-abk-v-revit-2024-po-chertejam-dwg.html",
   "tg:freegolup/4454",
   "tg:zakazy_freelance/78153",
   "rss:https://www.fl.ru/projects/5528628/razvit-vyidumannyiy-mir-prorabotat-syujetyi.html",
@@ -4999,7 +4995,11 @@
   "tg:program_job/6878",
   "tg:frilancekomfort/14446",
   "tg:frilancekomfort/14447",
-  "tg:FreelanceBay/16820"
+  "tg:FreelanceBay/16820",
+  "tg:frilancekomfort/14448",
+  "tg:digitaltender/5644",
+  "tg:freelancce/16817",
+  "tg:FrWork3/16391"
  ],
  "prints": [
   "26a9ac8a749827aab4ad7fd9b96c0cd5",
