@@ -805,3 +805,10 @@ RuntimeError: raqm_layout() failed.
 [2026-11-21 17:06:39] TikTok: ролик загружен, publish_id v_inbox_file~v2.7710672288517031958
 [2026-11-21 17:14:07] Отправлен в черновики TikTok: Почему Google одевал интернет в броню от акул 🦈
 [2026-11-21 17:14:07] Готово: 2026-11-21 17-14 shark-cables.mp4
+[2026-11-22 08:05:28] Собираю ролик: facebook-bots-language (Facebook выключил ИИ, который придумал свой язык? 🤖), осталось сценариев: 14
+[2026-11-22 08:06:39] Ролик собран
+[2026-11-22 08:06:41] Загружен на YouTube: https://youtube.com/shorts/ljrHVB233nI
+[2026-11-22 08:06:41] Ошибка публикации в Instagram: ключ не открывает Instagram 17841443254640267: {"error":{"message":"API access blocked.","code":200,"type":"OAuthException","error_subcode":5258005,"fbtrace_id":"AwIyfiMkEaErodVSU_K9YYu"}}; страницы: {'error': {'message': 'API access blocked.', 'type': 'OAuthException', 'code': 200, 'error_subcode':
+[2026-11-22 08:06:44] TikTok: ролик загружен, publish_id v_inbox_file~v2.7710904085800650774
+[2026-11-22 08:20:12] Отправлен в черновики TikTok: Facebook выключил ИИ, который придумал свой язык? 🤖
+[2026-11-22 08:20:12] Готово: 2026-11-22 08-20 facebook-bots-language.mp4
