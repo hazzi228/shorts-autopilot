@@ -1,8 +1,5 @@
 {
  "ids": [
-  "rss:https://www.fl.ru/projects/5528636/razvernut-sayt-wordpress-na-hostinge-.html",
-  "rss:https://www.fl.ru/projects/5528633/smm-spetsialist---videomeyker-dlya-lichnogo-akkaunta.html",
-  "rss:https://www.fl.ru/projects/5528640/razrabotka-sayta-servisa-vyikupa-iz-ssha-dizayn-gotov.html",
   "tg:zakazy_freelance/78171",
   "tg:zakazy_freelance/78172",
   "tg:zakazy_freelance/78173",
@@ -4999,7 +4996,10 @@
   "tg:freelancce/16829",
   "tg:program_job/6889",
   "tg:freelancce/16830",
-  "tg:program_job/6890"
+  "tg:program_job/6890",
+  "tg:program_job/6891",
+  "tg:frilancekomfort/14451",
+  "tg:sova_freelance/16834"
  ],
  "prints": [
   "26a9ac8a749827aab4ad7fd9b96c0cd5",
@@ -5354,7 +5354,8 @@
   "51fc72403616be3cc2484c7ac20a20bf",
   "ea80b80ec6f15474cb062a899ea383a4",
   "1feb6a9dc40a6b92e407ce1776e9d475",
-  "8eb67baadcdbb97815a94fd828d2d732"
+  "8eb67baadcdbb97815a94fd828d2d732",
+  "c874c9f928b2be857c689dd7b05c64d9"
  ],
  "chat_ids": [
   "8301728829"
