@@ -1,11 +1,5 @@
 {
  "ids": [
-  "rss:https://www.fl.ru/projects/5528643/sozdanie-kraski-v-vode-houdini-.html",
-  "rss:https://www.fl.ru/projects/5528641/vstroennoe-zaschitnoe-soorujenie-grajdanskoy-oboronyi.html",
-  "rss:https://www.fl.ru/projects/5528651/razrabotat-paket-rabochih-chertejey-dlya-kvartiryi-64-m-bez-pereplanirovki.html",
-  "rss:https://www.fl.ru/projects/5528642/otzyiv-.html",
-  "rss:https://www.fl.ru/projects/5528645/razrabotka-telegram-bota-s-umnyimi-otvetami-i-primom-zayavok.html",
-  "rss:https://www.fl.ru/projects/5528646/nujen-omnikanalnyiy-chat-bot-dlya-bronirovaniya-otelya-s-integratsiyami-amocrm-i-mehotel.html",
   "tg:zakazy_freelance/78185",
   "tg:zakazy_freelance/78186",
   "tg:zakazy_freelance/78187",
@@ -4999,7 +4993,13 @@
   "tg:frilancekomfort/14452",
   "tg:FreelanceBay/16830",
   "tg:freelancce/16835",
-  "tg:freelancce/16836"
+  "tg:freelancce/16836",
+  "tg:sova_freelance/16839",
+  "tg:sova_freelance/16840",
+  "tg:sova_freelance/16841",
+  "tg:FreelanceBay/16831",
+  "tg:freelancce/16837",
+  "tg:FrWork3/16396"
  ],
  "prints": [
   "26a9ac8a749827aab4ad7fd9b96c0cd5",
@@ -5355,7 +5355,8 @@
   "ea80b80ec6f15474cb062a899ea383a4",
   "1feb6a9dc40a6b92e407ce1776e9d475",
   "8eb67baadcdbb97815a94fd828d2d732",
-  "c874c9f928b2be857c689dd7b05c64d9"
+  "c874c9f928b2be857c689dd7b05c64d9",
+  "eaecf5b95ec579f7bf3513a3ffff1047"
  ],
  "chat_ids": [
   "8301728829"
