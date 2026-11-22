@@ -1,9 +1,5 @@
 {
  "ids": [
-  "tg:FreeWorkFeed/4255",
-  "tg:zakazy_freelance/78175",
-  "tg:FrWork3/16312",
-  "tg:sova_freelance/16725",
   "tg:getwork25/5104",
   "tg:zakazy_freelance/78176",
   "tg:zakazy_freelance/78177",
@@ -4999,7 +4995,11 @@
   "tg:FreelanceBay/16828",
   "tg:freelancce/16832",
   "tg:sova_freelance/16835",
-  "tg:sova_freelance/16836"
+  "tg:sova_freelance/16836",
+  "tg:program_job/6892",
+  "tg:freelancce/16833",
+  "tg:FreelanceBay/16829",
+  "tg:FrWork3/16395"
  ],
  "prints": [
   "26a9ac8a749827aab4ad7fd9b96c0cd5",
