@@ -828,3 +828,10 @@ RuntimeError: raqm_layout() failed.
 [2026-11-22 14:22:17] TikTok за 15 минут не обработал ролик (статус PROCESSING_UPLOAD)
 [2026-11-22 14:22:22] Ролик и описание для TikTok отправлены в бот
 [2026-11-22 14:22:22] Готово: 2026-11-22 14-22 stolen-phone-rules.mp4
+[2026-11-22 17:05:32] Собираю ролик: twitter-hack-2020 (17-летний взломал Twitter Обамы и Илона Маска 😳), осталось сценариев: 12
+[2026-11-22 17:06:49] Ролик собран
+[2026-11-22 17:06:51] Загружен на YouTube: https://youtube.com/shorts/WhyB-qRmaAM
+[2026-11-22 17:06:52] Ошибка публикации в Instagram: ключ не открывает Instagram 17841443254640267: {"error":{"message":"API access blocked.","code":200,"type":"OAuthException","error_subcode":5258005,"fbtrace_id":"A8u2j1hbEdjTGxw5A9QwVaQ"}}; страницы: {'error': {'message': 'API access blocked.', 'type': 'OAuthException', 'code': 200, 'error_subcode':
+[2026-11-22 17:06:55] TikTok: ролик загружен, publish_id v_inbox_file~v2.7711043432432666647
+[2026-11-22 17:20:04] Отправлен в черновики TikTok: 17-летний взломал Twitter Обамы и Илона Маска 😳
+[2026-11-22 17:20:04] Готово: 2026-11-22 17-20 twitter-hack-2020.mp4
