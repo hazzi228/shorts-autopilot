@@ -820,3 +820,11 @@ RuntimeError: raqm_layout() failed.
 [2026-11-22 11:21:53] TikTok за 15 минут не обработал ролик (статус PROCESSING_UPLOAD)
 [2026-11-22 11:21:57] Ролик и описание для TikTok отправлены в бот
 [2026-11-22 11:21:57] Готово: 2026-11-22 11-21 ad-eve-battle.mp4
+[2026-11-22 14:05:32] Собираю ролик: stolen-phone-rules (Украли телефон? 3 правила в первый час 📵), осталось сценариев: 13
+[2026-11-22 14:06:34] Ролик собран
+[2026-11-22 14:06:36] Загружен на YouTube: https://youtube.com/shorts/RML_jzWzMRs
+[2026-11-22 14:06:37] Ошибка публикации в Instagram: ключ не открывает Instagram 17841443254640267: {"error":{"message":"API access blocked.","code":200,"type":"OAuthException","error_subcode":5258005,"fbtrace_id":"AE8VPsUYw1ftgqvzl1xSy6Q"}}; страницы: {'error': {'message': 'API access blocked.', 'type': 'OAuthException', 'code': 200, 'error_subcode':
+[2026-11-22 14:06:40] TikTok: ролик загружен, publish_id v_inbox_file~v2.7710996875738302486
+[2026-11-22 14:22:17] TikTok за 15 минут не обработал ролик (статус PROCESSING_UPLOAD)
+[2026-11-22 14:22:22] Ролик и описание для TikTok отправлены в бот
+[2026-11-22 14:22:22] Готово: 2026-11-22 14-22 stolen-phone-rules.mp4
