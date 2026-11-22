@@ -1,7 +1,5 @@
 {
  "ids": [
-  "rss:https://www.fl.ru/projects/5528634/menedjer-po-zakupke-reklamyi-u-blogerov-youtube-telegram-vk-.html",
-  "tg:onlinevakansii/10781",
   "tg:theyseeku/40314",
   "rss:https://www.fl.ru/projects/5528643/sozdanie-kraski-v-vode-houdini-.html",
   "rss:https://www.fl.ru/projects/5528641/vstroennoe-zaschitnoe-soorujenie-grajdanskoy-oboronyi.html",
@@ -4999,7 +4997,9 @@
   "tg:sova_freelance/16837",
   "tg:freelancce/16834",
   "tg:sova_freelance/16838",
-  "tg:frilancekomfort/14452"
+  "tg:frilancekomfort/14452",
+  "tg:FreelanceBay/16830",
+  "tg:freelancce/16835"
  ],
  "prints": [
   "26a9ac8a749827aab4ad7fd9b96c0cd5",
