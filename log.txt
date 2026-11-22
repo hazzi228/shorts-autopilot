@@ -812,3 +812,11 @@ RuntimeError: raqm_layout() failed.
 [2026-11-22 08:06:44] TikTok: ролик загружен, publish_id v_inbox_file~v2.7710904085800650774
 [2026-11-22 08:20:12] Отправлен в черновики TikTok: Facebook выключил ИИ, который придумал свой язык? 🤖
 [2026-11-22 08:20:12] Готово: 2026-11-22 08-20 facebook-bots-language.mp4
+[2026-11-22 11:05:25] Собираю рекламный ролик: ad-eve-battle (В этой игре одна битва стоила 300 тысяч долларов 🚀)
+[2026-11-22 11:06:14] Ролик собран
+[2026-11-22 11:06:16] Загружен на YouTube: https://youtube.com/shorts/1S82Dg8lTrA
+[2026-11-22 11:06:17] Ошибка публикации в Instagram: ключ не открывает Instagram 17841443254640267: {"error":{"message":"API access blocked.","code":200,"type":"OAuthException","error_subcode":5258005,"fbtrace_id":"AXKScR9BgoYVs5RIpuhMUcB"}}; страницы: {'error': {'message': 'API access blocked.', 'type': 'OAuthException', 'code': 200, 'error_subcode':
+[2026-11-22 11:06:19] TikTok: ролик загружен, publish_id v_inbox_file~v2.7710950466696366102
+[2026-11-22 11:21:53] TikTok за 15 минут не обработал ролик (статус PROCESSING_UPLOAD)
+[2026-11-22 11:21:57] Ролик и описание для TikTok отправлены в бот
+[2026-11-22 11:21:57] Готово: 2026-11-22 11-21 ad-eve-battle.mp4
