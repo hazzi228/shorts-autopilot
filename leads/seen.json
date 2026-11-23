@@ -1,9 +1,5 @@
 {
  "ids": [
-  "tg:zakazy_freelance/78208",
-  "rss:https://www.fl.ru/projects/5528665/smeta-v-tsn-.html",
-  "tg:zakazy_freelance/78209",
-  "tg:zakazy_freelance/78210",
   "tg:zakazy_freelance/78211",
   "tg:zakazy_freelance/78212",
   "tg:zakazy_freelance/78213",
@@ -4999,7 +4995,11 @@
   "tg:program_job/6906",
   "tg:freelancce/16844",
   "tg:program_job/6907",
-  "tg:FreelanceBay/16836"
+  "tg:FreelanceBay/16836",
+  "tg:FrWork3/16401",
+  "tg:sova_freelance/16844",
+  "tg:program_job/6908",
+  "tg:freelancce/16845"
  ],
  "prints": [
   "26a9ac8a749827aab4ad7fd9b96c0cd5",
