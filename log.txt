@@ -858,3 +858,11 @@ RuntimeError: raqm_layout() failed.
 [2026-11-23 14:22:10] TikTok за 15 минут не обработал ролик (статус PROCESSING_UPLOAD)
 [2026-11-23 14:22:16] Ролик и описание для TikTok отправлены в бот
 [2026-11-23 14:22:16] Готово: 2026-11-23 14-22 iphone-orange-dot.mp4
+[2026-11-23 17:05:30] Собираю ролик: usb-safe-removal (Что будет, если выдернуть флешку без «безопасного извлечения» 💾), осталось сценариев: 9
+[2026-11-23 17:06:28] Ролик собран
+[2026-11-23 17:06:30] Загружен на YouTube: https://youtube.com/shorts/1mhyf0cD3AY
+[2026-11-23 17:06:31] Ошибка публикации в Instagram: ключ не открывает Instagram 17841443254640267: {"error":{"message":"API access blocked.","code":200,"type":"OAuthException","error_subcode":5258005,"fbtrace_id":"A1QeG5ZFz_fMcUuJkjpL970"}}; страницы: {'error': {'message': 'API access blocked.', 'type': 'OAuthException', 'code': 200, 'error_subcode':
+[2026-11-23 17:06:35] TikTok: ролик загружен, publish_id v_inbox_file~v2.7711414155739629590
+[2026-11-23 17:22:16] TikTok за 15 минут не обработал ролик (статус PROCESSING_UPLOAD)
+[2026-11-23 17:22:21] Ролик и описание для TikTok отправлены в бот
+[2026-11-23 17:22:21] Готово: 2026-11-23 17-22 usb-safe-removal.mp4
