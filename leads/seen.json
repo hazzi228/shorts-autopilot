@@ -1,10 +1,5 @@
 {
  "ids": [
-  "tg:zakazy_it/354",
-  "tg:zakazy_freelance/78194",
-  "tg:theyseeku/40316",
-  "tg:zakazy_freelance/78195",
-  "tg:zakazy_freelance/78196",
   "tg:zakazy_freelance/78197",
   "tg:zakazy_freelance/78198",
   "tg:zakazy_freelance/78199",
@@ -4999,7 +4994,12 @@
   "tg:program_job/6895",
   "tg:freelancce/16841",
   "tg:program_job/6896",
-  "tg:frilancekomfort/14453"
+  "tg:frilancekomfort/14453",
+  "tg:FrWork3/16398",
+  "tg:FrWork3/16399",
+  "tg:program_job/6897",
+  "tg:freelancce/16842",
+  "tg:FreelanceBay/16833"
  ],
  "prints": [
   "26a9ac8a749827aab4ad7fd9b96c0cd5",
