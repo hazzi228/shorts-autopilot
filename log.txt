@@ -850,3 +850,11 @@ RuntimeError: raqm_layout() failed.
 [2026-11-23 11:06:41] TikTok: ролик загружен, publish_id v_inbox_file~v2.7711321658065569795
 [2026-11-23 11:21:21] Отправлен в черновики TikTok: Первый миллионер, который заработал внутри игры 🏰
 [2026-11-23 11:21:21] Готово: 2026-11-23 11-21 ad-second-life.mp4
+[2026-11-23 14:05:30] Собираю ролик: iphone-orange-dot (Видишь оранжевую точку на айфоне? 🟠), осталось сценариев: 10
+[2026-11-23 14:06:23] Ролик собран
+[2026-11-23 14:06:25] Загружен на YouTube: https://youtube.com/shorts/Yc8hYPq8kiQ
+[2026-11-23 14:06:25] Ошибка публикации в Instagram: ключ не открывает Instagram 17841443254640267: {"error":{"message":"API access blocked.","code":200,"type":"OAuthException","error_subcode":5258005,"fbtrace_id":"AvGqBhuR5HyyScidDcRUyRf"}}; страницы: {'error': {'message': 'API access blocked.', 'type': 'OAuthException', 'code': 200, 'error_subcode':
+[2026-11-23 14:06:30] TikTok: ролик загружен, publish_id v_inbox_file~v2.7711367975764396054
+[2026-11-23 14:22:10] TikTok за 15 минут не обработал ролик (статус PROCESSING_UPLOAD)
+[2026-11-23 14:22:16] Ролик и описание для TikTok отправлены в бот
+[2026-11-23 14:22:16] Готово: 2026-11-23 14-22 iphone-orange-dot.mp4
