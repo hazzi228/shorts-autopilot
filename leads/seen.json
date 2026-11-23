@@ -1,9 +1,5 @@
 {
  "ids": [
-  "tg:zakazy_freelance/78217",
-  "rss:https://www.fl.ru/projects/5528670/laravel-proektyi-multivendora-dlya-sener-ispolniteley.html",
-  "tg:zakazy_freelance/78239",
-  "tg:zakazy_freelance/78240",
   "tg:zakazy_freelance/78241",
   "tg:zakazy_freelance/78242",
   "tg:zakazy_freelance/78243",
@@ -4999,7 +4995,11 @@
   "tg:FreelanceBay/16837",
   "tg:frilancekomfort/14456",
   "tg:freelancce/16846",
-  "tg:program_job/6911"
+  "tg:program_job/6911",
+  "tg:sova_freelance/16845",
+  "tg:program_job/6912",
+  "tg:freelancce/16847",
+  "tg:program_job/6913"
  ],
  "prints": [
   "26a9ac8a749827aab4ad7fd9b96c0cd5",
@@ -5358,7 +5358,8 @@
   "c874c9f928b2be857c689dd7b05c64d9",
   "eaecf5b95ec579f7bf3513a3ffff1047",
   "0a599e5c918786fabb10ae1a79ccf524",
-  "38fd2605add4741f56de4427fbddb521"
+  "38fd2605add4741f56de4427fbddb521",
+  "6105f0c4eff09a1d983e4d2b74b4aac5"
  ],
  "chat_ids": [
   "8301728829"
