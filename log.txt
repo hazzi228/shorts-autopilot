@@ -843,3 +843,10 @@ RuntimeError: raqm_layout() failed.
 [2026-11-23 08:22:34] TikTok за 15 минут не обработал ролик (статус PROCESSING_UPLOAD)
 [2026-11-23 08:22:39] Ролик и описание для TikTok отправлены в бот
 [2026-11-23 08:22:39] Готово: 2026-11-23 08-22 password-rules.mp4
+[2026-11-23 11:05:39] Собираю рекламный ролик: ad-second-life (Первый миллионер, который заработал внутри игры 🏰)
+[2026-11-23 11:06:35] Ролик собран
+[2026-11-23 11:06:37] Загружен на YouTube: https://youtube.com/shorts/DFq7EygXkOU
+[2026-11-23 11:06:37] Ошибка публикации в Instagram: ключ не открывает Instagram 17841443254640267: {"error":{"message":"API access blocked.","code":200,"type":"OAuthException","error_subcode":5258005,"fbtrace_id":"APm69260GW4NISP0t2NI5Pa"}}; страницы: {'error': {'message': 'API access blocked.', 'type': 'OAuthException', 'code': 200, 'error_subcode':
+[2026-11-23 11:06:41] TikTok: ролик загружен, publish_id v_inbox_file~v2.7711321658065569795
+[2026-11-23 11:21:21] Отправлен в черновики TikTok: Первый миллионер, который заработал внутри игры 🏰
+[2026-11-23 11:21:21] Готово: 2026-11-23 11-21 ad-second-life.mp4
