@@ -1,12 +1,5 @@
 {
  "ids": [
-  "tg:zakazy_freelance/78199",
-  "tg:zakazy_freelance/78200",
-  "tg:theyseeku/40317",
-  "tg:freelancce/16682",
-  "tg:makingmoney/236",
-  "rss:https://www.fl.ru/projects/5528653/realizovat-gotovyiy-dizayn-na-bitriks-internet-magazin-i-nastroit-vyigruzku-kataloga-iz-1s-unf.html",
-  "tg:program_job/6669",
   "rss:https://www.fl.ru/projects/5528654/ischu-spetsialista-kotoryiy-nauchit-sozdavat-realistichnyie-ii-video-po-moim-knigam.html",
   "rss:https://www.fl.ru/projects/5528648/nujno-razrabotat-dizayn-sayta-na-tilde-iz-12-blokov.html",
   "tg:zakazy_freelance/78201",
@@ -4999,7 +4992,14 @@
   "tg:freelancce/16842",
   "tg:FreelanceBay/16833",
   "tg:sova_freelance/16842",
-  "tg:sova_freelance/16843"
+  "tg:sova_freelance/16843",
+  "tg:FreelanceBay/16835",
+  "tg:FrWork3/16400",
+  "tg:frilancekomfort/14454",
+  "tg:freelancce/16843",
+  "tg:program_job/6898",
+  "tg:program_job/6899",
+  "tg:frilancekomfort/14455"
  ],
  "prints": [
   "26a9ac8a749827aab4ad7fd9b96c0cd5",
@@ -5356,7 +5356,8 @@
   "1feb6a9dc40a6b92e407ce1776e9d475",
   "8eb67baadcdbb97815a94fd828d2d732",
   "c874c9f928b2be857c689dd7b05c64d9",
-  "eaecf5b95ec579f7bf3513a3ffff1047"
+  "eaecf5b95ec579f7bf3513a3ffff1047",
+  "0a599e5c918786fabb10ae1a79ccf524"
  ],
  "chat_ids": [
   "8301728829"
