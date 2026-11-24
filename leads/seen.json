@@ -1,7 +1,5 @@
 {
  "ids": [
-  "tg:FrWork3/16313",
-  "tg:zakazy_freelance/78350",
   "tg:FreeWorkFeed/4256",
   "tg:zakazy_freelance/78351",
   "tg:rabotka_zdes/13612",
@@ -4999,7 +4997,9 @@
   "tg:freelancce/16864",
   "tg:FreelanceBay/16846",
   "tg:freelancce/16865",
-  "tg:freelancce/16866"
+  "tg:freelancce/16866",
+  "tg:program_job/6940",
+  "tg:program_job/6941"
  ],
  "prints": [
   "26a9ac8a749827aab4ad7fd9b96c0cd5",
@@ -5362,7 +5362,8 @@
   "6105f0c4eff09a1d983e4d2b74b4aac5",
   "1c5d442da8f11e1988575a8f2e71bc70",
   "01ea165f646e34501514d86e7cfebe7b",
-  "8fcf1d3d65266c59ee780da66857695c"
+  "8fcf1d3d65266c59ee780da66857695c",
+  "31c381df5394a8c2c38a94ca799d07f7"
  ],
  "chat_ids": [
   "8301728829"
