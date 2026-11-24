@@ -1,9 +1,5 @@
 {
  "ids": [
-  "rss:https://www.fl.ru/projects/5528662/podgotovit-rassyilku-po-bolnitsam-rf.html",
-  "rss:https://www.fl.ru/projects/5528673/napisat-10-stsenariev-dlya-youtube-rolikov-istoricheskaya-tematika.html",
-  "rss:https://www.fl.ru/projects/5528655/razvernut-vyidelennyiy-server-filippinyi-i-nastroit-bezopasnoe-okrujenie-dlya-rabotyi-s-claude.html",
-  "rss:https://www.fl.ru/projects/5528677/ai-generatsiya-muzyikalnyih-video-i-avto-publikatsiya-v-tiktok---shorts---rutube.html",
   "rss:https://www.fl.ru/projects/5528656/ischem-kompaniyu-dlya-proekta-gostinitsyi-spa-i-13-vill.html",
   "rss:https://www.fl.ru/projects/5528671/dorabotka-python-bota-samp-emulyator-dlya-black-russia-avto-kapcha-polzunok-i-navigatsiya.html",
   "rss:https://www.fl.ru/projects/5528684/razrabotka-internet-magazina-s-telegram-botom-ai-assistentom-i-umnoy-sistemoy-rekomendatsiy-tovarov.html",
@@ -4999,7 +4995,11 @@
   "tg:digitaltender/5650",
   "tg:digitaltender/5651",
   "tg:freelancce/16861",
-  "tg:FreelanceBay/16845"
+  "tg:FreelanceBay/16845",
+  "tg:digitaltender/5652",
+  "tg:freelancce/16862",
+  "tg:program_job/6938",
+  "tg:frilancekomfort/14463"
  ],
  "prints": [
   "26a9ac8a749827aab4ad7fd9b96c0cd5",
@@ -5361,7 +5361,8 @@
   "38fd2605add4741f56de4427fbddb521",
   "6105f0c4eff09a1d983e4d2b74b4aac5",
   "1c5d442da8f11e1988575a8f2e71bc70",
-  "01ea165f646e34501514d86e7cfebe7b"
+  "01ea165f646e34501514d86e7cfebe7b",
+  "8fcf1d3d65266c59ee780da66857695c"
  ],
  "chat_ids": [
   "8301728829"
