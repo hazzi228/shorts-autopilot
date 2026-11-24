@@ -866,3 +866,11 @@ RuntimeError: raqm_layout() failed.
 [2026-11-23 17:22:16] TikTok за 15 минут не обработал ролик (статус PROCESSING_UPLOAD)
 [2026-11-23 17:22:21] Ролик и описание для TikTok отправлены в бот
 [2026-11-23 17:22:21] Готово: 2026-11-23 17-22 usb-safe-removal.mp4
+[2026-11-24 08:05:31] Собираю ролик: ipod-in-aquarium (Зачем Джобс бросил новенький плеер в воду? 🐟), осталось сценариев: 8
+[2026-11-24 08:06:53] Ролик собран
+[2026-11-24 08:06:55] Загружен на YouTube: https://youtube.com/shorts/GQS0dhSEFZA
+[2026-11-24 08:06:56] Ошибка публикации в Instagram: ключ не открывает Instagram 17841443254640267: {"error":{"message":"API access blocked.","code":200,"type":"OAuthException","error_subcode":5258005,"fbtrace_id":"Aksk5mjpqf5p2A6nA1umZaT"}}; страницы: {'error': {'message': 'API access blocked.', 'type': 'OAuthException', 'code': 200, 'error_subcode':
+[2026-11-24 08:07:00] TikTok: ролик загружен, publish_id v_inbox_file~v2.7711646388974520342
+[2026-11-24 08:22:31] TikTok за 15 минут не обработал ролик (статус PROCESSING_UPLOAD)
+[2026-11-24 08:22:37] Ролик и описание для TikTok отправлены в бот
+[2026-11-24 08:22:37] Готово: 2026-11-24 08-22 ipod-in-aquarium.mp4
