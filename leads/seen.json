@@ -1,9 +1,5 @@
 {
  "ids": [
-  "rss:https://www.fl.ru/projects/5528656/ischem-kompaniyu-dlya-proekta-gostinitsyi-spa-i-13-vill.html",
-  "rss:https://www.fl.ru/projects/5528671/dorabotka-python-bota-samp-emulyator-dlya-black-russia-avto-kapcha-polzunok-i-navigatsiya.html",
-  "rss:https://www.fl.ru/projects/5528684/razrabotka-internet-magazina-s-telegram-botom-ai-assistentom-i-umnoy-sistemoy-rekomendatsiy-tovarov.html",
-  "rss:https://www.fl.ru/projects/5528688/ischu-spetsialista-po-privlecheniyu-klientov-na-buhgalterskoe-obslujivanie-avito-telegram-max.html",
   "rss:https://www.fl.ru/projects/5528689/nauchit-rabotat-v-1s-unf-nastroit-otchetyi.html",
   "rss:https://www.fl.ru/projects/5528690/vyipolnit-proekt.html",
   "tg:zakazy_freelance/78348",
@@ -4999,7 +4995,11 @@
   "tg:digitaltender/5652",
   "tg:freelancce/16862",
   "tg:program_job/6938",
-  "tg:frilancekomfort/14463"
+  "tg:frilancekomfort/14463",
+  "tg:FrWork3/16409",
+  "tg:sova_freelance/16851",
+  "tg:freelancce/16863",
+  "tg:digitaltender/5653"
  ],
  "prints": [
   "26a9ac8a749827aab4ad7fd9b96c0cd5",
