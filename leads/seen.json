@@ -1,11 +1,5 @@
 {
  "ids": [
-  "tg:sova_freelance/16727",
-  "tg:zakazy_freelance/78344",
-  "tg:getwork25/5105",
-  "tg:zakazy_freelance/78345",
-  "tg:zakazy_freelance/78346",
-  "tg:zakazy_it/355",
   "tg:zakazy_freelance/78347",
   "rss:https://www.fl.ru/projects/5528682/neyming-dlya-brenda-odejdyi.html",
   "rss:https://www.fl.ru/projects/5528680/uluchshenie-kachestva-video-nujno-razlichit-lyudey-v-kadre.html",
@@ -4999,7 +4993,13 @@
   "tg:rabotka_zdes/13611",
   "tg:program_job/6935",
   "tg:program_job/6936",
-  "tg:freelancce/16859"
+  "tg:freelancce/16859",
+  "tg:digitaltender/5648",
+  "tg:FreelanceBay/16844",
+  "tg:frilancekomfort/14462",
+  "tg:digitaltender/5649",
+  "tg:freelancce/16860",
+  "tg:program_job/6937"
  ],
  "prints": [
   "26a9ac8a749827aab4ad7fd9b96c0cd5",
