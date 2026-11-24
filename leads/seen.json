@@ -1,10 +1,5 @@
 {
  "ids": [
-  "tg:zakazy_freelance/78347",
-  "rss:https://www.fl.ru/projects/5528682/neyming-dlya-brenda-odejdyi.html",
-  "rss:https://www.fl.ru/projects/5528680/uluchshenie-kachestva-video-nujno-razlichit-lyudey-v-kadre.html",
-  "rss:https://www.fl.ru/projects/5528666/sdelat-kursovoy-proekt-.html",
-  "rss:https://www.fl.ru/projects/5528669/sozdanie-webp-fotografiy.html",
   "rss:https://www.fl.ru/projects/5528662/podgotovit-rassyilku-po-bolnitsam-rf.html",
   "rss:https://www.fl.ru/projects/5528673/napisat-10-stsenariev-dlya-youtube-rolikov-istoricheskaya-tematika.html",
   "rss:https://www.fl.ru/projects/5528655/razvernut-vyidelennyiy-server-filippinyi-i-nastroit-bezopasnoe-okrujenie-dlya-rabotyi-s-claude.html",
@@ -4999,7 +4994,12 @@
   "tg:frilancekomfort/14462",
   "tg:digitaltender/5649",
   "tg:freelancce/16860",
-  "tg:program_job/6937"
+  "tg:program_job/6937",
+  "tg:FrWork3/16408",
+  "tg:digitaltender/5650",
+  "tg:digitaltender/5651",
+  "tg:freelancce/16861",
+  "tg:FreelanceBay/16845"
  ],
  "prints": [
   "26a9ac8a749827aab4ad7fd9b96c0cd5",
