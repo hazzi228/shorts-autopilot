@@ -874,3 +874,11 @@ RuntimeError: raqm_layout() failed.
 [2026-11-24 08:22:31] TikTok за 15 минут не обработал ролик (статус PROCESSING_UPLOAD)
 [2026-11-24 08:22:37] Ролик и описание для TikTok отправлены в бот
 [2026-11-24 08:22:37] Готово: 2026-11-24 08-22 ipod-in-aquarium.mp4
+[2026-11-24 11:05:34] Собираю рекламный ролик: ad-entropia-asteroid (Виртуальный астероид продали за 635 тысяч долларов ☄️)
+[2026-11-24 11:06:38] Ролик собран
+[2026-11-24 11:06:40] Загружен на YouTube: https://youtube.com/shorts/7fn4eUI4U1A
+[2026-11-24 11:06:41] Ошибка публикации в Instagram: ключ не открывает Instagram 17841443254640267: {"error":{"message":"API access blocked.","code":200,"type":"OAuthException","error_subcode":5258005,"fbtrace_id":"ABp_Rv7oOFoX9j19AjtiHDJ"}}; страницы: {'error': {'message': 'API access blocked.', 'type': 'OAuthException', 'code': 200, 'error_subcode':
+[2026-11-24 11:06:44] TikTok: ролик загружен, publish_id v_inbox_file~v2.7711692779952375830
+[2026-11-24 11:22:20] TikTok за 15 минут не обработал ролик (статус PROCESSING_UPLOAD)
+[2026-11-24 11:22:24] Ролик и описание для TikTok отправлены в бот
+[2026-11-24 11:22:24] Готово: 2026-11-24 11-22 ad-entropia-asteroid.mp4
