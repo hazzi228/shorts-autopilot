@@ -1,13 +1,5 @@
 {
  "ids": [
-  "tg:FreelanceBay/16747",
-  "tg:rabotka_zdes/13611",
-  "tg:zakazy_freelance/78338",
-  "tg:zakazy_freelance/78339",
-  "tg:zakazy_freelance/78340",
-  "tg:zakazy_freelance/78341",
-  "tg:program_job/6671",
-  "tg:zakazy_freelance/78342",
   "tg:zakazy_freelance/78343",
   "tg:freelancce/16684",
   "tg:program_job/6672",
@@ -4999,7 +4991,15 @@
   "tg:FrWork3/16405",
   "tg:freelancce/16857",
   "tg:program_job/6932",
-  "tg:frilancekomfort/14460"
+  "tg:frilancekomfort/14460",
+  "tg:program_job/6933",
+  "tg:FreelanceBay/16843",
+  "tg:program_job/6934",
+  "tg:frilancekomfort/14461",
+  "tg:FrWork3/16406",
+  "tg:FrWork3/16407",
+  "tg:freelancce/16858",
+  "tg:sova_freelance/16850"
  ],
  "prints": [
   "26a9ac8a749827aab4ad7fd9b96c0cd5",
@@ -5360,7 +5360,8 @@
   "0a599e5c918786fabb10ae1a79ccf524",
   "38fd2605add4741f56de4427fbddb521",
   "6105f0c4eff09a1d983e4d2b74b4aac5",
-  "1c5d442da8f11e1988575a8f2e71bc70"
+  "1c5d442da8f11e1988575a8f2e71bc70",
+  "01ea165f646e34501514d86e7cfebe7b"
  ],
  "chat_ids": [
   "8301728829"
