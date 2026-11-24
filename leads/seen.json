@@ -1,7 +1,5 @@
 {
  "ids": [
-  "tg:zakazy_freelance/78348",
-  "tg:zakazy_freelance/78349",
   "rss:https://www.fl.ru/projects/5528691/yandeks-360-pochta-dlya-biznesa.html",
   "tg:FrWork3/16313",
   "tg:zakazy_freelance/78350",
@@ -4999,7 +4997,9 @@
   "tg:freelancce/16863",
   "tg:digitaltender/5653",
   "tg:program_job/6939",
-  "tg:freelancce/16864"
+  "tg:freelancce/16864",
+  "tg:FreelanceBay/16846",
+  "tg:freelancce/16865"
  ],
  "prints": [
   "26a9ac8a749827aab4ad7fd9b96c0cd5",
