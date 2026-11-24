@@ -889,3 +889,11 @@ RuntimeError: raqm_layout() failed.
 [2026-11-24 14:06:42] TikTok: ролик загружен, publish_id v_inbox_file~v2.7711739116789975062
 [2026-11-24 14:21:21] Отправлен в черновики TikTok: Главный рингтон твоего детства украли из 19 века 🎶
 [2026-11-24 14:21:21] Готово: 2026-11-24 14-21 nokia-tune.mp4
+[2026-11-24 17:05:26] Собираю ролик: shazam-history (Как работал Shazam, когда ещё не было смартфонов 🎶), осталось сценариев: 6
+[2026-11-24 17:06:12] Ролик собран
+[2026-11-24 17:06:14] Загружен на YouTube: https://youtube.com/shorts/OGqoVFDhWv4
+[2026-11-24 17:06:15] Ошибка публикации в Instagram: ключ не открывает Instagram 17841443254640267: {"error":{"message":"API access blocked.","code":200,"type":"OAuthException","error_subcode":5258005,"fbtrace_id":"A_XeSv7yqphotBTPvcIsfv6"}}; страницы: {'error': {'message': 'API access blocked.', 'type': 'OAuthException', 'code': 200, 'error_subcode':
+[2026-11-24 17:06:19] TikTok: ролик загружен, publish_id v_inbox_file~v2.7711785437462792214
+[2026-11-24 17:22:06] TikTok за 15 минут не обработал ролик (статус PROCESSING_UPLOAD)
+[2026-11-24 17:22:11] Ролик и описание для TikTok отправлены в бот
+[2026-11-24 17:22:11] Готово: 2026-11-24 17-22 shazam-history.mp4
