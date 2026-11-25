@@ -1,11 +1,5 @@
 {
  "ids": [
-  "tg:zakazy_freelance/78377",
-  "rss:https://www.fl.ru/projects/5528710/podgotovka-ispolnitelnoy-dokumentatsii.html",
-  "rss:https://www.fl.ru/projects/5528711/platforma-ili-prilojenie-.html",
-  "tg:zakazy_freelance/78378",
-  "tg:zakazy_freelance/78379",
-  "tg:zakazy_freelance/78380",
   "tg:zakazy_freelance/78381",
   "tg:zakazy_freelance/78382",
   "tg:zakazy_freelance/78383",
@@ -4999,7 +4993,13 @@
   "tg:FrWork3/16415",
   "tg:frilancekomfort/14469",
   "tg:program_job/6962",
-  "tg:program_job/6963"
+  "tg:program_job/6963",
+  "tg:program_job/6964",
+  "tg:program_job/6965",
+  "tg:FrWork3/16416",
+  "tg:freelancce/16877",
+  "tg:FreelanceBay/16852",
+  "tg:program_job/6966"
  ],
  "prints": [
   "26a9ac8a749827aab4ad7fd9b96c0cd5",
