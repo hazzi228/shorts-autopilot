@@ -1,13 +1,5 @@
 {
  "ids": [
-  "tg:zakazy_freelance/78374",
-  "rss:https://www.fl.ru/projects/5528704/vyigruzka-s-eis-po-api.html",
-  "tg:rabotka_zdes/13594",
-  "tg:rabotka_zdes/13595",
-  "tg:zakazy_freelance/78375",
-  "tg:sova_freelance/16728",
-  "tg:zakazy_freelance/78376",
-  "rss:https://www.fl.ru/projects/5528708/razdel-th-fontan.html",
   "tg:zakazy_freelance/78377",
   "rss:https://www.fl.ru/projects/5528710/podgotovka-ispolnitelnoy-dokumentatsii.html",
   "rss:https://www.fl.ru/projects/5528711/platforma-ili-prilojenie-.html",
@@ -4999,7 +4991,15 @@
   "tg:FrWork3/16413",
   "tg:program_job/6958",
   "tg:FrWork3/16414",
-  "tg:frilancekomfort/14468"
+  "tg:frilancekomfort/14468",
+  "tg:program_job/6960",
+  "tg:freelancce/16876",
+  "tg:sova_freelance/16859",
+  "tg:program_job/6961",
+  "tg:FrWork3/16415",
+  "tg:frilancekomfort/14469",
+  "tg:program_job/6962",
+  "tg:program_job/6963"
  ],
  "prints": [
   "26a9ac8a749827aab4ad7fd9b96c0cd5",
