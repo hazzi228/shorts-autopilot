@@ -1,13 +1,5 @@
 {
  "ids": [
-  "rss:https://www.fl.ru/projects/5528700/sdelat-uchebnyiy-v-programme-altium-designer.html",
-  "tg:zakazy_it/356",
-  "tg:zakazy_freelance/78367",
-  "tg:zakazy_freelance/78368",
-  "rss:https://www.fl.ru/projects/5528701/dizayn-sayta-parka-igrovyih-realnostey.html",
-  "tg:zakazy_freelance/78369",
-  "tg:zakazy_freelance/78370",
-  "tg:program_job/6673",
   "tg:freelancce/16685",
   "tg:getwork25/5106",
   "tg:makingmoney/237",
@@ -4999,7 +4991,15 @@
   "tg:freelancce/16872",
   "tg:program_job/6950",
   "tg:sova_freelance/16856",
-  "tg:program_job/6951"
+  "tg:program_job/6951",
+  "tg:program_job/6952",
+  "tg:FreelanceBay/16850",
+  "tg:program_job/6953",
+  "tg:program_job/6954",
+  "tg:program_job/6955",
+  "tg:freelancce/16873",
+  "tg:program_job/6956",
+  "tg:sova_freelance/16857"
  ],
  "prints": [
   "26a9ac8a749827aab4ad7fd9b96c0cd5",
@@ -5365,7 +5365,10 @@
   "8fcf1d3d65266c59ee780da66857695c",
   "31c381df5394a8c2c38a94ca799d07f7",
   "ad23e9428f9a917d67f6bfb2eb692f42",
-  "437cf6db09bbd7269428b01c0d0106e1"
+  "437cf6db09bbd7269428b01c0d0106e1",
+  "fa9860429bdd3520977455dcf1e0d5dd",
+  "383f98e2129b9ddc286f38c5dfae1f4e",
+  "5d3e0851b245f14433e14ff39b2be73d"
  ],
  "chat_ids": [
   "8301728829"
