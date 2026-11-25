@@ -904,3 +904,11 @@ RuntimeError: raqm_layout() failed.
 [2026-11-25 08:06:35] TikTok: ролик загружен, publish_id v_inbox_file~v2.7712017366883797015
 [2026-11-25 08:18:42] Отправлен в черновики TikTok: Почему на старых макбуках яблоко было вверх ногами? 💻
 [2026-11-25 08:18:42] Готово: 2026-11-25 08-18 apple-upside-down-logo.mp4
+[2026-11-25 11:05:32] Собираю рекламный ролик: ad-steam-fee (Сколько Valve забирает с каждого скина в Steam 🎯)
+[2026-11-25 11:06:29] Ролик собран
+[2026-11-25 11:06:31] Загружен на YouTube: https://youtube.com/shorts/zQl93Cw7ung
+[2026-11-25 11:06:32] Ошибка публикации в Instagram: ключ не открывает Instagram 17841443254640267: {"error":{"message":"API access blocked.","code":200,"type":"OAuthException","error_subcode":5258005,"fbtrace_id":"AxL4J52poF_yGcJhaTL5s6k"}}; страницы: {'error': {'message': 'API access blocked.', 'type': 'OAuthException', 'code': 200, 'error_subcode':
+[2026-11-25 11:06:36] TikTok: ролик загружен, publish_id v_inbox_file~v2.7712063843496642582
+[2026-11-25 11:22:13] TikTok за 15 минут не обработал ролик (статус PROCESSING_UPLOAD)
+[2026-11-25 11:22:18] Ролик и описание для TikTok отправлены в бот
+[2026-11-25 11:22:18] Готово: 2026-11-25 11-22 ad-steam-fee.mp4
