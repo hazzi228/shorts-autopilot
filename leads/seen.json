@@ -1,7 +1,5 @@
 {
  "ids": [
-  "tg:zakazy_freelance/78351",
-  "tg:rabotka_zdes/13612",
   "rss:https://www.fl.ru/projects/5528693/target-vk-dlya-b2b.html",
   "tg:zakazy_freelance/78352",
   "tg:frilancekomfort/14391",
@@ -4999,7 +4997,9 @@
   "tg:freelancce/16866",
   "tg:program_job/6940",
   "tg:program_job/6941",
-  "tg:freelancce/16867"
+  "tg:freelancce/16867",
+  "tg:frilancekomfort/14464",
+  "tg:FreelanceBay/16847"
  ],
  "prints": [
   "26a9ac8a749827aab4ad7fd9b96c0cd5",
