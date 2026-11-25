@@ -1,10 +1,5 @@
 {
  "ids": [
-  "tg:freelancce/16685",
-  "tg:getwork25/5106",
-  "tg:makingmoney/237",
-  "tg:theyseeku/40322",
-  "tg:zakazy_freelance/78371",
   "tg:frilancekomfort/14393",
   "tg:zakazy_freelance/78372",
   "tg:FrWork3/16314",
@@ -4999,7 +4994,12 @@
   "tg:program_job/6955",
   "tg:freelancce/16873",
   "tg:program_job/6956",
-  "tg:sova_freelance/16857"
+  "tg:sova_freelance/16857",
+  "tg:sova_freelance/16858",
+  "tg:freelancce/16874",
+  "tg:program_job/6957",
+  "tg:FreelanceBay/16851",
+  "tg:FrWork3/16412"
  ],
  "prints": [
   "26a9ac8a749827aab4ad7fd9b96c0cd5",
