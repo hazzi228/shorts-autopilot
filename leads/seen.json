@@ -1,9 +1,5 @@
 {
  "ids": [
-  "tg:frilancekomfort/14392",
-  "tg:zakazy_freelance/78354",
-  "tg:zakazy_freelance/78355",
-  "tg:zakazy_freelance/78356",
   "rss:https://www.fl.ru/projects/5528694/ostavit-otlichnyiy-otzyiv-magazinu-v-internete.html",
   "rss:https://www.fl.ru/projects/5528695/proksirovanie-veb-sayta-cherez-yandeks-cdn-dlya-ego-dostupnosti-v-usloviyah-belyih-spiskov.html",
   "tg:onlinevakansii/10782",
@@ -4999,7 +4995,11 @@
   "tg:rabotka_zdes/13612",
   "tg:program_job/6942",
   "tg:freelancce/16868",
-  "tg:frilancekomfort/14465"
+  "tg:frilancekomfort/14465",
+  "tg:rabotka_zdes/13629",
+  "tg:frilancekomfort/14466",
+  "tg:FreelanceBay/16849",
+  "tg:FrWork3/16410"
  ],
  "prints": [
   "26a9ac8a749827aab4ad7fd9b96c0cd5",
