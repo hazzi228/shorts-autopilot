@@ -1,8 +1,5 @@
 {
  "ids": [
-  "tg:zakazy_freelance/78381",
-  "tg:zakazy_freelance/78382",
-  "tg:zakazy_freelance/78383",
   "rss:https://www.fl.ru/projects/5528713/dorabotka-gotovoy-vektornoy-raskroyki-upakovki-.html",
   "tg:theyseeku/40323",
   "tg:freelancce/16686",
@@ -4999,7 +4996,10 @@
   "tg:FrWork3/16416",
   "tg:freelancce/16877",
   "tg:FreelanceBay/16852",
-  "tg:program_job/6966"
+  "tg:program_job/6966",
+  "tg:program_job/6967",
+  "tg:freelancce/16878",
+  "tg:FrWork3/16417"
  ],
  "prints": [
   "26a9ac8a749827aab4ad7fd9b96c0cd5",
@@ -5368,7 +5368,8 @@
   "437cf6db09bbd7269428b01c0d0106e1",
   "fa9860429bdd3520977455dcf1e0d5dd",
   "383f98e2129b9ddc286f38c5dfae1f4e",
-  "5d3e0851b245f14433e14ff39b2be73d"
+  "5d3e0851b245f14433e14ff39b2be73d",
+  "00fbddef85228142f35758c4084a3788"
  ],
  "chat_ids": [
   "8301728829"
