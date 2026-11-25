@@ -1,10 +1,5 @@
 {
  "ids": [
-  "tg:frilancekomfort/14393",
-  "tg:zakazy_freelance/78372",
-  "tg:FrWork3/16314",
-  "tg:zakazy_freelance/78373",
-  "rss:https://www.fl.ru/projects/5528702/nayti-kartinku-kot-ubyilaetsya-ii-agent-ignor.html",
   "tg:zakazy_freelance/78374",
   "rss:https://www.fl.ru/projects/5528704/vyigruzka-s-eis-po-api.html",
   "tg:rabotka_zdes/13594",
@@ -4999,7 +4994,12 @@
   "tg:freelancce/16874",
   "tg:program_job/6957",
   "tg:FreelanceBay/16851",
-  "tg:FrWork3/16412"
+  "tg:FrWork3/16412",
+  "tg:freelancce/16875",
+  "tg:FrWork3/16413",
+  "tg:program_job/6958",
+  "tg:FrWork3/16414",
+  "tg:frilancekomfort/14468"
  ],
  "prints": [
   "26a9ac8a749827aab4ad7fd9b96c0cd5",
