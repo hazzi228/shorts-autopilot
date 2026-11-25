@@ -919,3 +919,10 @@ RuntimeError: raqm_layout() failed.
 [2026-11-25 14:06:40] TikTok: ролик загружен, publish_id v_inbox_file~v2.7712110144536184854
 [2026-11-25 14:17:10] Отправлен в черновики TikTok: Кто на самом деле озвучил крик монстра в Minecraft? 😱
 [2026-11-25 14:17:10] Готово: 2026-11-25 14-17 minecraft-ghast-sound.mp4
+[2026-11-25 17:05:28] Собираю ролик: youtube-301-views (Почему на YouTube все видео зависали на 301 просмотре? 🛑), осталось сценариев: 3
+[2026-11-25 17:06:21] Ролик собран
+[2026-11-25 17:06:23] Загружен на YouTube: https://youtube.com/shorts/zmRiR6O-1kQ
+[2026-11-25 17:06:23] Ошибка публикации в Instagram: ключ не открывает Instagram 17841443254640267: {"error":{"message":"API access blocked.","code":200,"type":"OAuthException","error_subcode":5258005,"fbtrace_id":"AlVKU-BiKM5BkGup79GvFd7"}}; страницы: {'error': {'message': 'API access blocked.', 'type': 'OAuthException', 'code': 200, 'error_subcode':
+[2026-11-25 17:06:27] TikTok: ролик загружен, publish_id v_inbox_file~v2.7712156286640621590
+[2026-11-25 17:12:04] Отправлен в черновики TikTok: Почему на YouTube все видео зависали на 301 просмотре? 🛑
+[2026-11-25 17:12:04] Готово: 2026-11-25 17-12 youtube-301-views.mp4
