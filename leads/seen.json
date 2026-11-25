@@ -1,14 +1,5 @@
 {
  "ids": [
-  "tg:onlinevakansii/10782",
-  "tg:theyseeku/40320",
-  "tg:zakazy_freelance/78357",
-  "tg:freelancetaverna/4151",
-  "tg:zakazy_freelance/78358",
-  "tg:zakazy_freelance/78359",
-  "tg:FreelanceBay/16749",
-  "rss:https://www.fl.ru/projects/5528696/ui-ux-testirovanie-telegram-bota.html",
-  "tg:zakazy_freelance/78360",
   "tg:workk_on/19093",
   "rss:https://www.fl.ru/projects/5528698/verstka-bukleta-a5-4-polosyi.html",
   "tg:zakazy_freelance/78361",
@@ -4999,7 +4990,16 @@
   "tg:FreelanceBay/16849",
   "tg:FrWork3/16410",
   "tg:rabotka_zdes/13630",
-  "tg:freelancce/16869"
+  "tg:freelancce/16869",
+  "tg:program_job/6943",
+  "tg:rabotka_zdes/13631",
+  "tg:program_job/6944",
+  "tg:sova_freelance/16852",
+  "tg:freelancce/16870",
+  "tg:sova_freelance/16853",
+  "tg:program_job/6945",
+  "tg:program_job/6946",
+  "tg:program_job/6947"
  ],
  "prints": [
   "26a9ac8a749827aab4ad7fd9b96c0cd5",
@@ -5363,7 +5363,8 @@
   "1c5d442da8f11e1988575a8f2e71bc70",
   "01ea165f646e34501514d86e7cfebe7b",
   "8fcf1d3d65266c59ee780da66857695c",
-  "31c381df5394a8c2c38a94ca799d07f7"
+  "31c381df5394a8c2c38a94ca799d07f7",
+  "ad23e9428f9a917d67f6bfb2eb692f42"
  ],
  "chat_ids": [
   "8301728829"
