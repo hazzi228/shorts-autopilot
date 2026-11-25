@@ -1,10 +1,5 @@
 {
  "ids": [
-  "tg:zakazy_freelance/78363",
-  "tg:theyseeku/40321",
-  "tg:zakazy_freelance/78364",
-  "tg:zakazy_freelance/78365",
-  "tg:zakazy_freelance/78366",
   "rss:https://www.fl.ru/projects/5528700/sdelat-uchebnyiy-v-programme-altium-designer.html",
   "tg:zakazy_it/356",
   "tg:zakazy_freelance/78367",
@@ -4999,7 +4994,12 @@
   "tg:sova_freelance/16854",
   "tg:freelancce/16871",
   "tg:sova_freelance/16855",
-  "tg:program_job/6949"
+  "tg:program_job/6949",
+  "tg:rabotka_zdes/13632",
+  "tg:freelancce/16872",
+  "tg:program_job/6950",
+  "tg:sova_freelance/16856",
+  "tg:program_job/6951"
  ],
  "prints": [
   "26a9ac8a749827aab4ad7fd9b96c0cd5",
@@ -5364,7 +5364,8 @@
   "01ea165f646e34501514d86e7cfebe7b",
   "8fcf1d3d65266c59ee780da66857695c",
   "31c381df5394a8c2c38a94ca799d07f7",
-  "ad23e9428f9a917d67f6bfb2eb692f42"
+  "ad23e9428f9a917d67f6bfb2eb692f42",
+  "437cf6db09bbd7269428b01c0d0106e1"
  ],
  "chat_ids": [
   "8301728829"
