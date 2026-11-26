@@ -1,8 +1,5 @@
 {
  "ids": [
-  "tg:FreelanceBay/16750",
-  "rss:https://www.fl.ru/projects/5528712/ai-agent.html",
-  "tg:zakazy_freelance/78385",
   "tg:zakazy_freelance/78386",
   "tg:workk_on/19095",
   "tg:zakazy_freelance/78387",
@@ -4999,7 +4996,10 @@
   "tg:FrWork3/16418",
   "tg:FreelanceBay/16853",
   "tg:freelancce/16881",
-  "tg:program_job/6969"
+  "tg:program_job/6969",
+  "tg:FrWork3/16419",
+  "tg:webfrl/3195",
+  "tg:FreelanceBay/16855"
  ],
  "prints": [
   "26a9ac8a749827aab4ad7fd9b96c0cd5",
