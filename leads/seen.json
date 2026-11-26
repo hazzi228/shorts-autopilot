@@ -1,7 +1,5 @@
 {
  "ids": [
-  "tg:zakazy_freelance/78402",
-  "tg:theyseeku/40326",
   "tg:zakazy_freelance/78403",
   "tg:zakazy_freelance/78404",
   "tg:zakazy_freelance/78405",
@@ -4999,7 +4997,9 @@
   "tg:FrWork3/16423",
   "tg:freelancce/16891",
   "tg:freelancce/16892",
-  "tg:program_job/6981"
+  "tg:program_job/6981",
+  "tg:freelancce/16893",
+  "tg:program_job/6982"
  ],
  "prints": [
   "26a9ac8a749827aab4ad7fd9b96c0cd5",
@@ -5370,7 +5370,8 @@
   "383f98e2129b9ddc286f38c5dfae1f4e",
   "5d3e0851b245f14433e14ff39b2be73d",
   "00fbddef85228142f35758c4084a3788",
-  "0ecd73cf7d7ce770a37ec8087f1651ef"
+  "0ecd73cf7d7ce770a37ec8087f1651ef",
+  "7dcb70e2a4c33032af4d1b8c4ce80f08"
  ],
  "chat_ids": [
   "8301728829"
