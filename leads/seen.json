@@ -1,7 +1,5 @@
 {
  "ids": [
-  "tg:program_job/6677",
-  "tg:zakazy_freelance/78401",
   "rss:https://www.fl.ru/projects/5528724/okazat-uslugi-injenera-proektirovschika.html",
   "tg:program_job/6678",
   "rss:https://www.fl.ru/projects/5528725/ustanovit-redmayn-redmine.html",
@@ -4999,7 +4997,9 @@
   "tg:frilancekomfort/14473",
   "tg:frilancekomfort/14474",
   "tg:FrWork3/16422",
-  "tg:freelancce/16889"
+  "tg:freelancce/16889",
+  "tg:freelancce/16890",
+  "tg:FrWork3/16423"
  ],
  "prints": [
   "26a9ac8a749827aab4ad7fd9b96c0cd5",
