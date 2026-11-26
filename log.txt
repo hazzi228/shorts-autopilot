@@ -934,3 +934,11 @@ RuntimeError: raqm_layout() failed.
 [2026-11-26 08:22:22] TikTok за 15 минут не обработал ролик (статус PROCESSING_UPLOAD)
 [2026-11-26 08:22:28] Ролик и описание для TikTok отправлены в бот
 [2026-11-26 08:22:28] Готово: 2026-11-26 08-22 first-barcode.mp4
+[2026-11-26 11:05:27] Собираю рекламный ролик: ad-diablo-auction (Blizzard разрешила продавать вещи за реальные деньги. Зря 💸)
+[2026-11-26 11:06:22] Ролик собран
+[2026-11-26 11:06:24] Загружен на YouTube: https://youtube.com/shorts/nWKx_wxrJ54
+[2026-11-26 11:06:24] Ошибка публикации в Instagram: ключ не открывает Instagram 17841443254640267: {"error":{"message":"API access blocked.","code":200,"type":"OAuthException","error_subcode":5258005,"fbtrace_id":"AuX2mZ_dBXTmtq_UallwbQR"}}; страницы: {'error': {'message': 'API access blocked.', 'type': 'OAuthException', 'code': 200, 'error_subcode':
+[2026-11-26 11:06:27] TikTok: ролик загружен, publish_id v_inbox_file~v2.7712434841689819158
+[2026-11-26 11:22:00] TikTok за 15 минут не обработал ролик (статус PROCESSING_UPLOAD)
+[2026-11-26 11:22:05] Ролик и описание для TikTok отправлены в бот
+[2026-11-26 11:22:05] Готово: 2026-11-26 11-22 ad-diablo-auction.mp4
