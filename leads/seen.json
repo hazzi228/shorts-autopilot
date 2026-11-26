@@ -1,11 +1,5 @@
 {
  "ids": [
-  "tg:zakazy_freelance/78398",
-  "tg:zakazy_freelance/78399",
-  "tg:program_job/6676",
-  "tg:workk_on/19097",
-  "tg:zakazy_freelance/78400",
-  "tg:rabotka_zdes/13596",
   "rss:https://www.fl.ru/projects/5355552/nujen-bot-avto-broker.html",
   "tg:program_job/6677",
   "tg:zakazy_freelance/78401",
@@ -4999,7 +4993,13 @@
   "tg:FreelanceBay/16858",
   "tg:freelancce/16887",
   "tg:sova_freelance/16864",
-  "tg:program_job/6978"
+  "tg:program_job/6978",
+  "tg:program_job/6979",
+  "tg:program_job/6980",
+  "tg:freelancce/16888",
+  "tg:frilancekomfort/14473",
+  "tg:frilancekomfort/14474",
+  "tg:FrWork3/16422"
  ],
  "prints": [
   "26a9ac8a749827aab4ad7fd9b96c0cd5",
@@ -5369,7 +5369,8 @@
   "fa9860429bdd3520977455dcf1e0d5dd",
   "383f98e2129b9ddc286f38c5dfae1f4e",
   "5d3e0851b245f14433e14ff39b2be73d",
-  "00fbddef85228142f35758c4084a3788"
+  "00fbddef85228142f35758c4084a3788",
+  "0ecd73cf7d7ce770a37ec8087f1651ef"
  ],
  "chat_ids": [
   "8301728829"
