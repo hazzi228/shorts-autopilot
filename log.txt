@@ -926,3 +926,11 @@ RuntimeError: raqm_layout() failed.
 [2026-11-25 17:06:27] TikTok: ролик загружен, publish_id v_inbox_file~v2.7712156286640621590
 [2026-11-25 17:12:04] Отправлен в черновики TikTok: Почему на YouTube все видео зависали на 301 просмотре? 🛑
 [2026-11-25 17:12:04] Готово: 2026-11-25 17-12 youtube-301-views.mp4
+[2026-11-26 08:05:42] Собираю ролик: first-barcode (Этот копеечный товар навсегда изменил все магазины мира 🛒), осталось сценариев: 2
+[2026-11-26 08:06:41] Ролик собран
+[2026-11-26 08:06:43] Загружен на YouTube: https://youtube.com/shorts/igjsEnmB_q4
+[2026-11-26 08:06:43] Ошибка публикации в Instagram: ключ не открывает Instagram 17841443254640267: {"error":{"message":"API access blocked.","code":200,"type":"OAuthException","error_subcode":5258005,"fbtrace_id":"A23CqS6dX6eJn-nUQYeM_3_"}}; страницы: {'error': {'message': 'API access blocked.', 'type': 'OAuthException', 'code': 200, 'error_subcode':
+[2026-11-26 08:06:46] TikTok: ролик загружен, publish_id v_inbox_file~v2.7712388438871377942
+[2026-11-26 08:22:22] TikTok за 15 минут не обработал ролик (статус PROCESSING_UPLOAD)
+[2026-11-26 08:22:28] Ролик и описание для TikTok отправлены в бот
+[2026-11-26 08:22:28] Готово: 2026-11-26 08-22 first-barcode.mp4
