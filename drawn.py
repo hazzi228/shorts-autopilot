@@ -239,8 +239,9 @@ def prep(kind, accent):
     k = kind[0]
     P = {"k": k, "kind": kind}
     if k == "question":
-        P["head"], P["unders"] = headline(kind[1], 100)
-        P["q"] = sticker(qmark(), border=10)
+        P["hook"] = len(kind) > 2
+        P["head"], P["unders"] = headline(kind[1], 112 if P["hook"] else 100)
+        P["q"] = sticker(emoji_img(kind[2], 300), border=14) if len(kind) > 2 and kind[2] else sticker(qmark(), border=10)
     elif k in ("mascot",):
         P["prop"] = sticker(emoji_img(kind[1], 230), border=12) if len(kind) > 1 and kind[1] else None
         P["label"] = label_pill(kind[2]) if len(kind) > 2 and kind[2] else None
@@ -405,7 +406,8 @@ def draw_scene(fr, P, lt, dur, t, sc, accent, first):
 
     if k == "question":
         head = P["head"]
-        hy = 520
+        hk = P.get("hook")
+        hy = 640 if hk else 520
         paste_c(fr, faded(scaled(head, 0.85 + 0.15 * pop), min(1, pop + 0.3)), W / 2, hy)
         ox = (W - head.width) / 2
         oy = hy - head.height / 2
@@ -413,12 +415,14 @@ def draw_scene(fr, P, lt, dur, t, sc, accent, first):
             p = 1.0 if first and lt > 0.5 else ease_out(max(0, lt - 0.25 - i * 0.2) / 0.45)
             scribble(d, ox + x0, ox + x1, oy + y, p, seed=i + 3)
         m = mascot_sticker(blink, "", 30)
-        paste_c(fr, scaled(m, 0.7 + 0.3 * pop), W / 2 - 60, 980 + bob)
+        paste_c(fr, scaled(m, 0.7 + 0.3 * pop), W / 2 - (130 if hk else 60), (1130 if hk else 980) + bob)
         q = P["q"]
         qa = ease_out_back(min(1, max(0, lt - 0.4) / 0.35)) if not first else 1
+        if first:  # хук: картинка «дышит» с первого кадра, чтобы кадр не был статичным
+            qa = 1 + 0.06 * math.sin(lt * 7)
         if qa > 0.01:
             q2 = scaled(q, qa).rotate(8 * math.sin(t * 3), resample=Image.BICUBIC, expand=True)
-            paste_c(fr, q2, W / 2 + 230, 820 + bob * 0.5)
+            paste_c(fr, q2, W / 2 + (200 if hk else 230), (1010 if hk else 820) + bob * 0.5)
 
     elif k == "mascot":
         m = mascot_sticker(blink, P["outfit"], 34)
@@ -769,6 +773,40 @@ def draw_caption(fr, cap, t, first, ad):
         y += size * 1.2
 
 
+# ---------- хук: первые секунды ----------
+# По статистике (27.11.2026) зрители уходят в первые 4-9 секунд, баннер в середине не мешает.
+# Поэтому первый кадр — крупный заголовок-хук с акцентом, а не одна картинка.
+
+def hook_text(v, sc):
+    h = (v.get("hook") or "").strip()
+    if not h:
+        h = re.sub(r"\s*[👇👆]+$", "", sc.get("show", "")).strip()
+        if len(h) > 60:
+            return None
+        h = h.rstrip(".…")
+    if "*" not in h:  # акцент на самом длинном слове (обычно это суть)
+        ws = h.split()
+        cand = [w for w in ws if len(re.sub(r"\W", "", w)) >= 4]
+        if cand:
+            best = max(cand, key=lambda w: (bool(re.search(r"\d", w)), len(re.sub(r"\W", "", w))))
+            i = ws.index(best)
+            m = re.match(r"^(\W*)(.*?)(\W*)$", best)
+            ws[i] = m.group(1) + "*" + m.group(2) + "*" + m.group(3)
+            h = " ".join(ws)
+    return h
+
+
+def hook_kind(v, sc):
+    k = kind_of(sc)
+    if k[0] in ("question", "rule", "cta", "banner") or sc.get("ad"):
+        return k, False
+    h = hook_text(v, sc)
+    if not h:
+        return k, False
+    emo = k[1] if k[0] in ("emoji", "mascot") and k[1] else ""
+    return ["question", h, emo], True
+
+
 # ---------- сборка ----------
 
 def build(v, out_path, work):
@@ -777,7 +815,11 @@ def build(v, out_path, work):
     accent = tuple(v["accent"])
     v = place_banner(v)
     timeline, total, wav_path = engine.make_audio(v, work)
-    preps = [prep(["banner"] if sc.get("banner") else kind_of(sc), accent) for sc in timeline]
+    kinds = [["banner"] if sc.get("banner") else kind_of(sc) for sc in timeline]
+    hooked = False
+    if timeline and not timeline[0].get("banner"):
+        kinds[0], hooked = hook_kind(v, timeline[0])
+    preps = [prep(k, accent) for k in kinds]
     for sc in timeline:
         sc["caps"] = captions(sc)
 
@@ -832,8 +874,10 @@ def build(v, out_path, work):
         if si and lt < 0.12:
             fr.alpha_composite(Image.new("RGBA", (W, H), PAPER + (int(200 * (1 - lt / 0.12)),)))
 
-        # медленный наезд камеры
-        z = 1.0 + 0.035 * min(1.0, lt / max(0.5, sc["end"] - sc["start"]))
+        # камера: медленный наезд + «джамп-кат» (ступенька зума) на каждой новой фразе субтитров,
+        # чтобы картинка менялась каждые 1-2 секунды
+        ci = next((i for i, c in enumerate(sc["caps"]) if c[0] <= t < c[1]), 0)
+        z = 1.0 + 0.035 * min(1.0, lt / max(0.5, sc["end"] - sc["start"])) + (0.045 if ci % 2 else 0)
         if z > 1.002:
             zw, zh = int(W * z), int(H * z)
             big = fr.resize((zw, zh), Image.BILINEAR)
@@ -854,8 +898,14 @@ def build(v, out_path, work):
             cap = sc["caps"][-1]
         if cap is None and first and sc["caps"]:
             cap = sc["caps"][0]
-        if cap:
+        if cap and not (first and hooked):  # хук уже крупно на экране, субтитр его не дублирует
             draw_caption(fr, cap, t, first, bool(sc.get("ad")))
+        if fi == 0:
+            first_fr = fr.copy()
+        # петля: в последние 0,3 с плавно переходим в первый кадр, чтобы повтор был незаметен
+        left = total - t
+        if left < 0.3 and fi > 0:
+            fr = Image.blend(fr, first_fr, 1 - left / 0.3)
         last_fr = fr.copy()
         ff.stdin.write(fr.convert("RGB").tobytes())
     ff.stdin.close()
