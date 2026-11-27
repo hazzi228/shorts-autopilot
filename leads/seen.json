@@ -1,8 +1,5 @@
 {
  "ids": [
-  "tg:zakazy_freelance/78407",
-  "tg:FreelanceBay/16751",
-  "rss:https://www.fl.ru/projects/5528733/dorabotka-firmennogo-stilya-i-brendbuka.html",
   "tg:zakazy_freelance/78408",
   "rss:https://www.fl.ru/projects/5528729/tochechnyie-izmeneniya-v-makete-knigi.html",
   "rss:https://www.fl.ru/projects/5528731/proekt-ploskoy-kryishi-navesa-pod-avto.html",
@@ -4999,7 +4996,10 @@
   "tg:freelancce/16894",
   "tg:frilancekomfort/14475",
   "tg:frilancekomfort/14476",
-  "tg:FrWork3/16424"
+  "tg:FrWork3/16424",
+  "tg:sova_freelance/16865",
+  "tg:sova_freelance/16866",
+  "tg:freelancce/16895"
  ],
  "prints": [
   "26a9ac8a749827aab4ad7fd9b96c0cd5",
