@@ -976,3 +976,11 @@ RuntimeError: raqm_layout() failed.
 [2026-11-27 14:21:57] Отправлен в черновики TikTok: Ты делаешь этот жест каждый день, но не знаешь автора 📲
 [2026-11-27 14:21:57] Готово: 2026-11-27 14-21 pull-to-refresh.mp4
 [2026-11-27 17:05:28] Сценарии закончились. Попроси Claude сделать новую пачку и положить scenarios.json в эту папку.
+[2026-11-27 18:05:30] Собираю ролик: found-usb-drive (Ты нашёл флешку на улице. Вставишь её? 💾), осталось сценариев: 8
+[2026-11-27 18:07:02] Ролик собран
+[2026-11-27 18:07:04] Загружен на YouTube: https://youtube.com/shorts/iJ9Y-cSSHaI
+[2026-11-27 18:07:05] Ошибка публикации в Instagram: ключ не открывает Instagram 17841443254640267: {"error":{"message":"API access blocked.","code":200,"type":"OAuthException","error_subcode":5258005,"fbtrace_id":"Aq6c2MWQoXn7bGZ8HLnJtuw"}}; страницы: {'error': {'message': 'API access blocked.', 'type': 'OAuthException', 'code': 200, 'error_subcode':
+[2026-11-27 18:07:09] TikTok: ролик загружен, publish_id v_inbox_file~v2.7712914350612776982
+[2026-11-27 18:22:49] TikTok за 15 минут не обработал ролик (статус PROCESSING_UPLOAD)
+[2026-11-27 18:22:55] Ролик и описание для TikTok отправлены в бот
+[2026-11-27 18:22:55] Готово: 2026-11-27 18-22 found-usb-drive.mp4

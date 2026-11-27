@@ -107,7 +107,8 @@
     "first-barcode",
     "infinite-scroll",
     "voice-of-siri",
-    "pull-to-refresh"
+    "pull-to-refresh",
+    "found-usb-drive"
   ],
   "ads_done": 27
 }
