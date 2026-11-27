@@ -968,3 +968,10 @@ RuntimeError: raqm_layout() failed.
 [2026-11-27 11:22:14] TikTok за 15 минут не обработал ролик (статус PROCESSING_UPLOAD)
 [2026-11-27 11:22:20] Ролик и описание для TikTok отправлены в бот
 [2026-11-27 11:22:20] Готово: 2026-11-27 11-22 ad-eve-battle.mp4
+[2026-11-27 14:05:27] Собираю ролик: pull-to-refresh (Ты делаешь этот жест каждый день, но не знаешь автора 📲), осталось сценариев: 0
+[2026-11-27 14:06:10] Ролик собран
+[2026-11-27 14:06:12] Загружен на YouTube: https://youtube.com/shorts/OBNEmW90taI
+[2026-11-27 14:06:13] Ошибка публикации в Instagram: ключ не открывает Instagram 17841443254640267: {"error":{"message":"API access blocked.","code":200,"type":"OAuthException","error_subcode":5258005,"fbtrace_id":"Az2JwPwKX3jSXmzusIyg306"}}; страницы: {'error': {'message': 'API access blocked.', 'type': 'OAuthException', 'code': 200, 'error_subcode':
+[2026-11-27 14:06:17] TikTok: ролик загружен, publish_id v_inbox_file~v2.7712852298506045462
+[2026-11-27 14:21:57] Отправлен в черновики TikTok: Ты делаешь этот жест каждый день, но не знаешь автора 📲
+[2026-11-27 14:21:57] Готово: 2026-11-27 14-21 pull-to-refresh.mp4

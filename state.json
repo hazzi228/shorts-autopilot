@@ -106,7 +106,8 @@
     "youtube-301-views",
     "first-barcode",
     "infinite-scroll",
-    "voice-of-siri"
+    "voice-of-siri",
+    "pull-to-refresh"
   ],
   "ads_done": 27
 }
