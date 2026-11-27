@@ -1,7 +1,5 @@
 {
  "ids": [
-  "rss:https://www.fl.ru/projects/5355552/nujen-bot.html",
-  "rss:https://www.fl.ru/projects/5528711/platforma-ili-prilojenie.html",
   "rss:https://www.fl.ru/projects/5528737/sozdanie-sayta-dlya-internet-magazina.html",
   "rss:https://www.fl.ru/projects/5528738/zapisat-video-otzyiv-o-yazyikovom-prilojenii.html",
   "rss:https://www.fl.ru/projects/5528739/vyivod-v-top--kanal-telegram-max.html",
@@ -4999,7 +4997,9 @@
   "tg:freelancce/16904",
   "tg:sova_freelance/16871",
   "tg:digitaltender/5663",
-  "tg:program_job/6995"
+  "tg:program_job/6995",
+  "tg:digitaltender/5664",
+  "tg:freelancce/16905"
  ],
  "prints": [
   "26a9ac8a749827aab4ad7fd9b96c0cd5",
