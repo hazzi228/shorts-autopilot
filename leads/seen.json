@@ -1,10 +1,5 @@
 {
  "ids": [
-  "tg:workk_on/19099",
-  "tg:program_job/6682",
-  "tg:zakazy_freelance/78426",
-  "tg:freegolup/4456",
-  "tg:freegolup/4457",
   "rss:https://www.fl.ru/projects/5355552/nujen-bot.html",
   "rss:https://www.fl.ru/projects/5528711/platforma-ili-prilojenie.html",
   "rss:https://www.fl.ru/projects/5528737/sozdanie-sayta-dlya-internet-magazina.html",
@@ -4999,7 +4994,12 @@
   "tg:FrWork3/16429",
   "tg:freelancce/16903",
   "tg:FreelanceBay/16867",
-  "tg:digitaltender/5660"
+  "tg:digitaltender/5660",
+  "tg:digitaltender/5661",
+  "tg:freelancce/16904",
+  "tg:sova_freelance/16871",
+  "tg:digitaltender/5663",
+  "tg:program_job/6995"
  ],
  "prints": [
   "26a9ac8a749827aab4ad7fd9b96c0cd5",
