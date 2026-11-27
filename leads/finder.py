@@ -609,6 +609,7 @@ def main():
         fresh.append(lead)
 
     log(f"просмотрено {len(raw)}, подходящих новых {len(fresh)}"
+        + (f" ({', '.join(l['source'] for l in fresh)})" if fresh else "")
         + (f"; не открылись: {'; '.join(errors)}" if errors else ""))
     # Заявки из своих ниш точно попадут в выдачу и придут последними, то есть окажутся внизу чата.
     fresh = sorted(fresh, key=lambda l: bool(l["niche"]))

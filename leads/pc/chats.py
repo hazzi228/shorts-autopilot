@@ -134,6 +134,7 @@ async def run(cfg, finder):
             log(f"нет папки «{FOLDER}» в Telegram: создай её и добавь туда чаты с заказами")
             return
         found, seen_total, skipped = [], 0, []
+        per_chat = {}  # название чата -> [сообщений, заявок], чтобы видеть, какие чаты пустые
         for peer in peers:
             try:
                 chat = await tg.get_entity(peer)
@@ -143,6 +144,7 @@ async def run(cfg, finder):
             if isinstance(chat, User) or (isinstance(chat, Channel) and chat.broadcast and not chat.megagroup):
                 continue  # личные переписки и каналы не читаем: каналы и так смотрит поиск в GitHub
             key = str(chat.id)
+            stat = per_chat.setdefault(getattr(chat, "title", key), [0, 0])
             kwargs = {"limit": PER_CHAT}
             if key in last:
                 kwargs["min_id"] = last[key]
@@ -155,6 +157,7 @@ async def run(cfg, finder):
                 if not text or msg.sender_id == me.id:
                     continue
                 seen_total += 1
+                stat[0] += 1
                 kind = finder.classify(text)
                 if not kind:
                     continue
@@ -171,6 +174,7 @@ async def run(cfg, finder):
                     continue
                 contacts = [f"@{sender.username}"] if sender.username else [f"tg://user?id={sender.id}"]
                 contacts += [c for c in finder.contacts(text, []) if c not in contacts]
+                stat[1] += 1
                 found.append({
                     "id": f"chat:{chat.id}/{msg.id}", "source": getattr(chat, "title", "чат"),
                     "title": text[:90], "text": text, "url": link, "contacts": contacts[:3],
@@ -195,6 +199,8 @@ async def run(cfg, finder):
                 log(f"не отправилось: {e}")
         time.sleep(1.2)
     log(f"чатов в папке {len(peers)}, сообщений {seen_total}, заявок {len(found)}, пропущено фейков {len(skipped)}")
+    if per_chat:
+        log("по чатам (сообщений/заявок): " + "; ".join(f"{t} {m}/{n}" for t, (m, n) in per_chat.items()))
     state["prints"] = list(prints)[-3000:]
     STATE_FILE.write_text(json.dumps(state, ensure_ascii=False, indent=1), encoding="utf-8")
 
