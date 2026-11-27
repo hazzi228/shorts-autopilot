@@ -960,3 +960,11 @@ RuntimeError: raqm_layout() failed.
 [2026-11-27 08:05:24] Сценарии закончились. Попроси Claude сделать новую пачку и положить scenarios.json в эту папку.
 [2026-11-27 09:05:27] Сценарии закончились. Попроси Claude сделать новую пачку и положить scenarios.json в эту папку.
 [2026-11-27 10:05:29] Сценарии закончились. Попроси Claude сделать новую пачку и положить scenarios.json в эту папку.
+[2026-11-27 11:05:29] Собираю рекламный ролик: ad-eve-battle (В этой игре одна битва стоила 300 тысяч долларов 🚀)
+[2026-11-27 11:06:34] Ролик собран
+[2026-11-27 11:06:37] Загружен на YouTube: https://youtube.com/shorts/Cy4-ZyOsruY
+[2026-11-27 11:06:38] Ошибка публикации в Instagram: ключ не открывает Instagram 17841443254640267: {"error":{"message":"API access blocked.","code":200,"type":"OAuthException","error_subcode":5258005,"fbtrace_id":"AI126085LkK4nO24S5m_KwV"}}; страницы: {'error': {'message': 'API access blocked.', 'type': 'OAuthException', 'code': 200, 'error_subcode':
+[2026-11-27 11:06:41] TikTok: ролик загружен, publish_id v_inbox_file~v2.7712806030920402966
+[2026-11-27 11:22:14] TikTok за 15 минут не обработал ролик (статус PROCESSING_UPLOAD)
+[2026-11-27 11:22:20] Ролик и описание для TikTok отправлены в бот
+[2026-11-27 11:22:20] Готово: 2026-11-27 11-22 ad-eve-battle.mp4
