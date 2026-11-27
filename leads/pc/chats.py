@@ -157,7 +157,8 @@ async def run(cfg, finder):
                 if key not in last and now - msg.date > FIRST_RUN:
                     break
                 text = finder.clean(msg.message or "")
-                if not text or msg.sender_id == me.id:
+                # Ответы на чужие сообщения в чате это обсуждение, а не новые заказы.
+                if not text or msg.sender_id == me.id or msg.is_reply:
                     continue
                 seen_total += 1
                 stat[0] += 1
