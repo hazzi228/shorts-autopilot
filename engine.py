@@ -702,7 +702,7 @@ def chunk_caption(text):
     return chunks
 
 # ---------- main ----------
-STYLE = os.environ.get("VIDEO_STYLE", "drawn")  # "drawn" = рисованный стиль (drawn.py), "classic" = старый с фото
+STYLE = os.environ.get("VIDEO_STYLE", "film")  # 27.11.2026: все ролики — мини-фильмы с героем  # "drawn" = рисованный стиль (drawn.py), "classic" = старый с фото
 
 
 def build(v, out_path, work):

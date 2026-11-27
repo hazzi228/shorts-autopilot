@@ -9968,7 +9968,7 @@
  },
  {
   "id": "first-internet-photo",
-  "style": "drawn",
+  "style": "film",
   "title": "Первая фотография в интернете",
   "accent": [
    255,
@@ -10226,7 +10226,7 @@
  },
  {
   "id": "nokia-snake",
-  "style": "drawn",
+  "style": "film",
   "title": "Первая игра в телефоне — Змейка",
   "accent": [
    40,
@@ -10487,7 +10487,7 @@
  },
  {
   "id": "fj-bumps",
-  "style": "drawn",
+  "style": "film",
   "title": "Зачем выступы на клавишах F и J",
   "accent": [
    124,
@@ -10748,7 +10748,7 @@
  },
  {
   "id": "android-name",
-  "style": "drawn",
+  "style": "film",
   "title": "Откуда название Android",
   "accent": [
    40,
