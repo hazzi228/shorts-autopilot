@@ -1,7 +1,5 @@
 {
  "ids": [
-  "tg:theyseeku/40329",
-  "tg:freelancce/16689",
   "tg:zakazy_freelance/78423",
   "tg:onlinevakansii/10785",
   "tg:zakazy_freelance/78424",
@@ -4999,7 +4997,9 @@
   "tg:digitaltender/5657",
   "tg:FrWork3/16427",
   "tg:FrWork3/16428",
-  "tg:freelancce/16902"
+  "tg:freelancce/16902",
+  "tg:digitaltender/5658",
+  "tg:program_job/6994"
  ],
  "prints": [
   "26a9ac8a749827aab4ad7fd9b96c0cd5",
