@@ -424,8 +424,34 @@ def draw_caption(fr, cap, t, first):
 
 # ---------- сборка ----------
 
-def scene_of(sc):
-    f = dict(sc.get("film") or {})
+# Для сценариев без поля "film" (обычные факты) сцены придумываются сами:
+# хук — герой с телефоном, дальше идёт по улице, сидит за компьютером, гуляет, в конце вопрос зрителю.
+AUTO = [
+    [dict(bg="room", act="phone", mood="worried"), dict(bg="street", act="walk", mood="neutral"),
+     dict(bg="room", act="sit", mood="shock", screen="code"), dict(bg="day", act="stand", mood="happy"),
+     dict(bg="room", act="stand", mood="happy")],
+    [dict(bg="street", act="phone", mood="shock"), dict(bg="room", act="sit", mood="neutral", screen="ok"),
+     dict(bg="day", act="walk", mood="happy"), dict(bg="shop", act="stand", mood="worried"),
+     dict(bg="street", act="stand", mood="happy")],
+    [dict(bg="park", act="phone", mood="worried"), dict(bg="room", act="sit", mood="worried", screen="code"),
+     dict(bg="street", act="walk", mood="neutral"), dict(bg="room", act="shock", mood="shock"),
+     dict(bg="park", act="stand", mood="happy")],
+]
+
+
+def auto_scene(sc, i, n, seed):
+    plan = AUTO[seed % len(AUTO)]
+    f = dict(plan[-1] if i == n - 1 else plan[min(i, len(plan) - 2)])
+    h = sc.get("hero") or []
+    if h and h[0] == "big" and len(h) > 1:
+        f["sign"] = str(h[1]) + ((" " + h[2]) if len(h) > 2 and h[2] and len(str(h[1]) + h[2]) < 16 else "")
+    elif h and h[0] in ("emoji",) and len(h) > 1:
+        f["think"] = h[1]
+    return f
+
+
+def scene_of(sc, i=0, n=1, seed=0):
+    f = dict(sc.get("film") or auto_scene(sc, i, n, seed))
     f.setdefault("bg", "room"); f.setdefault("act", "stand"); f.setdefault("mood", "neutral")
     f.setdefault("prop", "phone" if f["act"] == "phone" else "none")
     return f
@@ -439,9 +465,11 @@ def build(v, out_path, work):
     shirt = tuple(int(c * 0.85) for c in accent)
     v = drawn.place_banner(v)
     timeline, total, wav_path = engine.make_audio(v, work)
+    seed = sum(map(ord, v.get("id", "")))
+    plain = [sc for sc in timeline if not sc.get("banner")]
     for sc in timeline:
         sc["caps"] = dark.captions(sc)
-        sc["F"] = None if sc.get("banner") else scene_of(sc)
+        sc["F"] = None if sc.get("banner") else scene_of(sc, plain.index(sc), len(plain), seed)
     desks = {}
     thinks = {}
     signs = {}
