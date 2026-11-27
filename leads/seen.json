@@ -1,14 +1,5 @@
 {
  "ids": [
-  "tg:freelancce/16688",
-  "tg:freelancetaverna/4153",
-  "tg:zakazy_freelance/78410",
-  "rss:https://www.fl.ru/projects/5528735/sdelat-umenshennyiy-magazin-vitrinu.html",
-  "tg:zakazy_freelance/78411",
-  "tg:zakazy_freelance/78412",
-  "tg:workk_on/19098",
-  "tg:freegolup/4474",
-  "tg:zakazy_freelance/78413",
   "tg:digitaltender/5600",
   "tg:zakazy_freelance/78414",
   "tg:zakazy_freelance/78415",
@@ -4999,7 +4990,16 @@
   "tg:freelancce/16896",
   "tg:program_job/6986",
   "tg:FrWork3/16425",
-  "tg:FreelanceBay/16863"
+  "tg:FreelanceBay/16863",
+  "tg:program_job/6987",
+  "tg:FreelanceBay/16864",
+  "tg:program_job/6988",
+  "tg:freelancce/16897",
+  "tg:program_job/6989",
+  "tg:program_job/6990",
+  "tg:program_job/6991",
+  "tg:sova_freelance/16868",
+  "tg:program_job/6992"
  ],
  "prints": [
   "26a9ac8a749827aab4ad7fd9b96c0cd5",
@@ -5371,7 +5371,8 @@
   "5d3e0851b245f14433e14ff39b2be73d",
   "00fbddef85228142f35758c4084a3788",
   "0ecd73cf7d7ce770a37ec8087f1651ef",
-  "7dcb70e2a4c33032af4d1b8c4ce80f08"
+  "7dcb70e2a4c33032af4d1b8c4ce80f08",
+  "6c4c427d96e17e4bc6468ecc6ffcf0c7"
  ],
  "chat_ids": [
   "8301728829"
