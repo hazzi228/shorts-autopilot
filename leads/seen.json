@@ -1,10 +1,5 @@
 {
  "ids": [
-  "tg:zakazy_freelance/78423",
-  "tg:onlinevakansii/10785",
-  "tg:zakazy_freelance/78424",
-  "tg:program_job/6681",
-  "tg:zakazy_freelance/78425",
   "tg:workk_on/19099",
   "tg:program_job/6682",
   "tg:zakazy_freelance/78426",
@@ -4999,7 +4994,12 @@
   "tg:FrWork3/16428",
   "tg:freelancce/16902",
   "tg:digitaltender/5658",
-  "tg:program_job/6994"
+  "tg:program_job/6994",
+  "tg:digitaltender/5659",
+  "tg:FrWork3/16429",
+  "tg:freelancce/16903",
+  "tg:FreelanceBay/16867",
+  "tg:digitaltender/5660"
  ],
  "prints": [
   "26a9ac8a749827aab4ad7fd9b96c0cd5",
@@ -5372,7 +5372,8 @@
   "00fbddef85228142f35758c4084a3788",
   "0ecd73cf7d7ce770a37ec8087f1651ef",
   "7dcb70e2a4c33032af4d1b8c4ce80f08",
-  "6c4c427d96e17e4bc6468ecc6ffcf0c7"
+  "6c4c427d96e17e4bc6468ecc6ffcf0c7",
+  "32379a239e7838484355f36cf486e8cc"
  ],
  "chat_ids": [
   "8301728829"
