@@ -706,6 +706,9 @@ STYLE = os.environ.get("VIDEO_STYLE", "drawn")  # "drawn" = рисованный
 
 
 def build(v, out_path, work):
+    if (v.get("style") or STYLE) == "dark":
+        import dark
+        return dark.build(v, out_path, work)
     if (v.get("style") or STYLE) == "drawn":
         import drawn
         return drawn.build(v, out_path, work)
