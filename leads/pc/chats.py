@@ -16,8 +16,10 @@
 import asyncio
 import importlib.util
 import json
+import os
 import re
 import sys
+import threading
 import time
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
@@ -34,6 +36,7 @@ MSK = timezone(timedelta(hours=3))
 PER_CHAT = 40          # не больше сообщений из одного чата за проверку
 PAUSE = 3              # секунд между чатами: обычный темп человека, а не робота
 FIRST_RUN = timedelta(hours=12)
+HANG_LIMIT = 15 * 60   # обычная проверка идёт пару минут; дольше значит зависла и держит файл входа
 
 
 def log(msg):
@@ -254,6 +257,13 @@ def main():
     if "--login" in sys.argv:
         asyncio.run(login(cfg))
         return
+    def hung():
+        # Зависшая проверка держит hazzer.session, и Планировщик часами не запускает новые.
+        log(f"проверка зависла дольше {HANG_LIMIT // 60} минут, завершаю её")
+        os._exit(3)
+    watchdog = threading.Timer(HANG_LIMIT, hung)
+    watchdog.daemon = True
+    watchdog.start()
     try:
         asyncio.run(run(cfg, load_finder()))
     except SystemExit as e:
