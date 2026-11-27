@@ -262,7 +262,7 @@ def draw_caption(fr, cap, t, first):
     for a, b, w, ww in ws:
         vis = 0 if first and cap[0] < 0.5 else a - 0.05
         if t >= vis:
-            p = min(1, (t - vis) / 0.12)
+            p = 1 if vis == 0 and first else min(1, (t - vis) / 0.12)
             on = a <= t < b
             col = GOLD if on else WHITE
             lay = text_layer(w, size, col, pad=30)

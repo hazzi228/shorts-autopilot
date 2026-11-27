@@ -197,6 +197,8 @@ def build_video(raw, index, taken):
                 tags=tags + ["shorts", "интересные факты"], scenes=story + ending + [ad_end(index)])
     if hook:
         out["hook"] = hook
+    # 27.11.2026: сравниваем два стиля, поэтому через один ролик — тёмный (dark.py), остальные рисованные
+    out["style"] = "dark" if index % 2 == 0 else "drawn"
     return out
 
 
