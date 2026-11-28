@@ -1,7 +1,5 @@
 {
  "ids": [
-  "tg:zakazy_freelance/78430",
-  "tg:zakazy_freelance/78431",
   "tg:zakazy_freelance/78432",
   "tg:program_job/6684",
   "rss:https://www.fl.ru/projects/5528748/trebuetsya-konsultatsiya-yurista-spetsializiruyuschegosya-na-trudovom-prave-rf.html",
@@ -4999,7 +4997,9 @@
   "tg:FreelanceBay/16871",
   "tg:sova_freelance/16874",
   "tg:freelancce/16910",
-  "tg:frilancekomfort/14479"
+  "tg:frilancekomfort/14479",
+  "tg:FreelanceBay/16873",
+  "tg:freelancce/16911"
  ],
  "prints": [
   "26a9ac8a749827aab4ad7fd9b96c0cd5",
