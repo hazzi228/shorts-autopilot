@@ -998,3 +998,10 @@ RuntimeError: raqm_layout() failed.
 [2026-11-28 11:06:49] TikTok: ролик загружен, publish_id v_inbox_file~v2.7713177035305945110
 [2026-11-28 11:19:54] Отправлен в черновики TikTok: Первый миллионер, который заработал внутри игры 🏰
 [2026-11-28 11:19:54] Готово: 2026-11-28 11-19 ad-second-life.mp4
+[2026-11-28 14:05:25] Собираю ролик: internet-off-week (Что будет, если интернет отключат на неделю? 📵), осталось сценариев: 6
+[2026-11-28 14:06:31] Ролик собран
+[2026-11-28 14:06:33] Загружен на YouTube: https://youtube.com/shorts/buRerAE_97s
+[2026-11-28 14:06:33] Ошибка публикации в Instagram: ключ не открывает Instagram 17841443254640267: {"error":{"message":"API access blocked.","code":200,"type":"OAuthException","error_subcode":5258005,"fbtrace_id":"A7JKrTS5M1woatzKByA2-N7"}}; страницы: {'error': {'message': 'API access blocked.', 'type': 'OAuthException', 'code': 200, 'error_subcode':
+[2026-11-28 14:06:39] TikTok: ролик загружен, publish_id v_inbox_file~v2.7713223398441601046
+[2026-11-28 14:18:21] Отправлен в черновики TikTok: Что будет, если интернет отключат на неделю? 📵
+[2026-11-28 14:18:21] Готово: 2026-11-28 14-18 internet-off-week.mp4
