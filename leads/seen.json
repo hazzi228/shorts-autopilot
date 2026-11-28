@@ -1,11 +1,5 @@
 {
  "ids": [
-  "tg:zakazy_freelance/78432",
-  "tg:program_job/6684",
-  "rss:https://www.fl.ru/projects/5528748/trebuetsya-konsultatsiya-yurista-spetsializiruyuschegosya-na-trudovom-prave-rf.html",
-  "tg:zakazy_freelance/78433",
-  "rss:https://www.fl.ru/projects/5528749/python-razrabotchik.html",
-  "rss:https://www.fl.ru/projects/5528750/avtomatizirovannaya-ferma-farma-virtov-v-igre.html",
   "tg:zakazy_freelance/78434",
   "tg:program_job/6685",
   "tg:zakazy_freelance/78435",
@@ -4999,7 +4993,13 @@
   "tg:freelancce/16910",
   "tg:frilancekomfort/14479",
   "tg:FreelanceBay/16873",
-  "tg:freelancce/16911"
+  "tg:freelancce/16911",
+  "tg:program_job/6998",
+  "tg:program_job/6999",
+  "tg:sova_freelance/16875",
+  "tg:sova_freelance/16876",
+  "tg:digitaltender/5666",
+  "tg:freelancce/16912"
  ],
  "prints": [
   "26a9ac8a749827aab4ad7fd9b96c0cd5",
