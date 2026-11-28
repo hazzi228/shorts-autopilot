@@ -984,3 +984,10 @@ RuntimeError: raqm_layout() failed.
 [2026-11-27 18:22:49] TikTok за 15 минут не обработал ролик (статус PROCESSING_UPLOAD)
 [2026-11-27 18:22:55] Ролик и описание для TikTok отправлены в бот
 [2026-11-27 18:22:55] Готово: 2026-11-27 18-22 found-usb-drive.mp4
+[2026-11-28 08:05:27] Собираю ролик: first-internet-photo (Первое фото в интернете было вовсе не про науку 📸), осталось сценариев: 7
+[2026-11-28 08:06:43] Ролик собран
+[2026-11-28 08:06:45] Загружен на YouTube: https://youtube.com/shorts/1ecljMqsXC8
+[2026-11-28 08:06:46] Ошибка публикации в Instagram: ключ не открывает Instagram 17841443254640267: {"error":{"message":"API access blocked.","code":200,"type":"OAuthException","error_subcode":5258005,"fbtrace_id":"A9BEhDe9CO3wIp_zR8LsCEP"}}; страницы: {'error': {'message': 'API access blocked.', 'type': 'OAuthException', 'code': 200, 'error_subcode':
+[2026-11-28 08:06:48] TikTok: ролик загружен, publish_id v_inbox_file~v2.7713130528966281239
+[2026-11-28 08:21:18] Отправлен в черновики TikTok: Первое фото в интернете было вовсе не про науку 📸
+[2026-11-28 08:21:18] Готово: 2026-11-28 08-21 first-internet-photo.mp4
