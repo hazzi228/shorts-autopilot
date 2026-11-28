@@ -1,8 +1,5 @@
 {
  "ids": [
-  "tg:sova_freelance/16734",
-  "rss:https://www.fl.ru/projects/5528747/razrabotka-telegram-bota-s-iskustyiennyim-intelektom--ai---parser-.html",
-  "tg:program_job/6683",
   "tg:zakazy_freelance/78428",
   "tg:theyseeku/40330",
   "tg:zakazy_freelance/78429",
@@ -4999,7 +4996,10 @@
   "tg:FreelanceBay/16870",
   "tg:freelancce/16908",
   "tg:FrWork3/16430",
-  "tg:program_job/6997"
+  "tg:program_job/6997",
+  "tg:sova_freelance/16873",
+  "tg:freelancce/16909",
+  "tg:FreelanceBay/16871"
  ],
  "prints": [
   "26a9ac8a749827aab4ad7fd9b96c0cd5",
